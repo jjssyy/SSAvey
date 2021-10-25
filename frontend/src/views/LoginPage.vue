@@ -1,6 +1,10 @@
 <template>
   <div>
-    <h1>로그인페이지</h1>
+    <v-row>
+      <v-col>
+        1
+      </v-col>
+    </v-row>
   </div>
 </template>
 
