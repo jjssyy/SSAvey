@@ -12,4 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RequestMapping("/compare")
 public class CompareController {
+
+    private CompareService compareService;
 }

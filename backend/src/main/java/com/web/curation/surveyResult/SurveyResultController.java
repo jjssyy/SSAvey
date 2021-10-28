@@ -12,4 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RequestMapping("/survey-result")
 public class SurveyResultController {
+
+    private SurveyResultService surveyResultService;
 }

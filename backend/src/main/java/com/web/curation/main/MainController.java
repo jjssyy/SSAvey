@@ -12,4 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RequestMapping("/main")
 public class MainController {
+
+    private MainService mainService;
 }

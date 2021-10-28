@@ -12,4 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RequestMapping("/template")
 public class TemplateController {
+
+    private TemplateService templateService;
 }
