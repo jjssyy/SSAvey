@@ -8679,10 +8679,10 @@ sass-loader@^10.0.0:
     schema-utils "^3.0.0"
     semver "^7.3.2"
 
-sass@~1.32.0:
-  version "1.32.13"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.32.13.tgz#8d29c849e625a415bce71609c7cf95e15f74ed00"
-  integrity sha512-dEgI9nShraqP7cXQH+lEXVf73WOPCse0QlFzSD8k+1TcOxCMwVXfQlr0jtoluZysQOyJGnfr21dLvYKDJq8HkA==
+sass@^1.43.3:
+  version "1.43.3"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.43.3.tgz#aa16a69131b84f0cd23189a242571e8905f1ce43"
+  integrity sha512-BJnLngqWpMeS65UvlYYEuCb3/fLxDxhHtOB/gWPxs6NKrslTxGt3ZxwIvOe/0Jm4tWwM/+tIpE3wj4dLEhPDeQ==
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
 
@@ -9916,6 +9916,11 @@ vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
+vee-validate@^3.4.13:
+  version "3.4.13"
+  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-3.4.13.tgz#886ffe90778edde9c2f0c3ad94bfab3fe8079f31"
+  integrity sha512-ONnyRixpd0/JOGLuN8dlxFwLoT5FGq5ti1w4rx/zFZWaJZ1EefhfAbXkQvLwLhjU6izkfHyITXojW/7InOU3Tw==
+
 vendors@^1.0.0:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/vendors/-/vendors-1.0.4.tgz#e2b800a53e7a29b93506c3cf41100d16c4c4ad8e"
@@ -10023,6 +10028,11 @@ vue-template-es2015-compiler@^1.6.0, vue-template-es2015-compiler@^1.9.0:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
+
+vue-validate@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/vue-validate/-/vue-validate-1.0.1.tgz#33b613ee598cdb2f2e35b43d7f9f47c586db20b7"
+  integrity sha1-M7YT7lmM2y8uNbQ9f59HxYbbILc=
 
 vue@^2.6.11:
   version "2.6.14"
