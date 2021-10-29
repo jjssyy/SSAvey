@@ -12,7 +12,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Document
+@Document(collection ="Question")
 @Getter
 @Builder
 @NoArgsConstructor

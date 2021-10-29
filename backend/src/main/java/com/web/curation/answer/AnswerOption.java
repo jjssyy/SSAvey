@@ -9,7 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Document
+@Document(collection ="AnswerOption")
 @Getter
 @Builder
 @NoArgsConstructor

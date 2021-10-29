@@ -11,7 +11,7 @@ import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+@Document(collection ="SurveyAnswer")
 @Getter
 @Builder
 @NoArgsConstructor
