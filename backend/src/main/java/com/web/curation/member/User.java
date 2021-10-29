@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.util.List;
 
-@Document
+@Document(collection = "User")
 @Getter
 @Builder
 @NoArgsConstructor
@@ -45,5 +45,4 @@ public class User {
     private List<String> mySurvey;
 
     private List<String> survey;
-
 }
