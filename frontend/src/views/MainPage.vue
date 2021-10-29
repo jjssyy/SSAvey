@@ -27,9 +27,17 @@
             ></v-select>
             {{ region }}
             <v-select
-              v-if="position == '교육생'"
+              v-if="position == '교육생' && generation == '5기'"
               v-model="region"
               :items="regions"
+              label="지역"
+              dense
+              solo
+            ></v-select>
+            <v-select
+              v-if="position == '교육생' && generation == '6기'"
+              v-model="region"
+              :items="regions2"
               label="지역"
               dense
               solo
@@ -49,7 +57,8 @@ export default {
   data: () => ({
     positions: ['교육생', '컨설턴트', '교육프로', '교육코치'],
     generations: ['5기', '6기'],
-    regions: ['서울', '대전', '광주', '구미', '부울경'],
+    regions: ['서울', '대전', '광주', '구미'],
+    regions2: ['서울', '대전', '광주', '구미', '부울경'],
     position: '',
     generation: '',
     region: '',
