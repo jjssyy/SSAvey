@@ -1,5 +1,6 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 html {
-	font-family: 'Apple SD Gothic Neo', Roboto, 'Noto Sans KR', NanumGothic, 'Malgun Gothic', sans-serif;
+	font-family: NanumGothic, sans-serif;
 	color: #555;
 	line-height: 1.2;
 	word-wrap: break-word;
