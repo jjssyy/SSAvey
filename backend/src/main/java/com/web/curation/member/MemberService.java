@@ -1,8 +1,10 @@
 package com.web.curation.member;
 
+import com.web.curation.error.CustomException;
+import com.web.curation.error.ErrorCode;
+import com.web.curation.error.UnauthorizedException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -32,5 +34,17 @@ public class MemberService {
                 .build();
 
         userDao.insert(user);
+    }
+
+    public User findUser(String uid){
+        User user  = userDao.findById(uid)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        return user;
+    }
+
+    public void updateUser(User user){
+        userDao.findById(user.getUid())
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        userDao.save(user);
     }
 }
