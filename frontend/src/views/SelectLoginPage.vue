@@ -13,6 +13,7 @@
               v-model="position"
               :items="positions"
               label="직책"
+              required
               dense
               solo
             ></v-select>
@@ -42,7 +43,38 @@
               dense
               solo
             ></v-select>
-            <v-btn class="signin-btn" type="submit" rounded color="white" light>
+            {{ name }}
+            <v-text-field
+              v-model="name"
+              :counter="4"
+              :rules="nameRules"
+              label="Name"
+              required
+              outlined
+              dark
+              filled
+              dense
+              @keyup.enter="Enter"
+            ></v-text-field>
+            <v-btn
+              v-if="name.length < 3"
+              class="signin-btn"
+              rounded
+              color="white"
+              disabled
+              light
+            >
+              Enter
+            </v-btn>
+            <v-btn
+              v-if="name.length >= 3"
+              class="signin-btn"
+              type="submit"
+              @click="Enter"
+              rounded
+              color="white"
+              light
+            >
               Enter
             </v-btn>
           </div>
@@ -62,7 +94,19 @@ export default {
     position: '',
     generation: '',
     region: '',
+    name: '',
+    nameRules: [
+      v => !!v || 'Name is required',
+      v => v.length <= 4 || 'Name must be less than 4 characters',
+    ],
   }),
+  methods: {
+    Enter: function() {
+      if (this.name.length >= 3) {
+        console.log(this.position, this.generation, this.region, this.name)
+      }
+    },
+  },
 }
 </script>
 
