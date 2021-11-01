@@ -8,6 +8,4 @@ public interface UserDao extends MongoRepository<User, String> {
 
     Optional<User> getUserByEmail(String email);
 
-    User getUserByUid(String uid);
-
 }

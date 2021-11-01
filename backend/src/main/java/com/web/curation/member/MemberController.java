@@ -2,7 +2,6 @@ package com.web.curation.member;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import jdk.nashorn.api.scripting.JSObject;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
@@ -98,5 +97,16 @@ public class MemberController {
             }
         }
         return email;
+    }
+
+    @GetMapping("/{uid}")
+    public ResponseEntity<Map<String, Object>> findUser(@PathVariable String uid){
+        Map<String, Object> resultMap = new HashMap<>();
+        User user = memberService.findUser(uid);
+
+        resultMap.put("message","회원 정보 확인");
+        resultMap.put("user", user);
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 }
