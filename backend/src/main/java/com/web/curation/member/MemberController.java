@@ -2,7 +2,8 @@ package com.web.curation.member;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import jdk.nashorn.api.scripting.JSObject;
+import com.web.curation.error.CustomException;
+import com.web.curation.error.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
@@ -31,10 +32,17 @@ public class MemberController {
         Map<String, Object> resultMap = new HashMap<>();
         //여기서 파악하고 변수명 email로 설정해서 받기
         String email = getMattermostEmail(loginDto);
-        if(email.equals("error")){
-            resultMap.put("message","존재하지 않는 로그인 정보입니다.");
-            return new ResponseEntity<>(resultMap,HttpStatus.BAD_REQUEST);
+
+        if(email.contains("400")){
+            throw new CustomException(ErrorCode.MATTERMOST_BAD_REQUEST);
+        }else if(email.contains("401")){
+            throw new CustomException(ErrorCode.MATTERMOST_UNAUTHORIZED);
+        }else if(email.contains("403")){
+            throw new CustomException(ErrorCode.MATTERMOST_FORBIDDEN);
+        }else if(email.contains("501")){
+            throw new CustomException(ErrorCode.MATTERMOST_NOT_IMPLEMENTED);
         }
+
         String uid = memberService.getUidByEmail(email);
 
         if(uid == null){
@@ -91,12 +99,33 @@ public class MemberController {
         } catch (IOException e) {
             try {
                 int responseCode = ((HttpURLConnection)conn).getResponseCode();
-                System.out.println(responseCode);
-                return "error";
+                return Integer.toString(responseCode);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
         return email;
+    }
+
+    @GetMapping("/{uid}")
+    public ResponseEntity<Map<String, Object>> findUser(@PathVariable String uid){
+        Map<String, Object> resultMap = new HashMap<>();
+        User user = memberService.findUser(uid);
+
+        resultMap.put("message","회원 정보 확인");
+        resultMap.put("user", user);
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
+    @PutMapping()
+    public ResponseEntity<Map<String, Object>> updateUser(@RequestBody User user){
+        Map<String, Object> resultMap = new HashMap<>();
+
+        memberService.updateUser(user);
+
+        resultMap.put("message", "회원 정보 수정 완료");
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 }
