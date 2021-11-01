@@ -9949,6 +9949,11 @@ vue-cli-plugin-vuetify@~2.4.3:
     semver "^7.1.2"
     shelljs "^0.8.3"
 
+vue-drag-and-drop-list@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/vue-drag-and-drop-list/-/vue-drag-and-drop-list-1.0.0.tgz#13e66fdafd79fbd25d568a41efeb8da4b1a5e308"
+  integrity sha1-E+Zv2v15+9JdVopB7+uNpLGl4wg=
+
 vue-eslint-parser@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-5.0.0.tgz#00f4e4da94ec974b821a26ff0ed0f7a78402b8a1"
