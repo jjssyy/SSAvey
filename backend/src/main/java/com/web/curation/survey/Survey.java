@@ -1,10 +1,6 @@
 package com.web.curation.survey;
 
-import lombok.AllArgsConstructor;
-
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,6 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import com.web.curation.question.Question;
 
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
