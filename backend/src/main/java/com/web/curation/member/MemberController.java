@@ -109,4 +109,15 @@ public class MemberController {
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
+
+    @PutMapping()
+    public ResponseEntity<Map<String, Object>> updateUser(@RequestBody User user){
+        Map<String, Object> resultMap = new HashMap<>();
+
+        memberService.updateUser(user);
+
+        resultMap.put("message", "회원 정보 수정 완료");
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
 }

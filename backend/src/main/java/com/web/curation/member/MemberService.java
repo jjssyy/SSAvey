@@ -39,11 +39,12 @@ public class MemberService {
     public User findUser(String uid){
         User user  = userDao.findById(uid)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
-
         return user;
     }
 
-    public void updateUser(){
-
+    public void updateUser(User user){
+        userDao.findById(user.getUid())
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        userDao.save(user);
     }
 }
