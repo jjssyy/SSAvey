@@ -8,4 +8,11 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 @Service
 public class SurveyService {
+	
+	private SurveyDao surveyDao;
+	
+	public void createSurvey(Survey survey) {
+		surveyDao.save(survey);
+	}
+	
 }
