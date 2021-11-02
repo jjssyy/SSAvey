@@ -20,8 +20,8 @@ public class AlarmController {
     public ResponseEntity<Map<String, Object>> kakaoLogin(@RequestParam String name) {
         Map<String, Object> resultMap = new HashMap<>();
 
-        LocalDateTime time = LocalDateTime.of(2021, 10, 29, 14, 30);
-        alarmService.setAlarm(name, time);
+        LocalDateTime time = LocalDateTime.of(2021, 11, 1, 17, 10);
+        alarmService.setAlarmSchdule(name, time);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
@@ -31,7 +31,7 @@ public class AlarmController {
         Map<String, Object> resultMap = new HashMap<>();
 
         LocalDateTime time = LocalDateTime.of(2021, 10, 29, 14, 31);
-        alarmService.editAlarm(name, time);
+        alarmService.editAlarmSchedule(name, time);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
