@@ -1,9 +1,7 @@
 package com.web.curation.template;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.web.curation.question.Question;
+import lombok.*;
 
 import java.util.List;
 
@@ -12,11 +10,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.web.curation.survey.Survey;
 
-@Document
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Document(collection ="Template")
 public class Template {
 	@Id
 	private String tid;
@@ -26,11 +25,10 @@ public class Template {
 	private String t_title;
 	
 	private String t_explain;
+
+	private List<Question> question;
 	
-	private List<Survey> survey;
-	
-	
-	
-	
-	
+	private List<String> survey;
+
+	private String writer;
 }
