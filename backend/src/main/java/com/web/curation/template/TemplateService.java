@@ -8,6 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 @AllArgsConstructor
 @Service
@@ -23,5 +26,24 @@ public class TemplateService {
 
         user.getTemplate().add(template.getTid());
         userDao.save(user);
+    }
+
+    public List<Template> getUserTemplates(String uid){
+        List<Template> list = new ArrayList<>();
+        User user  = userDao.findById(uid)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
+        for(String tid : user.getTemplate()){
+            Template template = templateDao.findById(tid)
+                    .orElseThrow(() -> new CustomException(ErrorCode.TEMPLATE_NOT_FOUND));
+            list.add(template);
+        }
+
+        return list;
+    }
+
+    public Template getTemplate(String tid){
+        return templateDao.findById(tid)
+                .orElseThrow(() -> new CustomException(ErrorCode.TEMPLATE_NOT_FOUND));
     }
 }
