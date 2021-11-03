@@ -147,6 +147,9 @@ public class MemberController {
         List<User> list = memberService.searchUser(name, position, generation, area, group, team, team_roll);
 
         resultMap.put("검색 결과", list);
+        if(list.size()==0){
+            resultMap.put("message","검색 결과가 없습니다.");
+        }
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 }
