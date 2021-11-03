@@ -61,8 +61,9 @@ public class SurveyService {
 		//자신에게 할당된 설문조사중 state와 똑같은 설문지 찾기
 		List<String> temp=user.getSurvey();
 		for(int i=0;i<temp.size();i++) {
-			Optional<Survey> tmp=surveyDao.findById(temp.get(i));
-			Survey tmp_survey=tmp.get();
+			Survey tmp_survey=surveyDao.findById(temp.get(i))
+					.orElseThrow(()-> new CustomException(ErrorCode.SURVEY_NOT_FOUND));
+			
 			if(tmp_survey.getState().toString().equals(state)) {
 				result.add(tmp_survey);
 			}			
@@ -74,12 +75,12 @@ public class SurveyService {
 	public List<Survey> getMySurvey(String state, String uid){
 		List<Survey> result=new ArrayList<Survey>();
 		User user=userDao.findById(uid)
-	             .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+				.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 		//자신이 만든 설문 가져오기
 		List<String> temp=user.getMySurvey();
 		for(int i=0;i<temp.size();i++) {
-			Optional<Survey> tmp=surveyDao.findById(temp.get(i));
-			Survey tmp_survey=tmp.get();
+			Survey tmp_survey=surveyDao.findById(temp.get(i))
+					.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));;
 			
 			if(tmp_survey.getState().toString().equals(state)) {
 				result.add(tmp_survey);
@@ -88,10 +89,11 @@ public class SurveyService {
 		return result;
 	}
 	public Survey getSurveyInfo(String sid) {
-		Optional<Survey> tmp=surveyDao.findById(sid);
-		Survey survey=tmp.get();
+		Survey tmp_survey=surveyDao.findById(sid)
+				.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));;
 		
-		return survey;
+		
+		return tmp_survey;
 		
 	}
 	
