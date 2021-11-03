@@ -1,0 +1,165 @@
+.container-set {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 10px;
+  position: relative;
+  height: 100%;
+}
+
+.container-set .container-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.container-set .tag-box {
+  padding-top: 8px;
+}
+
+.container-set .tag-box .tag-items {
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.container-set .tag-box .tag-items li {
+  font-size: 0.8rem;
+  background-color: #5d82e9;
+  border-radius: 10px;
+  padding: 4px 7px;
+  margin-right: 6.55px;
+  margin-bottom: 5px;
+}
+
+.container-set .tag-box .tag-items li i {
+  cursor: pointer;
+}
+
+.container-set .container-items {
+  width: 100%;
+  height: 574px;
+}
+
+.container-set .container-items .item {
+  margin-bottom: 1rem;
+}
+
+.container-set .container-items .item .user-filter {
+  display: flex;
+}
+
+.container-set .container-items .item .user-filter span {
+  background-color: #5d82e9;
+  padding: 4px 7px;
+  margin-right: 6.55px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  color: white;
+}
+
+.container-set .container-items .search-box {
+  height: 2.3rem;
+  display: flex;
+}
+
+.container-set .container-items .search-box label {
+  display: flex;
+  font-size: 1.3rem;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: #F2F2F2;
+  border-top-right-radius: 5px;
+  border-end-end-radius: 5px;
+  flex-grow: 0;
+}
+
+.container-set .container-items .search-box input {
+  padding-left: 10px;
+  background-color: #F2F2F2;
+  border-top-left-radius: 5px;
+  border-end-start-radius: 5px;
+  flex-grow: 1;
+  color: #131212;
+  font-weight: 500;
+}
+
+.container-set .container-items .search-box input:focus {
+  outline: none;
+}
+
+.container-set .container-items .user-list-box {
+  height: 400px;
+  overflow-y: scroll;
+}
+
+.container-set .container-items .user-list-box .user-list .user-item {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 10px;
+  padding: 10px 10px;
+  color: #131212;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 5px;
+  background-color: #F2F2F2;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.container-set .container-items .user-list-box .user-list .user-item:hover {
+  background-color: #5d82e9;
+}
+
+.container-set .container-items .user-list-box::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 5px;
+  margin: 10px;
+  background-color: #F2F2F2;
+}
+
+.container-set .container-items .user-list::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #737272;
+}
+
+.container-set .line {
+  width: 100%;
+}
+
+.container-set .line hr {
+  border-top: 2px dashed #c7bcbc;
+}
+
+.container-set .bottom-btn {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  width: 100%;
+  padding: 0 22px 25px 22px;
+  justify-content: space-between;
+}
+
+.container-set .bottom-btn .next-btn {
+  padding: 8px 0;
+}
+
+.container-subtitle {
+  font-size: 1rem;
+  font-weight: 500;
+  height: 64px;
+  margin-bottom: 1rem;
+}
+
+.container-subtitle p {
+  margin-bottom: 0.3rem;
+}
+
+.temp {
+  height: 22px;
+  margin-bottom: 16px;
+}
+/*# sourceMappingURL=survey-set-two.css.map */

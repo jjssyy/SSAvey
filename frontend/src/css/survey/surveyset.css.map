@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,gBAAgB,CAAC;EACf,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,IAAI;EACZ,OAAO,EAAE,IAAI;CACd;;AACD,AAAA,aAAa,CAAC;EACZ,gBAAgB,EAAE,GAAG;EACrB,KAAK,EAAE,GAAG;EACV,YAAY,EAAE,EAAE;CACjB;;AACD,AAAA,aAAa,CAAC;EACZ,gBAAgB,EAAE,IAAI;EACtB,KAAK,EAAE,GAAG;CACX",
-    "sources": [
-        "surveyset.scss"
-    ],
-    "names": [],
-    "file": "surveyset.css"
-}

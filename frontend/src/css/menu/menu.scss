@@ -160,27 +160,6 @@
   }
 }
 
-.component {
-  width: 100vw;
-  height: 100vh;
-  padding-top: 70px;
-  background-color: #EEF2F7;
-  transition: all ease 0.4s;
-  @media (min-width: 375px) {
-    padding-top: 86px;
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-  @media (min-width: 768px) {
-    padding-left: 86px;
-  }
-  @media (min-width: 1200px) {
-    padding-top: 16px;
-    padding-left: 256px;
-    padding-right: 16px;
-    padding-bottom: 16px;
-  }
-}
 .open-left-menu {
   @media (min-width: 375px) {
     top: 70px;
@@ -198,12 +177,6 @@
 
 .open-top-menu {
   @media (min-width: 768px) {
-  }
-}
-
-.open-menu-component {
-  @media (min-width: 768px) {
-    padding-left: 256px;
   }
 }
 

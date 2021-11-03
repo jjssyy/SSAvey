@@ -41,4 +41,4 @@ export default {
 }
 </script>
 
-<style scoped src="./css/menu/menu.css"></style>
+<style scoped src="./css/menu/app.css"></style>
