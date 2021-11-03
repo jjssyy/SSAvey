@@ -117,10 +117,9 @@ export default {
             login_id: this.email,
             password: this.password,
           },
-          res => {
-            console.log(res.data)
-
-            console.log(res.data.isSignUp)
+          (res) => {
+            console.log(res.data.Uid);
+            this.$store.commit("setUid", res.data.Uid);
 
             if (res.data.isSignUp) {
               this.$router.push({ name: 'MainPage' })

@@ -15,21 +15,25 @@ export default new VueRouter({
       path: '/login',
       name: 'Login',
       component: LoginPage,
+      meta: { auth: false },
     },
     {
       path: '/select',
       name: 'SelectLoginPage',
       component: SelectLoginPage,
+      meta: { auth: true },
     },
     {
       path: '/main',
       name: 'MainPage',
       component: MainPage,
+      meta: { auth: true },
     },
     {
       path: '/surveyset',
       name: 'SurveySetPage',
       component: SurveySetPage,
+      meta: { auth: true },
     },
     {
       path: '/survey/state/expected',
