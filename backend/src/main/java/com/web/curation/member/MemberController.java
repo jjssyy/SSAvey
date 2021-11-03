@@ -16,6 +16,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -126,6 +127,29 @@ public class MemberController {
 
         resultMap.put("message", "회원 정보 수정 완료");
 
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Map<String, Object>> searchUser(@RequestParam(required = false) String name,
+                                                          @RequestParam(required = false) String position,
+                                                          @RequestParam(required = false) Integer generation,
+                                                          @RequestParam(required = false) String area,
+                                                          @RequestParam(required = false) String group,
+                                                          @RequestParam(required = false) String team,
+                                                          @RequestParam(required = false) String team_roll){
+        Map<String, Object> resultMap = new HashMap<>();
+
+        if(generation == null){
+            generation = 0;
+        }
+
+        List<User> list = memberService.searchUser(name, position, generation, area, group, team, team_roll);
+
+        resultMap.put("검색 결과", list);
+        if(list.size()==0){
+            resultMap.put("message","검색 결과가 없습니다.");
+        }
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 }
