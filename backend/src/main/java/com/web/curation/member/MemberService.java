@@ -35,7 +35,7 @@ public class MemberService {
                 .email(email)
                 .build();
 
-        userDao.insert(user);
+        userDao.save(user);
     }
 
     public User findUser(String uid){
