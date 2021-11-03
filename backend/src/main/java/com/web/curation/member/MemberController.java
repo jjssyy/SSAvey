@@ -31,25 +31,16 @@ public class MemberController {
     @PostMapping()
     public ResponseEntity<Map<String, Object>> Login(@RequestBody LoginDto loginDto){
         Map<String, Object> resultMap = new HashMap<>();
-        //여기서 파악하고 변수명 email로 설정해서 받기
-        String email = getMattermostEmail(loginDto);
 
-        if(email.contains("400")){
-            throw new CustomException(ErrorCode.MATTERMOST_BAD_REQUEST);
-        }else if(email.contains("401")){
-            throw new CustomException(ErrorCode.MATTERMOST_UNAUTHORIZED);
-        }else if(email.contains("403")){
-            throw new CustomException(ErrorCode.MATTERMOST_FORBIDDEN);
-        }else if(email.contains("501")){
-            throw new CustomException(ErrorCode.MATTERMOST_NOT_IMPLEMENTED);
-        }
+        Map<String, String> map = getMattermostInfo(loginDto);
+        String uid = map.get("uid");
+        String email = map.get("email");
 
-        String uid = memberService.getUidByEmail(email);
+        String stored_uid = memberService.getUidByEmail(email);
 
-        if(uid == null){
-            memberService.joinUser(email);
-            String newUid = memberService.getUidByEmail(email);
-            resultMap.put("Uid", newUid);
+        if(stored_uid == null){
+            memberService.joinUser(map);
+            resultMap.put("Uid", uid);
             resultMap.put("isSignUp", false);
         }else{
             resultMap.put("Uid", uid);
@@ -58,9 +49,10 @@ public class MemberController {
         return new ResponseEntity<>(resultMap,HttpStatus.OK);
     }
 
-    private String getMattermostEmail(LoginDto loginDto){
+    private Map<String,String> getMattermostInfo(LoginDto loginDto){
         String email="";
         HttpURLConnection conn = null;
+        Map<String, String> map = new HashMap();
 
         try {
             URL url = new URL("https://meeting.ssafy.com/api/v4/users/login");
@@ -90,7 +82,11 @@ public class MemberController {
             JsonParser parser = new JsonParser();
             JsonElement element = parser.parse(result.toString());
 
+            String uid = element.getAsJsonObject().get("id").getAsString();
             email = element.getAsJsonObject().get("email").getAsString();
+
+            map.put("uid", uid);
+            map.put("email", email);
 
             br.close();
             bw.close();
@@ -100,12 +96,20 @@ public class MemberController {
         } catch (IOException e) {
             try {
                 int responseCode = ((HttpURLConnection)conn).getResponseCode();
-                return Integer.toString(responseCode);
+                if(responseCode==400){
+                    throw new CustomException(ErrorCode.MATTERMOST_BAD_REQUEST);
+                }else if(responseCode==401){
+                    throw new CustomException(ErrorCode.MATTERMOST_UNAUTHORIZED);
+                }else if(responseCode==403){
+                    throw new CustomException(ErrorCode.MATTERMOST_FORBIDDEN);
+                }else if(responseCode==501){
+                    throw new CustomException(ErrorCode.MATTERMOST_NOT_IMPLEMENTED);
+                }
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
-        return email;
+        return map;
     }
 
     @GetMapping("/{uid}")

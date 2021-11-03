@@ -1,5 +1,5 @@
 <template>
-  <div style="display: flex; justify-content: center;">
+  <div style="display: flex; justify-content: center">
     <section class="section-container">
       <v-row class="signin">
         <v-col cols="12" sm="8" class="left">
@@ -54,7 +54,7 @@
                 >
                   <img
                     src="@/assets/Mattermost_Logo.png"
-                    style="width: 1.5rem; height:1.5rem;"
+                    style="width: 1.5rem; height: 1.5rem"
                     alt=""
                   />
                   Mattermost
@@ -69,25 +69,26 @@
 </template>
 
 <script>
-import { required, email } from 'vee-validate/dist/rules'
+import { required, email } from "vee-validate/dist/rules";
+import UserApi from "@/api/UserApi";
 import {
   extend,
   ValidationProvider,
   setInteractionMode,
   ValidationObserver,
-} from 'vee-validate'
+} from "vee-validate";
 
-setInteractionMode('eager')
+setInteractionMode("eager");
 
-extend('required', {
+extend("required", {
   ...required,
-  message: '{_field_} can not be empty',
-})
+  message: "{_field_} can not be empty",
+});
 
-extend('email', {
+extend("email", {
   ...email,
-  message: 'Email must be valid',
-})
+  message: "Email must be valid",
+});
 
 export default {
   components: {
@@ -95,7 +96,7 @@ export default {
     ValidationObserver,
   },
   data: () => ({
-    email: '',
+    email: "",
     password: null,
     showPass: false,
   }),
@@ -104,24 +105,45 @@ export default {
       return {
         email: this.email,
         password: this.password,
-      }
+      };
     },
   },
   methods: {
     async submit() {
-      const valid = await this.$refs.observer.validate()
+      const valid = await this.$refs.observer.validate();
       if (valid) {
-        this.login(this.params) // action to login
+        UserApi.Login(
+          {
+            login_id: this.email,
+            password: this.password,
+          },
+          (res) => {
+            console.log(res.data);
+
+            console.log(res.data.isSignUp);
+
+            if (res.data.isSignUp) {
+              this.$router.push({ name: "MainPage" });
+            } else {
+              this.$router.push({ name: "SelectLoginPage" });
+            }
+          },
+          (err) => {
+            if (err.response.status == 401) {
+              alert("유효하지 않은 계정입니다.");
+            }
+          }
+        );
       }
     },
     clear() {
       // you can use this method to clear login form
-      this.email = ''
-      this.password = null
-      this.$refs.observer.reset()
+      this.email = "";
+      this.password = null;
+      this.$refs.observer.reset();
     },
   },
-}
+};
 </script>
 
 <style scoped></style>

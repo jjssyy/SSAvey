@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -25,16 +26,16 @@ public class MemberService {
         }
         return null;
     }
-    public void joinUser(String email){
-        long randomNum = (long)(Math.random() * (long)Math.pow(10, 12));
-        String uid = "U"+randomNum;
+    public void joinUser(Map<String, String> map){
+        String uid = map.get("uid");
+        String email = map.get("email");
 
         User user = User.builder()
                 .uid(uid)
                 .email(email)
                 .build();
 
-        userDao.insert(user);
+        userDao.save(user);
     }
 
     public User findUser(String uid){

@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.web.curation.question.Type;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,11 +23,11 @@ public class AnswerQuestion {
 	
 	private String q_explanation;
 	
-	private String q_type;
+	private Type q_type;
 	
 	private String answer;
 	
 	private boolean is_required;
 	
-	private List<SurveyAnswer>  q_option;
+	private List<AnswerOption>  q_option;
 }
