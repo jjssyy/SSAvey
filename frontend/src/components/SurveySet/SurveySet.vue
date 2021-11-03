@@ -9,7 +9,7 @@
         <SurveySetTwo @nextSet="nextSet" @prevSet="prevSet"></SurveySetTwo>
       </div>
       <div class="item">
-        <SurveySetThr></SurveySetThr>
+        <SurveySetThr @prevSet="prevSet"></SurveySetThr>
       </div>
     </div>
   </div>
@@ -43,8 +43,13 @@ export default {
     prevSet() {
       this.carouselSlide.style.transition = 'transform 0.6s ease-in-out'
       this.counter--
-      this.carouselSlide.style.transform =
-        'translateX(' + this.size * this.counter + 'px)'
+      if (this.counter === 1) {
+        this.carouselSlide.style.transform =
+          'translateX(' + -this.size * this.counter + 'px)'
+      } else {
+        this.carouselSlide.style.transform =
+          'translateX(' + this.size * this.counter + 'px)'
+      }
     },
   },
   mounted() {
