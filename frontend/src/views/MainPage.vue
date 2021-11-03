@@ -1,11 +1,94 @@
 <template>
   <div>
-    MainPage입니다.
+    <v-carousel
+      cycle
+      height="400"
+      hide-delimiter-background
+      show-arrows-on-hover
+    >
+      <v-carousel-item v-for="(slide, i) in slides" :key="i">
+        <v-sheet :color="colors[i]" height="100%">
+          <v-row class="fill-height" align="center" justify="center">
+            <div class="text-h2">{{ slide }} Slide</div>
+          </v-row>
+        </v-sheet>
+      </v-carousel-item>
+    </v-carousel>
+    <v-container class="grey lighten-5">
+      <v-row style="min-width: 100%;">
+        <v-col
+          @click="gotoProceeding"
+          style="min-height: 300px;"
+          cols="12"
+          sm="6"
+        >
+          <div style="border-bottom: 2px solid;">
+            <h2>진행중인 설문</h2>
+          </div>
+          <div class="d-flex justify-space-between" style="margin: 3px 5px;">
+            <h4>설문제목</h4>
+            <h5>설문날짜</h5>
+          </div>
+        </v-col>
+        <v-col
+          @click="gotoExpected"
+          style="min-height: 300px;"
+          cols="12"
+          sm="6"
+        >
+          <div style="border-bottom: 2px solid;">
+            <h2>진행예정 설문</h2>
+          </div>
+          <div class="d-flex justify-space-between" style="margin: 3px 5px;">
+            <h4>설문제목</h4>
+            <h5>설문날짜</h5>
+          </div>
+        </v-col>
+        <v-col
+          @click="gotoCompleted"
+          style="min-height: 300px;"
+          cols="12"
+          sm="6"
+        >
+          <div style="border-bottom: 2px solid;">
+            <h2>완료된 설문</h2>
+          </div>
+          <div class="d-flex justify-space-between" style="margin: 3px 5px;">
+            <h4>설문제목</h4>
+            <h5>설문날짜</h5>
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      colors: [
+        'indigo',
+        'warning',
+        'pink darken-2',
+        'red lighten-1',
+        'deep-purple accent-4',
+      ],
+      slides: ['First', 'Second', 'Third', 'Fourth', 'Fifth'],
+    }
+  },
+  methods: {
+    gotoExpected() {
+      this.$router.push('/survey/state/expected')
+    },
+    gotoProceeding() {
+      this.$router.push('/survey/state/proceeding')
+    },
+    gotoCompleted() {
+      this.$router.push('/survey/state/completed')
+    },
+  },
+}
 </script>
 
 <style></style>
