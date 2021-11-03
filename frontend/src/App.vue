@@ -1,6 +1,11 @@
 <template>
+<<<<<<< HEAD
+  <v-app>
+    <div id="v-app" v-if="isLogin">
+=======
   <div>
     <div v-if="isLogin">
+>>>>>>> bc20abb798ffe90623ba1d03df610940dfb3c81a
       <nav>
         <AppHeader @openMenu="openMenu"></AppHeader>
       </nav>
@@ -17,7 +22,11 @@
         <router-view></router-view>
       </v-app>
     </div>
+<<<<<<< HEAD
+  </v-app>
+=======
   </div>
+>>>>>>> bc20abb798ffe90623ba1d03df610940dfb3c81a
 </template>
 
 <script>
