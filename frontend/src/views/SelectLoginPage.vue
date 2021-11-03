@@ -26,6 +26,15 @@
               dense
               solo
             ></v-select>
+            {{ role }}
+            <v-select
+              v-if="position == '교육생'"
+              v-model="role"
+              :items="roles"
+              label="역할"
+              dense
+              solo
+            ></v-select>
             {{ region }}
             <v-select
               v-if="position == '교육생' && generation == '5기'"
@@ -91,10 +100,12 @@ export default {
     generations: ['5기', '6기'],
     regions: ['서울', '대전', '광주', '구미'],
     regions2: ['서울', '대전', '광주', '구미', '부울경'],
+    roles: ['팀장', '팀원'],
     position: '',
     generation: '',
     region: '',
     name: '',
+    role: '',
     nameRules: [
       v => !!v || 'Name is required',
       v => v.length <= 4 || 'Name must be less than 4 characters',
@@ -103,7 +114,13 @@ export default {
   methods: {
     Enter: function() {
       if (this.name.length >= 3) {
-        console.log(this.position, this.generation, this.region, this.name)
+        console.log(
+          this.position,
+          this.generation,
+          this.region,
+          this.role,
+          this.name,
+        )
       }
     },
   },

@@ -1,7 +1,7 @@
 <template>
   <div class="component-total">
     <!-- 설문 문항 -->
-    <div class="component-11" ref="left" id="display drop-target"></div>
+    <div class="component-11" ref="left" id="drop-target"></div>
     <!-- 오른쪽 사이드바 -->
     <div class="component-22" ref="right" id="drag-elements">
       <div>테스트1</div>
