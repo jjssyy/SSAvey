@@ -1,18 +1,25 @@
 <template>
-  <div class="component-total">
+  <div class="page-component">
     <!-- 설문 문항 -->
-    <div class="component-11">
-      haha
+    <div class="component-1">
+      <survey></survey>
     </div>
     <!-- 오른쪽 사이드바 -->
-    <div class="component-22">
-      nana
+    <div class="component-2">
+      <surveySet></surveySet>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+import Survey from '@/components/SurveySet/Survey.vue'
+import SurveySet from '@/components/SurveySet/SurveySet.vue'
+export default {
+  components: {
+    Survey,
+    SurveySet,
+  },
+}
 </script>
 
-<style scoped src="./../css/survey/surveyset.css"></style>
+<style scoped src="./../css/survey/surveyset/survey-set-page.css"></style>

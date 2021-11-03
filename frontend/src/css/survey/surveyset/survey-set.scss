@@ -1,0 +1,13 @@
+.carousel-container {
+  // overflow: hidden;
+  height: 100%;
+}
+.carousel-slides {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  .item {
+    height: 100%;
+    min-width: 100%;
+  }
+}
