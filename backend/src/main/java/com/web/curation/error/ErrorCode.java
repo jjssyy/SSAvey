@@ -22,7 +22,7 @@ public enum ErrorCode {
     /* 404 NOT_FOUND : Resource 를 찾을 수 없음 */
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 유저를 찾을 수 없습니다."),
     SURVEY_NOT_FOUND(HttpStatus.NOT_FOUND,"해당 설문조사를 찾을 수 없습니다."),
-    TEMPLATE_NOT_FOUND(HttpStatus.NOT_FOUND,"해당 설문조사를 찾을 수 없습니다."),
+    TEMPLATE_NOT_FOUND(HttpStatus.NOT_FOUND,"해당 템플릿을 찾을 수 없습니다."),
     SURVEYANSWER_NOT_FOUND(HttpStatus.NOT_FOUND,"해당 설문에 대한 응답을 찾을 수 없습니다."),
 
     /* 409 CONFLICT : Resource 의 현재 상태와 충돌. 중복된 데이터 존재 */
