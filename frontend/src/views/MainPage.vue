@@ -16,7 +16,12 @@
     </v-carousel>
     <v-container class="grey lighten-5">
       <v-row style="min-width: 100%;">
-        <v-col style="min-height: 300px;" cols="12" sm="6">
+        <v-col
+          @click="gotoProceeding"
+          style="min-height: 300px;"
+          cols="12"
+          sm="6"
+        >
           <div style="border-bottom: 2px solid;">
             <h2>진행중인 설문</h2>
           </div>
@@ -25,18 +30,28 @@
             <h5>설문날짜</h5>
           </div>
         </v-col>
-        <v-col style="min-height: 300px;" cols="12" sm="6">
+        <v-col
+          @click="gotoExpected"
+          style="min-height: 300px;"
+          cols="12"
+          sm="6"
+        >
           <div style="border-bottom: 2px solid;">
-            <h2>진행중인 설문</h2>
+            <h2>진행예정 설문</h2>
           </div>
           <div class="d-flex justify-space-between" style="margin: 3px 5px;">
             <h4>설문제목</h4>
             <h5>설문날짜</h5>
           </div>
         </v-col>
-        <v-col style="min-height: 300px;" cols="12" sm="6">
+        <v-col
+          @click="gotoCompleted"
+          style="min-height: 300px;"
+          cols="12"
+          sm="6"
+        >
           <div style="border-bottom: 2px solid;">
-            <h2>진행중인 설문</h2>
+            <h2>완료된 설문</h2>
           </div>
           <div class="d-flex justify-space-between" style="margin: 3px 5px;">
             <h4>설문제목</h4>
@@ -61,6 +76,17 @@ export default {
       ],
       slides: ['First', 'Second', 'Third', 'Fourth', 'Fifth'],
     }
+  },
+  methods: {
+    gotoExpected() {
+      this.$router.push('/survey/state/expected')
+    },
+    gotoProceeding() {
+      this.$router.push('/survey/state/proceeding')
+    },
+    gotoCompleted() {
+      this.$router.push('/survey/state/completed')
+    },
   },
 }
 </script>
