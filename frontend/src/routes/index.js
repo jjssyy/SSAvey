@@ -7,6 +7,7 @@ import SurveySetPage from '@/views/SurveySetPage.vue'
 import SurveyExpected from '@/views/SurveyExpected.vue'
 import SurveyProceeding from '@/views/SurveyProceeding.vue'
 import SurveyCompleted from '@/views/SurveyCompleted.vue'
+import SettingPage from '@/views/SettingPage.vue'
 Vue.use(VueRouter)
 
 export default new VueRouter({
