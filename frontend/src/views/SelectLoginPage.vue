@@ -1,5 +1,5 @@
 <template>
-  <div style="display: flex; justify-content: center;">
+  <div style="display: flex; justify-content: center">
     <section class="section-container">
       <v-row class="signin">
         <v-col cols="12" sm="8" class="left">
@@ -94,6 +94,7 @@
 </template>
 
 <script>
+import UserApi from '@/api/UserApi'
 export default {
   data: () => ({
     positions: ['교육생', '컨설턴트', '교육프로', '교육코치'],
@@ -115,6 +116,28 @@ export default {
     Enter: function() {
       if (this.name.length >= 3) {
         console.log(this.position, this.generation, this.region, this.name)
+
+        UserApi.updateUser(
+          {
+            uid: this.$store.state.uid,
+            email: this.$store.state.email,
+            name: this.name,
+            position: this.position,
+            generation: this.generation.charAt(0, 1) * 1,
+            area: this.region,
+            group: '',
+            team: '',
+            team_roll: this.role,
+            template: [],
+            mySurvey: [],
+            survey: [],
+          },
+          res => {
+            this.$router.push({ name: 'MainPage' })
+          },
+        )
+      } else {
+        alert('name은 3글자 이상 작성해주세요')
       }
     },
   },
