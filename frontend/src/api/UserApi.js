@@ -6,6 +6,12 @@ const Login = (payload, callback, errorCallback) => {
     .then(res => callback(res))
     .catch(err => errorCallback(err))
 }
+const userInfo = (payload, callback, errorCallback) => {
+  instance
+    .get(`/member/${payload.uid}`, payload)
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
+}
 
 const updateUser = (payload, callback, errorCallback) => {
   instance

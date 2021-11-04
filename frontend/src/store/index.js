@@ -17,6 +17,9 @@ export default new Vuex.Store({
     getIsSignUp(state) {
       return state.isSignUp
     },
+    getUser(state) {
+      return state.user
+    },
   },
   // 값 넣기
   mutations: {
@@ -28,6 +31,9 @@ export default new Vuex.Store({
     },
     setIsSignUp(state, isSignUp) {
       state.isSignUp = isSignUp
+    },
+    setUser(state, user) {
+      state.user = user
     },
   },
   actions: {},

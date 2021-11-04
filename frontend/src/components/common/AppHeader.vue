@@ -20,7 +20,7 @@
       </div>
       <div class="items profile">
         <img src="@/assets/profileDefault.jpg" alt="" />
-        <p class="medium-text">민싸피</p>
+        <p class="medium-text">{{ user.name }}</p>
         <p class="small-text">미완료 설문 {{ count }}개</p>
       </div>
       <div class="items">
@@ -91,6 +91,7 @@
 
 <script>
 import { headerInfo } from '@/api/header.js'
+import UserApi from '@/api/UserApi'
 export default {
   data() {
     return {
@@ -104,6 +105,7 @@ export default {
       isOpenIcon2Thr: false,
       windowWidth: window.innerWidth,
       count: null,
+      user: {},
     }
   },
   methods: {
@@ -173,8 +175,22 @@ export default {
   },
   async created() {
     window.addEventListener('resize', this.widthResize)
-    const res = await headerInfo('spdnq7u4bpbu5pu4f3g4ehss3c')
+    const resp = this.$store.state.uid
+    const res = await headerInfo(resp)
     this.count = res.data.data
+    UserApi.userInfo(
+      {
+        uid: resp,
+      },
+      res => {
+        this.$store.commit('setUser', res.data.user)
+        this.user = res.data.user
+      },
+      err => {
+        console.log(err)
+        alert('올바르지 않은 UID입니다.')
+      },
+    )
   },
 }
 </script>
