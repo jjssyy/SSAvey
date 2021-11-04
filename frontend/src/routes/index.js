@@ -40,21 +40,25 @@ export default new VueRouter({
       path: '/survey/state/expected',
       name: 'SurveyExpected',
       component: SurveyExpected,
+      meta: { auth: true },
     },
     {
       path: '/survey/state/proceeding',
       name: 'SurveyProceeding',
       component: SurveyProceeding,
+      meta: { auth: true },
     },
     {
       path: '/survey/state/completed',
       name: 'SurveyCompleted',
       component: SurveyCompleted,
+      meta: { auth: true },
     },
     {
       path: '/setting',
       name: 'SettingPage',
       component: SettingPage,
+      meta: { auth: true },
     },
   ],
 })
