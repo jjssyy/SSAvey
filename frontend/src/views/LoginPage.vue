@@ -1,5 +1,5 @@
 <template>
-  <div style="display: flex; justify-content: center">
+  <v-app style="display: flex; justify-content: center">
     <section class="section-container">
       <v-row class="signin">
         <v-col cols="12" sm="8" class="left">
@@ -11,7 +11,7 @@
             <v-form @submit.prevent="submit">
               <validation-provider
                 v-slot="{ errors }"
-                name="Name"
+                name="Email"
                 rules="required|email"
               >
                 <v-text-field
@@ -27,7 +27,7 @@
               </validation-provider>
               <validation-provider
                 v-slot="{ errors }"
-                name="email"
+                name="Password"
                 rules="required"
               >
                 <v-text-field
@@ -65,7 +65,7 @@
         </v-col>
       </v-row>
     </section>
-  </div>
+  </v-app>
 </template>
 
 <script>

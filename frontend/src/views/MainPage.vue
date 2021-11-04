@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-app style="background-color: #EEF2F7;">
     <v-carousel
       cycle
       height="400"
@@ -14,11 +14,11 @@
         </v-sheet>
       </v-carousel-item>
     </v-carousel>
-    <v-container class="grey lighten-5">
-      <v-row style="min-width: 100%;">
+    <v-container class="lighten-5" style="min-width: 100%;">
+      <v-row>
         <v-col
           @click="gotoProceeding"
-          style="min-height: 300px;"
+          style="min-height: 300px; background-color: green;"
           cols="12"
           sm="6"
         >
@@ -32,7 +32,7 @@
         </v-col>
         <v-col
           @click="gotoExpected"
-          style="min-height: 300px;"
+          style="min-height: 300px; background-color: purple;"
           cols="12"
           sm="6"
         >
@@ -60,7 +60,7 @@
         </v-col>
       </v-row>
     </v-container>
-  </div>
+  </v-app>
 </template>
 
 <script>
