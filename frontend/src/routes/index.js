@@ -50,5 +50,10 @@ export default new VueRouter({
       name: 'SurveyCompleted',
       component: SurveyCompleted,
     },
+    {
+      path: '/setting',
+      name: 'SettingPage',
+      component: SettingPage,
+    },
   ],
 })
