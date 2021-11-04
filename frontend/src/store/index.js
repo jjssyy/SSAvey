@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     uid: '',
     isSignUp: null,
+    email: '',
   },
   // 값 가져오기
   getters: {
@@ -21,6 +22,9 @@ export default new Vuex.Store({
   mutations: {
     setUid(state, uid) {
       state.uid = uid
+    },
+    setEmail(state, email) {
+      state.email = email
     },
     setIsSignUp(state, isSignUp) {
       state.isSignUp = isSignUp
