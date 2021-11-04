@@ -1,13 +1,15 @@
-// import { instance } from '@/util/index'
+import { instance } from '@/api/index'
 
-// // 특정 일기 불러오기 API
-// function fetchDiary(uid, data) {
-//   return instance.get(`/diary/${uid}/${data['date']}`)
-// }
+const getSurveysByStatus = (data, callback, errorCallback) => {
+  instance
+    .get(`/main/${data.id}`)
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
+}
 
-// // 학습 노트 데이터를 생성하는 API
-// function createPost(postData) {
-//   return posts.post('/', postData)
-// }
+const main = {
+  getSurveysByStatus: (data, callback, errorCallback) =>
+    getSurveysByStatus(data, callback, errorCallback),
+}
 
-// export { fetchDiary, createPost }
+export default main

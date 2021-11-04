@@ -25,9 +25,16 @@
           <div style="border-bottom: 2px solid;">
             <h2>진행중인 설문</h2>
           </div>
-          <div class="d-flex justify-space-between" style="margin: 3px 5px;">
-            <h4>설문제목</h4>
-            <h5>설문날짜</h5>
+          <div
+            class="d-flex justify-space-between"
+            v-if="proceedingSurvey.length > 0"
+            style="margin: 3px 5px;"
+          >
+            <h4>{{ proceedingSurvey[0].title }}</h4>
+            <h5>
+              {{ proceedingSurvey[0].start_date }} ~
+              {{ proceedingSurvey[0].end_date }}
+            </h5>
           </div>
         </v-col>
         <v-col
@@ -39,9 +46,16 @@
           <div style="border-bottom: 2px solid;">
             <h2>진행예정 설문</h2>
           </div>
-          <div class="d-flex justify-space-between" style="margin: 3px 5px;">
-            <h4>설문제목</h4>
-            <h5>설문날짜</h5>
+          <div
+            class="d-flex justify-space-between"
+            v-if="expectedSurvey.length > 0"
+            style="margin: 3px 5px;"
+          >
+            <h4>{{ expectedSurvey[0].title }}</h4>
+            <h5>
+              {{ expectedSurvey[0].start_date }} ~
+              {{ expectedSurvey[0].end_date }}
+            </h5>
           </div>
         </v-col>
         <v-col
@@ -53,9 +67,16 @@
           <div style="border-bottom: 2px solid;">
             <h2>완료된 설문</h2>
           </div>
-          <div class="d-flex justify-space-between" style="margin: 3px 5px;">
-            <h4>설문제목</h4>
-            <h5>설문날짜</h5>
+          <div
+            class="d-flex justify-space-between"
+            v-if="completedSurvey.length > 0"
+            style="margin: 3px 5px;"
+          >
+            <h4>{{ completedSurvey[0].title }}</h4>
+            <h5>
+              {{ completedSurvey[0].start_date }} ~
+              {{ completedSurvey[0].end_date }}
+            </h5>
           </div>
         </v-col>
       </v-row>
@@ -64,6 +85,7 @@
 </template>
 
 <script>
+import main from '@/api/main.js'
 export default {
   data() {
     return {
@@ -75,7 +97,25 @@ export default {
         'deep-purple accent-4',
       ],
       slides: ['First', 'Second', 'Third', 'Fourth', 'Fifth'],
+      expectedSurvey: [],
+      proceedingSurvey: [],
+      completedSurvey: [],
     }
+  },
+  async created() {
+    main.getSurveysByStatus(
+      {
+        id: this.$store.state.uid,
+      },
+      res => {
+        this.expectedSurvey = res.data.EXPECTED
+        this.proceedingSurvey = res.data.PROCEEDING
+        this.completedSurvey = res.data.COMPLETED
+      },
+      err => {
+        console.log(err)
+      },
+    )
   },
   methods: {
     gotoExpected() {
@@ -88,6 +128,10 @@ export default {
       this.$router.push('/survey/state/completed')
     },
   },
+  // computed: {
+  //   // eslint-disable-next-line no-undef
+  //   ...mapState(['uid']),
+  // },
 }
 </script>
 
