@@ -54,7 +54,7 @@
         </div>
         <ul id="ul-2" :class="{ 'open-list-2': isOpenUl2 }">
           <li>예정</li>
-          <li>잰행중</li>
+          <li>진행중</li>
           <li>완료</li>
         </ul>
       </div>
@@ -69,7 +69,7 @@
         </div>
         <ul id="ul-3" :class="{ 'open-list-3': isOpenUl3 }">
           <li>예정</li>
-          <li>잰행중</li>
+          <li>진행중</li>
           <li>완료</li>
         </ul>
       </div>
