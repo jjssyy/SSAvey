@@ -18,7 +18,7 @@
       <v-row>
         <v-col
           @click="gotoProceeding"
-          style="min-height: 300px; background-color: green;"
+          style="min-height: 300px;"
           cols="12"
           sm="6"
         >
@@ -32,7 +32,7 @@
         </v-col>
         <v-col
           @click="gotoExpected"
-          style="min-height: 300px; background-color: purple;"
+          style="min-height: 300px;"
           cols="12"
           sm="6"
         >

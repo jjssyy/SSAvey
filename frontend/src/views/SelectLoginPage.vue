@@ -49,7 +49,7 @@
               v-if="position == '교육생'"
               v-model="team"
               :items="teams"
-              label="반"
+              label="팀"
               dense
               solo
             ></v-select>
@@ -116,7 +116,7 @@ export default {
   data: () => ({
     positions: ['교육생', '컨설턴트', '교육프로', '교육코치'],
     generations: ['5기', '6기'],
-    roles: ['팀장', '팀원'],
+    roles: ['없음', '팀장', '팀원'],
     regions: ['서울', '대전', '광주', '구미'],
     regions2: ['서울', '대전', '광주', '구미', '부울경'],
     clss: [
@@ -132,6 +132,7 @@ export default {
       '10반',
     ],
     teams: [
+      '없음',
       '1팀',
       '2팀',
       '3팀',
