@@ -23,17 +23,25 @@
           sm="6"
         >
           <div style="border-bottom: 2px solid;">
-            <h2>진행중인 설문</h2>
+            <h2>진행 중인 설문</h2>
           </div>
           <div
             class="d-flex justify-space-between"
-            v-if="proceedingSurvey.length > 0"
+            style="margin: 3px 5px;"
+            v-if="proceedingSurvey.length <= 0"
+          >
+            진행 중인 설문이 없습니다.
+          </div>
+          <div
+            class="d-flex justify-space-between"
+            v-for="(survey, index) in proceedingSurvey"
+            :key="index"
             style="margin: 3px 5px;"
           >
-            <h4>{{ proceedingSurvey[0].title }}</h4>
+            <h4>{{ survey.title }}</h4>
             <h5>
-              {{ proceedingSurvey[0].start_date }} ~
-              {{ proceedingSurvey[0].end_date }}
+              {{ survey.start_date }} ~
+              {{ survey.end_date }}
             </h5>
           </div>
         </v-col>
@@ -44,17 +52,25 @@
           sm="6"
         >
           <div style="border-bottom: 2px solid;">
-            <h2>진행예정 설문</h2>
+            <h2>진행 예정 설문</h2>
           </div>
           <div
             class="d-flex justify-space-between"
-            v-if="expectedSurvey.length > 0"
             style="margin: 3px 5px;"
+            v-if="expectedSurvey.length <= 0"
           >
-            <h4>{{ expectedSurvey[0].title }}</h4>
+            진행 예정인 설문이 없습니다.
+          </div>
+          <div
+            class="d-flex justify-space-between"
+            style="margin: 3px 5px;"
+            v-for="(survey, index) in expectedSurvey"
+            :key="index"
+          >
+            <h4>{{ survey.title }}</h4>
             <h5>
-              {{ expectedSurvey[0].start_date }} ~
-              {{ expectedSurvey[0].end_date }}
+              {{ survey.start_date }} ~
+              {{ survey.end_date }}
             </h5>
           </div>
         </v-col>
@@ -69,13 +85,21 @@
           </div>
           <div
             class="d-flex justify-space-between"
-            v-if="completedSurvey.length > 0"
+            style="margin: 3px 5px;"
+            v-if="completedSurvey.length <= 0"
+          >
+            완료된 설문이 없습니다.
+          </div>
+          <div
+            class="d-flex justify-space-between"
+            v-for="(survey, index) in completedSurvey"
+            :key="index"
             style="margin: 3px 5px;"
           >
-            <h4>{{ completedSurvey[0].title }}</h4>
+            <h4>{{ survey.title }}</h4>
             <h5>
-              {{ completedSurvey[0].start_date }} ~
-              {{ completedSurvey[0].end_date }}
+              {{ survey.start_date }} ~
+              {{ survey.end_date }}
             </h5>
           </div>
         </v-col>
@@ -128,10 +152,6 @@ export default {
       this.$router.push('/survey/state/completed')
     },
   },
-  // computed: {
-  //   // eslint-disable-next-line no-undef
-  //   ...mapState(['uid']),
-  // },
 }
 </script>
 

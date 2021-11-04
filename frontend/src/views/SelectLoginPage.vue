@@ -177,6 +177,7 @@ export default {
             mySurvey: [],
             survey: [],
           },
+          // eslint-disable-next-line no-unused-vars
           res => {
             this.$router.push({ name: 'MainPage' })
           },
