@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <div v-if="isLoginTwo">
+    <div id="v-app" v-if="isLoginTwo">
       <nav>
         <AppHeader @openMenu="openMenu"></AppHeader>
       </nav>
@@ -17,7 +17,7 @@
         <router-view></router-view>
       </v-app>
     </div>
-  </div>
+  </v-app>
 </template>
 
 <script>

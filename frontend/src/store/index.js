@@ -8,6 +8,7 @@ export default new Vuex.Store({
     uid: '',
     isSignUp: null,
     email: '',
+    user: {},
   },
   // 값 가져오기
   getters: {
