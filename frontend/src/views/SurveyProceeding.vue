@@ -10,7 +10,7 @@
       </v-toolbar>
 
       <v-list three-line>
-        <template v-for="(item, index) in items">
+        <template v-for="(item, index) in surveys">
           <v-subheader
             v-if="item.header"
             :key="item.header"
@@ -27,13 +27,15 @@
             <v-list-item-content>
               <v-list-item-title v-html="item.title"></v-list-item-title>
               <v-list-item-subtitle
-                style="text-overflow:ellipsis; overflow:hidden; white-space: nowrap;"
-                >동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리 나라
-                만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이
-                보전하세</v-list-item-subtitle
-              >
+                style="
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  white-space: nowrap;
+                "
+                v-html="item.explain"
+              ></v-list-item-subtitle>
               <v-list-item-subtitle>
-                기간: 2021.11.01 09:00 ~ 2021.11.05 18:00
+                기간: {{ item.start_date }} ~ {{ item.end_date }}
               </v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
@@ -48,15 +50,29 @@
     </v-card>
   </v-app>
 </template>
+
 <script>
+import SurveyApi from "@/api/SurveyApi";
+
 export default {
   data: () => ({
-    items: [
-      {
-        title: 'SSAFY 5기 만족도 설문',
-      },
-      { divider: true, inset: true },
-    ],
+    surveys: [],
   }),
-}
+  methods: {},
+  created() {
+    SurveyApi.getCertainStateSurveys(
+      "PROCEEDING",
+      this.$store.state.uid,
+      (res) => {
+        console.log(res.data.data);
+        this.surveys = res.data.data;
+
+        this.surveys.push({ divider: true, inset: true });
+      },
+      () => {}
+    );
+  },
+};
 </script>
+
+<style scoped></style>
