@@ -7,6 +7,7 @@ import SurveySetPage from '@/views/SurveySetPage.vue'
 import SurveyExpected from '@/views/SurveyExpected.vue'
 import SurveyProceeding from '@/views/SurveyProceeding.vue'
 import SurveyCompleted from '@/views/SurveyCompleted.vue'
+import SettingPage from '@/views/SettingPage.vue'
 Vue.use(VueRouter)
 
 export default new VueRouter({
@@ -15,21 +16,25 @@ export default new VueRouter({
       path: '/login',
       name: 'Login',
       component: LoginPage,
+      meta: { auth: false },
     },
     {
       path: '/select',
       name: 'SelectLoginPage',
       component: SelectLoginPage,
+      meta: { auth: true },
     },
     {
       path: '/main',
       name: 'MainPage',
       component: MainPage,
+      meta: { auth: true },
     },
     {
       path: '/surveyset',
       name: 'SurveySetPage',
       component: SurveySetPage,
+      meta: { auth: true },
     },
     {
       path: '/survey/state/expected',
@@ -45,6 +50,11 @@ export default new VueRouter({
       path: '/survey/state/completed',
       name: 'SurveyCompleted',
       component: SurveyCompleted,
+    },
+    {
+      path: '/setting',
+      name: 'SettingPage',
+      component: SettingPage,
     },
   ],
 })
