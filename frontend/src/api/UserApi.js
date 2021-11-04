@@ -25,6 +25,8 @@ const UserApi = {
     Login(data, callback, errorCallback),
   updateUser: (data, callback, errorCallback) =>
     updateUser(data, callback, errorCallback),
+  userInfo: (data, callback, errorCallback) =>
+    userInfo(data, callback, errorCallback),
 }
 
 export default UserApi
