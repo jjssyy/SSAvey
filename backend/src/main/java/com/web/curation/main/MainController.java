@@ -3,6 +3,7 @@ package com.web.curation.main;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,9 +48,12 @@ public class MainController {
     		@PathVariable String uid
     		){
     	Map<String, Object> resultmap=new HashMap<String, Object>();
-    	List<Survey> EX_Survey=surveyService.getSurvey("EXPECTED",uid);
-    	List<Survey> PRO_Survey=surveyService.getSurvey("PROCEEDING",uid);
-    	List<Survey> COM_Survey=surveyService.getSurvey("COMPLETED",uid);
+    	List<Survey> EX_Survey=new ArrayList<Survey>();
+    	List<Survey> PRO_Survey=new ArrayList<Survey>();
+    	List<Survey> COM_Survey=new ArrayList<Survey>();
+    	EX_Survey=surveyService.getSurvey("EXPECTED",uid);
+    	PRO_Survey=surveyService.getSurvey("PROCEEDING",uid);
+    	COM_Survey=surveyService.getSurvey("COMPLETED",uid);
     	
     	resultmap.put("status", HttpStatus.OK);
     	resultmap.put("EXPECTED", EX_Survey);

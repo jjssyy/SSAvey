@@ -60,6 +60,9 @@ public class SurveyService {
 		
 		//자신에게 할당된 설문조사중 state와 똑같은 설문지 찾기
 		List<String> temp=user.getSurvey();
+		if(temp==null) {
+			return result;			
+		}
 		for(int i=0;i<temp.size();i++) {
 			Survey tmp_survey=surveyDao.findById(temp.get(i))
 					.orElseThrow(()-> new CustomException(ErrorCode.SURVEY_NOT_FOUND));
@@ -78,6 +81,7 @@ public class SurveyService {
 				.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 		//자신이 만든 설문 가져오기
 		List<String> temp=user.getMySurvey();
+		if(temp==null)return result;
 		for(int i=0;i<temp.size();i++) {
 			Survey tmp_survey=surveyDao.findById(temp.get(i))
 					.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));;
