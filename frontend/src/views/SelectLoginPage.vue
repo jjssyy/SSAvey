@@ -26,6 +26,15 @@
               dense
               solo
             ></v-select>
+            {{ role }}
+            <v-select
+              v-if="position == '교육생'"
+              v-model="role"
+              :items="roles"
+              label="역할"
+              dense
+              solo
+            ></v-select>
             {{ region }}
             <v-select
               v-if="position == '교육생' && generation == '5기'"
