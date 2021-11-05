@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import SurveyApi from "@/api/SurveyApi";
+import SurveyApi from '@/api/SurveyApi'
 
 export default {
   data: () => ({
@@ -61,18 +61,18 @@ export default {
   methods: {},
   created() {
     SurveyApi.getCertainStateSurveys(
-      "PROCEEDING",
+      'PROCEEDING',
       this.$store.state.uid,
-      (res) => {
-        console.log(res.data.data);
-        this.surveys = res.data.data;
+      res => {
+        console.log(res.data.data)
+        this.surveys = res.data.data
 
-        this.surveys.push({ divider: true, inset: true });
+        this.surveys.push({ divider: true, inset: true })
       },
-      () => {}
-    );
+      () => {},
+    )
   },
-};
+}
 </script>
 
 <style scoped></style>

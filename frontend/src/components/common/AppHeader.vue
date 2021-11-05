@@ -39,7 +39,7 @@
           ></i>
         </div>
         <ul id="ul-1" :class="{ 'open-list-1': isOpenUl1 }">
-          <li @click="moveSurveySet">설문 만들기</li>
+          <li @click="moveSurvey">설문 만들기</li>
           <li>내 탬플릿 보기</li>
         </ul>
       </div>
@@ -154,8 +154,8 @@ export default {
     moveMain() {
       this.$router.push('/main')
     },
-    moveSurveySet() {
-      // this.$router.push('/surveyset')
+    moveSurvey() {
+      this.$router.push('/survey')
     },
     moveSetting() {
       this.$router.push('/setting')
