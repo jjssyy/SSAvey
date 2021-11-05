@@ -9,6 +9,7 @@ export default new Vuex.Store({
     isSignUp: null,
     email: '',
     user: {},
+    selectedTemplate: {},
   },
   // 값 가져오기
   getters: {
@@ -20,6 +21,9 @@ export default new Vuex.Store({
     },
     getUser(state) {
       return state.user
+    },
+    getSelectedTemplate(state) {
+      return state.selectedTemplate
     },
   },
   // 값 넣기
@@ -35,6 +39,9 @@ export default new Vuex.Store({
     },
     setUser(state, user) {
       state.user = user
+    },
+    setSelectedTemplate(state, template) {
+      state.selectedTemplate = template
     },
   },
   actions: {},
