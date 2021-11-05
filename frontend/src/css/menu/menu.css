@@ -111,6 +111,7 @@
   .left-menu {
     width: 0vw;
     top: 70px;
+    z-index: 1;
     transition: all ease 0.4s;
   }
   .left-menu .big-logo-box {

@@ -97,6 +97,7 @@ export default {
           survey: this.user.survey,
         },
         res => {
+          this.is_modify = !this.is_modify
           alert(res.data.message)
         },
       )

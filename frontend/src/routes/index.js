@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import LoginPage from '@/views/LoginPage.vue'
 import SelectLoginPage from '@/views/SelectLoginPage.vue'
 import MainPage from '@/views/MainPage.vue'
+import SurveyPage from '@/views/SurveyPage.vue'
 import SurveySetPage from '@/views/SurveySetPage.vue'
 import SurveyExpected from '@/views/SurveyExpected.vue'
 import SurveyProceeding from '@/views/SurveyProceeding.vue'
@@ -28,6 +29,12 @@ export default new VueRouter({
       path: '/main',
       name: 'MainPage',
       component: MainPage,
+      meta: { auth: true },
+    },
+    {
+      path: '/survey',
+      name: 'SurveyPage',
+      component: SurveyPage,
       meta: { auth: true },
     },
     {

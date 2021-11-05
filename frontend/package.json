@@ -11,12 +11,15 @@
   "dependencies": {
     "axios": "^0.23.0",
     "core-js": "^3.6.5",
+    "dragula": "^3.7.3",
     "vee-validate": "^3.4.13",
     "vue": "^2.6.11",
+    "vue-drag-and-drop-list": "^1.0.0",
     "vue-router": "^3.5.2",
     "vue-validate": "^1.0.1",
     "vuetify": "^2.4.0",
-    "vuex": "^3.6.2"
+    "vuex": "^3.6.2",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.0",

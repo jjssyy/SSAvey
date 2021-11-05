@@ -1,1 +1,248 @@
-/* No CSS *//*# sourceMappingURL=survey-list.css.map */
+.dragula-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.dragula-container .drop-section {
+  width: 70%;
+  margin-right: 1%;
+  background-color: wheat;
+}
+
+.dragula-container .drag-section {
+  width: 29%;
+  border-radius: 10px;
+  background-color: white;
+  padding: 16px 10px;
+}
+
+.dragula-container .drag-section .section-containers {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.dragula-container .drag-section .section-containers .sub-button {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  width: 30.8%;
+  height: 2.3rem;
+  background-color: #F2F2F2;
+  border-radius: 3px;
+  font-size: 0.9rem;
+  color: #131212;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.dragula-container .drag-section .section-containers .sub-button .sub-button-q {
+  width: 50%;
+}
+
+.dragula-container .drag-section .section-containers .sub-button .sub-button-t {
+  width: 50%;
+}
+
+.dragula-container .drag-section .section-containers .sub-title {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.dragula-container .drag-section .section-containers .sub-title .sub-title-text {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent {
+  width: 100%;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing {
+  width: 100%;
+  margin-bottom: 1rem;
+  background-color: #dbd7d7;
+  border-radius: 4px;
+  padding: 7px;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .q-type {
+  width: 100%;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .question {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .question .question-title {
+  width: 85%;
+  font-size: 1.1rem;
+  font-weight: 500;
+  background-color: #c5bcbc;
+  border-radius: 4px;
+  border-bottom: solid 1px #141414;
+  outline: none;
+  margin-bottom: 12px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  resize: none;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .question .question-garbage {
+  width: 15%;
+  display: flex;
+  justify-content: end;
+  padding-right: 8px;
+  align-self: flex-start;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .question .q-option {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .question .q-option .item-short {
+  width: 100%;
+  outline: none;
+  margin-bottom: 12px;
+  border-radius: 4px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  resize: none;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .question .q-option .item-short:focus {
+  border-bottom: solid 1px #141414;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .question .q-option .q-option-item {
+  width: 100%;
+  display: flex;
+  margin-bottom: 6px;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .question .q-option .q-option-item .q-option-item-center {
+  display: flex;
+  align-items: center;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .question .q-option .q-option-item input[type="text"] {
+  margin-left: 6px;
+  outline: none;
+  width: 2.5rem;
+  border-bottom: solid 0.5px black;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .question .q-option .question-control {
+  width: 100%;
+  display: flex;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .question .q-option .question-control .q-option-item-c1 {
+  cursor: pointer;
+  color: #5d82e9;
+  margin-right: 8px;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .question .q-option .question-control .q-option-item-c2 {
+  cursor: pointer;
+  color: #5d82e9;
+  margin-left: 6px;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .question .is-required {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  padding-right: 8px;
+  margin-bottom: 9px;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .question .is-required .is-required-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding-right: 3px;
+  padding-top: 1px;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .question .is-required .toggle-control {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  user-select: none;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .question .is-required .toggle-control input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .question .is-required .toggle-control input:checked ~ .control {
+  background-color: dodgerblue;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .question .is-required .toggle-control input:checked ~ .control:after {
+  left: 20px;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .question .is-required .toggle-control .control {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 35px;
+  border-radius: 10px;
+  background-color: darkgray;
+  transition: background-color 0.15s ease-in;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .question .is-required .toggle-control .control:after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  background: white;
+  transition: left 0.15s ease-in;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .question .question-detail-btn {
+  display: flex;
+  justify-content: end;
+  padding-right: 8px;
+  width: 100%;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .question .question-detail-btn p {
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding-right: 3px;
+  padding-top: 1px;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .question .question-detail-btn button {
+  width: 35px;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing .question .question-detail-btn button i {
+  font-size: 24px;
+}
+/*# sourceMappingURL=survey-list.css.map */
