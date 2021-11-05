@@ -8,6 +8,7 @@ import SurveyExpected from '@/views/SurveyExpected.vue'
 import SurveyProceeding from '@/views/SurveyProceeding.vue'
 import SurveyCompleted from '@/views/SurveyCompleted.vue'
 import SettingPage from '@/views/SettingPage.vue'
+import Profile from '@/views/Profile.vue'
 Vue.use(VueRouter)
 
 export default new VueRouter({
@@ -58,6 +59,12 @@ export default new VueRouter({
       path: '/setting',
       name: 'SettingPage',
       component: SettingPage,
+      meta: { auth: true },
+    },
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: Profile,
       meta: { auth: true },
     },
   ],
