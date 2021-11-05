@@ -20,11 +20,11 @@
       </div>
       <div class="items profile">
         <img src="@/assets/profileDefault.jpg" alt="" />
-        <p class="medium-text">민싸피</p>
-        <p class="small-text">미완료 설문 99개</p>
+        <p class="medium-text">{{ user.name }}</p>
+        <p class="small-text">미완료 설문 {{ count }}개</p>
       </div>
       <div class="items">
-        <div>
+        <div @click="moveMain">
           <i class="fas fa-home icon-1"></i>
           <p>메인</p>
         </div>
@@ -39,7 +39,7 @@
           ></i>
         </div>
         <ul id="ul-1" :class="{ 'open-list-1': isOpenUl1 }">
-          <li>설문 만들기</li>
+          <li @click="moveSurveySet">설문 만들기</li>
           <li>내 탬플릿 보기</li>
         </ul>
       </div>
@@ -54,7 +54,7 @@
         </div>
         <ul id="ul-2" :class="{ 'open-list-2': isOpenUl2 }">
           <li>예정</li>
-          <li>잰행중</li>
+          <li>진행중</li>
           <li>완료</li>
         </ul>
       </div>
@@ -69,12 +69,12 @@
         </div>
         <ul id="ul-3" :class="{ 'open-list-3': isOpenUl3 }">
           <li>예정</li>
-          <li>잰행중</li>
+          <li>진행중</li>
           <li>완료</li>
         </ul>
       </div>
       <div class="items">
-        <div>
+        <div @click="moveSetting">
           <i class="fas fa-cog icon-1"></i>
           <p>설정</p>
         </div>
@@ -90,6 +90,8 @@
 </template>
 
 <script>
+import { headerInfo } from '@/api/header.js'
+import UserApi from '@/api/UserApi'
 export default {
   data() {
     return {
@@ -102,6 +104,8 @@ export default {
       isOpenIcon2Two: false,
       isOpenIcon2Thr: false,
       windowWidth: window.innerWidth,
+      count: null,
+      user: {},
     }
   },
   methods: {
@@ -147,6 +151,15 @@ export default {
     widthResize() {
       this.windowWidth = window.innerWidth
     },
+    moveMain() {
+      this.$router.push('/main')
+    },
+    moveSurveySet() {
+      // this.$router.push('/surveyset')
+    },
+    moveSetting() {
+      this.$router.push('/setting')
+    },
   },
   watch: {
     windowWidth(newWidth) {
@@ -160,8 +173,24 @@ export default {
       }
     },
   },
-  created() {
+  async created() {
     window.addEventListener('resize', this.widthResize)
+    const resp = this.$store.state.uid
+    const res = await headerInfo(resp)
+    this.count = res.data.data
+    UserApi.userInfo(
+      {
+        uid: resp,
+      },
+      res => {
+        this.$store.commit('setUser', res.data.user)
+        this.user = res.data.user
+      },
+      err => {
+        console.log(err)
+        alert('올바르지 않은 UID입니다.')
+      },
+    )
   },
 }
 </script>

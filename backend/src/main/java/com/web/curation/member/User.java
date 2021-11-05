@@ -27,8 +27,6 @@ public class User {
 
     private String email;
 
-    private String file_path;
-
     private String name;
 
     private String position;

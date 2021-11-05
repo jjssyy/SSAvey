@@ -1,5 +1,5 @@
 <template>
-  <div style="display: flex; justify-content: center;">
+  <v-app style="display: flex; justify-content: center">
     <section class="section-container">
       <v-row class="signin">
         <v-col cols="12" sm="8" class="left">
@@ -11,7 +11,7 @@
             <v-form @submit.prevent="submit">
               <validation-provider
                 v-slot="{ errors }"
-                name="Name"
+                name="Email"
                 rules="required|email"
               >
                 <v-text-field
@@ -27,7 +27,7 @@
               </validation-provider>
               <validation-provider
                 v-slot="{ errors }"
-                name="email"
+                name="Password"
                 rules="required"
               >
                 <v-text-field
@@ -54,7 +54,7 @@
                 >
                   <img
                     src="@/assets/Mattermost_Logo.png"
-                    style="width: 1.5rem; height:1.5rem;"
+                    style="width: 1.5rem; height: 1.5rem"
                     alt=""
                   />
                   Mattermost
@@ -65,11 +65,12 @@
         </v-col>
       </v-row>
     </section>
-  </div>
+  </v-app>
 </template>
 
 <script>
 import { required, email } from 'vee-validate/dist/rules'
+import UserApi from '@/api/UserApi'
 import {
   extend,
   ValidationProvider,
@@ -111,7 +112,28 @@ export default {
     async submit() {
       const valid = await this.$refs.observer.validate()
       if (valid) {
-        this.login(this.params) // action to login
+        UserApi.Login(
+          {
+            login_id: this.email,
+            password: this.password,
+          },
+          res => {
+            console.log(res.data.Uid)
+            this.$store.commit('setUid', res.data.Uid)
+            this.$store.commit('setEmail', this.email)
+
+            if (res.data.isSignUp) {
+              this.$router.push({ name: 'MainPage' })
+            } else {
+              this.$router.push({ name: 'SelectLoginPage' })
+            }
+          },
+          err => {
+            if (err.response.status == 401) {
+              alert('유효하지 않은 계정입니다.')
+            }
+          },
+        )
       }
     },
     clear() {

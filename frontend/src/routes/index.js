@@ -4,7 +4,10 @@ import LoginPage from '@/views/LoginPage.vue'
 import SelectLoginPage from '@/views/SelectLoginPage.vue'
 import MainPage from '@/views/MainPage.vue'
 import SurveySetPage from '@/views/SurveySetPage.vue'
-import SurveyPage from '@/views/SurveyPage.vue'
+import SurveyExpected from '@/views/SurveyExpected.vue'
+import SurveyProceeding from '@/views/SurveyProceeding.vue'
+import SurveyCompleted from '@/views/SurveyCompleted.vue'
+import SettingPage from '@/views/SettingPage.vue'
 Vue.use(VueRouter)
 
 export default new VueRouter({
@@ -34,9 +37,27 @@ export default new VueRouter({
       meta: { auth: true },
     },
     {
-      path: '/survey',
-      name: 'SurveyPage',
-      component: SurveyPage,
+      path: '/survey/state/expected',
+      name: 'SurveyExpected',
+      component: SurveyExpected,
+      meta: { auth: true },
+    },
+    {
+      path: '/survey/state/proceeding',
+      name: 'SurveyProceeding',
+      component: SurveyProceeding,
+      meta: { auth: true },
+    },
+    {
+      path: '/survey/state/completed',
+      name: 'SurveyCompleted',
+      component: SurveyCompleted,
+      meta: { auth: true },
+    },
+    {
+      path: '/setting',
+      name: 'SettingPage',
+      component: SettingPage,
       meta: { auth: true },
     },
   ],

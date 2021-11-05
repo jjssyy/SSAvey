@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div v-if="isLogin">
+  <v-app>
+    <div id="v-app" v-if="isLoginTwo">
       <nav>
         <AppHeader @openMenu="openMenu"></AppHeader>
       </nav>
@@ -17,7 +17,7 @@
         <router-view></router-view>
       </v-app>
     </div>
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -29,9 +29,14 @@ export default {
   },
   data() {
     return {
-      isLogin: true,
+      isLogin: this.$store.state.uid,
       isOpenMenu: false,
     }
+  },
+  computed: {
+    isLoginTwo() {
+      return this.$store.state.uid
+    },
   },
   methods: {
     openMenu(check) {
