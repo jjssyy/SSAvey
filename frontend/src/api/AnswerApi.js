@@ -7,8 +7,17 @@ const checkAssignedSurveyUser = (data, callback, errorCallback) => {
     .catch(err => errorCallback(err))
 }
 
+const saveSurveyResponse = (payload, callback, errorCallback) => {
+  instance
+    .post(`/answer/${payload.id}/${payload.sid}`, payload)
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
+}
+
 const AnswerApi = {
   checkAssignedSurveyUser: (data, callback, errorCallback) =>
     checkAssignedSurveyUser(data, callback, errorCallback),
+  saveSurveyResponse: (payload, callback, errorCallback) =>
+    saveSurveyResponse(payload, callback, errorCallback),
 }
 export default AnswerApi
