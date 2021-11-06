@@ -7,6 +7,9 @@ import SurveySetPage from '@/views/SurveySetPage.vue'
 import SurveyExpected from '@/views/SurveyExpected.vue'
 import SurveyProceeding from '@/views/SurveyProceeding.vue'
 import SurveyCompleted from '@/views/SurveyCompleted.vue'
+import MySurveyExpected from '@/views/MySurveyExpected.vue'
+import MySurveyProceeding from '@/views/MySurveyProceeding.vue'
+import MySurveyCompleted from '@/views/MySurveyCompleted.vue'
 import SettingPage from '@/views/SettingPage.vue'
 import Profile from '@/views/Profile.vue'
 Vue.use(VueRouter)
@@ -53,6 +56,24 @@ export default new VueRouter({
       path: '/survey/state/completed',
       name: 'SurveyCompleted',
       component: SurveyCompleted,
+      meta: { auth: true },
+    },
+    {
+      path: '/my-survey/state/expected',
+      name: 'MySurveyExpected',
+      component: MySurveyExpected,
+      meta: { auth: true },
+    },
+    {
+      path: '/my-survey/state/proceeding',
+      name: 'MySurveyProceeding',
+      component: MySurveyProceeding,
+      meta: { auth: true },
+    },
+    {
+      path: '/my-survey/state/completed',
+      name: 'MySurveyCompleted',
+      component: MySurveyCompleted,
       meta: { auth: true },
     },
     {

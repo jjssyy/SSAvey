@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-card class="mx-auto mt-5" color="#3396f4" dark min-width="500">
+    <v-card class="mx-auto mt-5" color="#3396f4" dark min-width="600">
       <v-card-title>
         <v-list-item class="grow">
           <v-list-item-avatar color="grey darken-3">
@@ -49,12 +49,6 @@
               <h4>팀 내 역할</h4>
               <input v-model="user.team_roll" :disabled="is_modify" />
             </div>
-            <div class="button" v-if="!is_modify">
-              <button>취소</button>
-              <button @click="modify" :disabled="!isValid">
-                완료
-              </button>
-            </div>
           </div>
         </div>
       </v-card-text>
@@ -88,6 +82,37 @@
           <v-btn light class="mx-5 my-5" color="error">
             <i class="fas fa-times-circle"></i>회원탈퇴
           </v-btn>
+          <v-menu bottom :offset-x="offset">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                <i class="fas fa-ellipsis-v"></i>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item>
+                <v-list-item-title
+                  >결과보기
+                  <i class="fas fa-file-alt fa-sm" style="float: right;"></i
+                ></v-list-item-title>
+              </v-list-item>
+              <v-divider></v-divider>
+              <v-list-item>
+                <v-list-item-title
+                  >공유
+                  <i class="fas fa-share-alt fa-sm" style="float: right;"></i
+                ></v-list-item-title>
+              </v-list-item>
+              <v-divider></v-divider>
+              <v-list-item>
+                <v-list-item-title
+                  >삭제<i
+                    class="fas fa-trash-alt fa-sm"
+                    style="float: right;"
+                  ></i
+                ></v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
         </v-row>
       </v-card-actions>
     </v-card>
@@ -100,13 +125,16 @@ export default {
     return {
       user: {},
       is_modify: true,
+      offset: true,
     }
   },
   methods: {
     Update() {
       this.is_modify = false
     },
-    back() {},
+    back() {
+      this.is_modify = !this.is_modify
+    },
     modify() {
       UserApi.updateUser(
         {
