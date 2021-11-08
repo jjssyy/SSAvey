@@ -1,5 +1,6 @@
 package com.web.curation.mySurvey;
 
+import com.web.curation.survey.State;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,20 +26,18 @@ import com.web.curation.survey.SurveyService;
 @RequestMapping("/my-survey")
 public class MySurveyController {
 
-    private MySurveyService mySurveyService;
-    
-    private SurveyService surveyService;
+	private MySurveyService mySurveyService;
 	
-	 @GetMapping("/{uid}/state/{state}")
-	    public ResponseEntity<Map<String, Object>> getMySurvey(
-	    		@PathVariable String uid,
-	    		@PathVariable String state
-	    		){
-	    	Map<String, Object> resultmap=new HashMap<String, Object>();
-	    	List<Survey> result=surveyService.getMySurvey(state, uid);
-	    	
-	    	resultmap.put("status", HttpStatus.OK);
-	    	resultmap.put("data", result);
-	    	return new ResponseEntity<>(resultmap,HttpStatus.OK); 	
-	    }
+	@GetMapping("/{uid}/state/{state}")
+	public ResponseEntity<Map<String, Object>> getMySurvey( @PathVariable String uid, @PathVariable State state){
+
+		Map<String, Object> resultMap=new HashMap<>();
+		List<MySurveyDto> mySurveyList = mySurveyService.getMySurveysByState(uid, state);
+
+		resultMap.put("data", mySurveyList);
+		if(mySurveyList.size()==0){
+			resultMap.put("message","설문 목록이 없습니다.");
+		}
+		return new ResponseEntity<>(resultMap,HttpStatus.OK);
+	}
 }
