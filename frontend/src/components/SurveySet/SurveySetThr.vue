@@ -72,7 +72,7 @@ export default {
       // 달력에서 한번만 클릭을 하면 배열의 길이는 1이 된다.
       // 두번 클릭시에는 길이가 2가 된다.
       // 똑같은 날짜를 두번클릭하면 배열의 길이는 2가 되고, 0번째와 1번째 index의 value는 같다.
-      console.log(this.dates)
+      // console.log(this.dates)
       if (newVal.length === 2) {
         let start = newVal[0].replace(/-/g, '')
         let end = newVal[1].replace(/-/g, '')
