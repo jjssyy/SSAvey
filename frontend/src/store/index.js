@@ -1,10 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
-<<<<<<< HEAD
-
-=======
->>>>>>> 783a468600a6f6a28843699ed05f5d76dd085288
 Vue.use(Vuex)
 
 export default new Vuex.Store({
