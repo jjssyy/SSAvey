@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AnswerQuestion {
 
-	private int q_number;
+	private String q_number;
 	
 	private String q_explanation;
 	
