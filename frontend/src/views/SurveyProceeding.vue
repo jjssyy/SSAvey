@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-card max-width="600" class="mx-auto">
+    <v-card width="600" class="mx-auto">
       <v-toolbar color="black" dark>
         <v-toolbar-title>진행중인 설문리스트</v-toolbar-title>
         <v-spacer></v-spacer>

@@ -4,7 +4,7 @@
   padding-top: 70px;
   background-color: #EEF2F7;
   transition: all ease 0.4s;
-  overflow-y: hidden;
+  overflow-y: scroll;
 }
 
 @media (min-width: 375px) {

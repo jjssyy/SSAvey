@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-card class="mx-auto mt-5" color="#3396f4" dark min-width="600">
+    <v-card class="mx-auto mt-5" color="#3396f4" dark width="600">
       <v-card-title>
         <v-list-item class="grow">
           <v-list-item-avatar color="grey darken-3">
