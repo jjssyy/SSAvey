@@ -10,6 +10,10 @@ export default new Vuex.Store({
     email: '',
     user: {},
     selectedTemplate: {},
+    surveySet: {
+      isWriting: false,
+      survey: {},
+    },
   },
   // 값 가져오기
   getters: {
@@ -24,6 +28,9 @@ export default new Vuex.Store({
     },
     getSelectedTemplate(state) {
       return state.selectedTemplate
+    },
+    getSurveySet(state) {
+      return state.surveySet
     },
   },
   // 값 넣기
@@ -42,6 +49,9 @@ export default new Vuex.Store({
     },
     setSelectedTemplate(state, template) {
       state.selectedTemplate = template
+    },
+    setSurveySet(state, payload) {
+      state.surveySet = payload
     },
   },
   actions: {},

@@ -1,13 +1,20 @@
 <template>
   <div>
     <p>
-      nana
+      {{ survey }}
     </p>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  props: {
+    survey: {
+      type: Object,
+      required: true,
+    },
+  },
+}
 </script>
 
 <style scoped src="./../../css/survey/surveyset/survey.css"></style>

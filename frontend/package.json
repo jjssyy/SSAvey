@@ -11,6 +11,7 @@
   "dependencies": {
     "axios": "^0.23.0",
     "core-js": "^3.6.5",
+    "dom-autoscroller": "^2.3.4",
     "dragula": "^3.7.3",
     "vee-validate": "^3.4.13",
     "vue": "^2.6.11",
