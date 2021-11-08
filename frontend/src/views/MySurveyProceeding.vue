@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-card width="600" class="mx-auto">
+    <v-card max-width="600" class="mx-auto">
       <v-toolbar color="black" dark>
         <v-toolbar-title>진행중인 설문리스트</v-toolbar-title>
         <v-spacer></v-spacer>
@@ -40,9 +40,40 @@
             </v-list-item-content>
             <v-list-item-action>
               설문 종류
-              <v-btn icon>
-                <v-icon>mdi-arrow-right</v-icon>
-              </v-btn>
+              <v-menu bottom :offset-x="offset">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </v-btn>
+                </template>
+                <v-list>
+                  <v-list-item>
+                    <v-list-item-title
+                      >결과보기
+                      <i class="fas fa-file-alt fa-sm" style="float: right;"></i
+                    ></v-list-item-title>
+                  </v-list-item>
+                  <v-divider></v-divider>
+                  <v-list-item>
+                    <v-list-item-title
+                      >공유
+                      <i
+                        class="fas fa-share-alt fa-sm"
+                        style="float: right;"
+                      ></i
+                    ></v-list-item-title>
+                  </v-list-item>
+                  <v-divider></v-divider>
+                  <v-list-item>
+                    <v-list-item-title
+                      >삭제<i
+                        class="fas fa-trash-alt fa-sm"
+                        style="float: right;"
+                      ></i
+                    ></v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
             </v-list-item-action>
           </v-list-item>
         </template>
