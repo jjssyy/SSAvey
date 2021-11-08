@@ -21,33 +21,35 @@ import com.web.curation.question.Question;
 public class Survey {
 	@Id
 	private String sid;
-	
+
 	private String title;
-	
+
 	private String explain;
-	
+
 	private boolean is_anony;
-	
+
+	private String writer;
+
 	private LocalDateTime start_date;
-	
+
 	private LocalDateTime end_date;
-	
+
 	private List<Question> question;
-	
+
 	private List<String> share;
-	
+
 	private List<String> target;
-	
+
 	private List<String> incomplete;
-	
-	private List<String> complete;	
-	
+
+	private List<String> complete;
+
 	private State state;
-	
+
 	private boolean use_template;
-	
+
 	private String template;
-	
-	
-	
+
+
+
 }
