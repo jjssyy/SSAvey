@@ -146,6 +146,19 @@
   background-color: #5d82e9;
 }
 
+.container-set .container-items .user-list-box .user-list .user-none-item {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 10px;
+  padding: 10px 10px;
+  color: #f03939;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+  background-color: #F2F2F2;
+  border-radius: 5px;
+}
+
 .container-set .container-items .user-list-box::-webkit-scrollbar {
   width: 10px;
   border-radius: 5px;
