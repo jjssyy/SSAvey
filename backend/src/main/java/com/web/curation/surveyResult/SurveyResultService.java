@@ -102,6 +102,7 @@ public class SurveyResultService {
 			}
 			
 		}
+		result.setAnswers(tmp_SurveyAnswerDtos);
 		
 		
 		
