@@ -48,4 +48,6 @@ public class SurveyDto {
 	private boolean use_template;
 
 	private String template;
+	
+	private List<SurveyAnswerDto> answers;
 }
