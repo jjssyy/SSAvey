@@ -1,0 +1,38 @@
+.component {
+  width: 100vw;
+  height: 100vh;
+  padding-top: 70px;
+  background-color: #EEF2F7;
+  transition: all ease 0.4s;
+  overflow-y: scroll;
+}
+
+@media (min-width: 375px) {
+  .component {
+    padding-top: 86px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (min-width: 768px) {
+  .component {
+    padding-left: 86px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .component {
+    padding-top: 16px;
+    padding-left: 256px;
+    padding-right: 16px;
+    padding-bottom: 16px;
+  }
+}
+
+@media (min-width: 768px) {
+  .open-menu-component {
+    padding-left: 256px;
+  }
+}
+/*# sourceMappingURL=app.css.map */

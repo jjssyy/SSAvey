@@ -1,0 +1,1086 @@
+.dragula-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.dragula-container .drop-section {
+  width: 70%;
+  margin-right: 1%;
+}
+
+.dragula-container .drop-section .section-containers {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.dragula-container .drop-section .section-containers .section-title {
+  width: 100%;
+  background-color: white;
+  border-radius: 8px;
+  padding: 10px 10px;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.dragula-container .drop-section .section-containers .section-title .survey-title {
+  width: 100%;
+  padding-bottom: 1rem;
+}
+
+.dragula-container .drop-section .section-containers .section-title .survey-title textarea[type="text"] {
+  width: 100%;
+  outline: none;
+  font-size: 1.8rem;
+  font-weight: 500;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  resize: none;
+  overflow-y: hidden;
+  height: 2.1rem;
+}
+
+.dragula-container .drop-section .section-containers .section-title .survey-title textarea[type="text"]:focus {
+  border-bottom: solid 1px black;
+}
+
+.dragula-container .drop-section .section-containers .section-title .survey-explain {
+  width: 100%;
+}
+
+.dragula-container .drop-section .section-containers .section-title .survey-explain textarea[type="text"] {
+  width: 100%;
+  outline: none;
+  font-size: 1.2rem;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  resize: none;
+  overflow-y: hidden;
+  height: 1.5rem;
+}
+
+.dragula-container .drop-section .section-containers .section-title .survey-explain textarea[type="text"]:focus {
+  border-bottom: solid 1px black;
+}
+
+.dragula-container .drop-section .section-containers .section-survey-option {
+  width: 100%;
+  background-color: white;
+  border-radius: 8px;
+  padding: 10px 10px;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+}
+
+.dragula-container .drop-section .section-containers .section-survey-option .option-st {
+  display: flex;
+}
+
+.dragula-container .drop-section .section-containers .section-survey-option .option-st .option-s {
+  display: flex;
+  padding-right: 1rem;
+}
+
+.dragula-container .drop-section .section-containers .section-survey-option .option-st .option-s .option-s-center {
+  display: flex;
+  align-items: center;
+  padding-right: 0.3rem;
+}
+
+.dragula-container .drop-section .section-containers .section-survey-option .option-st .option-t {
+  display: flex;
+}
+
+.dragula-container .drop-section .section-containers .section-survey-option .option-st .option-t .option-t-center {
+  display: flex;
+  align-items: center;
+  padding-right: 0.3rem;
+}
+
+.dragula-container .drop-section .section-containers .section-survey-option .option-anony {
+  display: flex;
+}
+
+.dragula-container .drop-section .section-containers .section-survey-option .option-anony .option-anony-item {
+  padding-right: 0.3rem;
+}
+
+.dragula-container .drop-section .section-containers .section-survey-option .option-anony .toggle-control {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  user-select: none;
+}
+
+.dragula-container .drop-section .section-containers .section-survey-option .option-anony .toggle-control input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.dragula-container .drop-section .section-containers .section-survey-option .option-anony .toggle-control input:checked ~ .control {
+  background-color: dodgerblue;
+}
+
+.dragula-container .drop-section .section-containers .section-survey-option .option-anony .toggle-control input:checked ~ .control:after {
+  left: 20px;
+}
+
+.dragula-container .drop-section .section-containers .section-survey-option .option-anony .toggle-control .control {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 35px;
+  border-radius: 10px;
+  background-color: darkgray;
+  transition: background-color 0.15s ease-in;
+}
+
+.dragula-container .drop-section .section-containers .section-survey-option .option-anony .toggle-control .control:after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  background: white;
+  transition: left 0.15s ease-in;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent {
+  width: 100%;
+  height: 100%;
+  margin-bottom: 1rem;
+  overflow-y: auto;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop {
+  width: 100%;
+  margin-bottom: 1rem;
+  background-color: white;
+  border-radius: 4px;
+  padding: 7px;
+  box-shadow: 3px 3px 9px 0px rgba(187, 182, 182, 0.5);
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .q-type {
+  width: 100%;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+  display: none;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .question-title {
+  width: 85%;
+  font-size: 1.1rem;
+  font-weight: 500;
+  background-color: #f5f1f1;
+  border-radius: 4px;
+  border-bottom: solid 1px #141414;
+  outline: none;
+  margin-bottom: 12px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  resize: none;
+  pointer-events: all;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .question-garbage {
+  width: 15%;
+  display: flex;
+  justify-content: end;
+  padding-right: 8px;
+  align-self: flex-start;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .q-option {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .q-option .item-short {
+  width: 100%;
+  outline: none;
+  margin-bottom: 12px;
+  border-radius: 4px;
+  pointer-events: none;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  resize: none;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .q-option .item-short:focus {
+  border-bottom: solid 1px #141414;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .q-option .q-option-item {
+  width: 100%;
+  display: flex;
+  margin-bottom: 6px;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .q-option .q-option-item .q-option-item-center {
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .q-option .q-option-item .q-option-item-center input[type="radio"] {
+  outline: none;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .q-option .q-option-item .q-option-item-center input[type="checkbox"] {
+  outline: none;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .q-option .q-option-item input[type="text"] {
+  margin-left: 6px;
+  outline: none;
+  width: 100%;
+  pointer-events: all;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .q-option .q-option-item input[type="text"]:focus {
+  border-bottom: 2px solid #5d82e9;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .q-option .q-option-item i {
+  cursor: pointer;
+  padding-right: 8px;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .q-option .q-option-item:hover input[type="text"] {
+  border-bottom: 1px solid #dfe1e6;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .q-option .question-control {
+  width: 100%;
+  display: flex;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .q-option .question-control .q-option-item-c1 {
+  cursor: pointer;
+  color: #5d82e9;
+  margin-right: 8px;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .q-option .question-control .q-option-item-c2 {
+  cursor: pointer;
+  color: #5d82e9;
+  margin-left: 6px;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .is-required {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  padding-right: 8px;
+  margin-bottom: 9px;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .is-required .is-required-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding-right: 3px;
+  padding-top: 1px;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .is-required .toggle-control {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  user-select: none;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .is-required .toggle-control input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .is-required .toggle-control input:checked ~ .control {
+  background-color: dodgerblue;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .is-required .toggle-control input:checked ~ .control:after {
+  left: 20px;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .is-required .toggle-control .control {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 35px;
+  border-radius: 10px;
+  background-color: darkgray;
+  transition: background-color 0.15s ease-in;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .is-required .toggle-control .control:after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  background: white;
+  transition: left 0.15s ease-in;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .question-detail-btn {
+  display: flex;
+  justify-content: end;
+  padding-right: 8px;
+  width: 100%;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .question-detail-btn p {
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding-right: 3px;
+  padding-top: 1px;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .question-detail-btn button {
+  width: 35px;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent .dragthing-drop .question .question-detail-btn button i {
+  font-size: 24px;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 5px;
+  margin: 10px;
+  background-color: #d4c9c9;
+}
+
+.dragula-container .drop-section .section-containers .drop-parent::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #737272;
+}
+
+.dragula-container .drop-section .section-containers .section-control {
+  width: 100%;
+}
+
+.dragula-container .drop-section .section-containers .section-control .control-box {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.dragula-container .drop-section .section-containers .section-control .control-box .cancel {
+  width: 80px;
+  border-radius: 4px;
+  padding: 8px 5px;
+  background-color: #ff8585;
+}
+
+.dragula-container .drop-section .section-containers .section-control .control-box .create {
+  width: 80px;
+  border-radius: 4px;
+  padding: 8px 5px;
+  margin-left: 1rem;
+  background-color: #5d82e9;
+}
+
+.dragula-container .drag-section {
+  width: 29%;
+  border-radius: 10px;
+  background-color: white;
+  padding: 16px 10px;
+}
+
+.dragula-container .drag-section .section-containers {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.dragula-container .drag-section .section-containers .sub-button {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  width: 30.8%;
+  height: 2.3rem;
+  background-color: #F2F2F2;
+  border-radius: 3px;
+  font-size: 0.9rem;
+  color: #131212;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.dragula-container .drag-section .section-containers .sub-button .sub-button-q {
+  width: 50%;
+}
+
+.dragula-container .drag-section .section-containers .sub-button .sub-button-t {
+  width: 50%;
+}
+
+.dragula-container .drag-section .section-containers .sub-title {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.dragula-container .drag-section .section-containers .sub-title .sub-title-text {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent {
+  width: 100%;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag {
+  width: 100%;
+  margin-bottom: 1rem;
+  background-color: #dbd7d7;
+  border-radius: 4px;
+  padding: 7px;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .q-type {
+  width: 100%;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .question {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .question .question-title {
+  width: 85%;
+  font-size: 1.1rem;
+  font-weight: 500;
+  background-color: #c5bcbc;
+  border-radius: 4px;
+  border-bottom: solid 1px #141414;
+  outline: none;
+  margin-bottom: 12px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  resize: none;
+  pointer-events: none;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .question .question-garbage {
+  width: 15%;
+  display: flex;
+  justify-content: end;
+  padding-right: 8px;
+  align-self: flex-start;
+  display: none;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .question .q-option {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .question .q-option .item-short {
+  width: 100%;
+  outline: none;
+  margin-bottom: 12px;
+  border-radius: 4px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  resize: none;
+  pointer-events: none;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .question .q-option .item-short:focus {
+  border-bottom: solid 1px #141414;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .question .q-option .q-option-item {
+  width: 100%;
+  display: flex;
+  margin-bottom: 6px;
+  pointer-events: none;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .question .q-option .q-option-item .q-option-item-center {
+  display: flex;
+  align-items: center;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .question .q-option .q-option-item input[type="text"] {
+  margin-left: 6px;
+  outline: none;
+  width: 2.5rem;
+  border-bottom: solid 0.5px black;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .question .q-option .question-control {
+  width: 100%;
+  display: flex;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  display: none;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .question .q-option .question-control .q-option-item-c1 {
+  cursor: pointer;
+  color: #5d82e9;
+  margin-right: 8px;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .question .q-option .question-control .q-option-item-c2 {
+  cursor: pointer;
+  color: #5d82e9;
+  margin-left: 6px;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .question .is-required {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  padding-right: 8px;
+  margin-bottom: 9px;
+  display: none;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .question .is-required .is-required-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding-right: 3px;
+  padding-top: 1px;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .question .is-required .toggle-control {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  user-select: none;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .question .is-required .toggle-control input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .question .is-required .toggle-control input:checked ~ .control {
+  background-color: dodgerblue;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .question .is-required .toggle-control input:checked ~ .control:after {
+  left: 20px;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .question .is-required .toggle-control .control {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 35px;
+  border-radius: 10px;
+  background-color: darkgray;
+  transition: background-color 0.15s ease-in;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .question .is-required .toggle-control .control:after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  background: white;
+  transition: left 0.15s ease-in;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .question .question-detail-btn {
+  display: flex;
+  justify-content: end;
+  padding-right: 8px;
+  width: 100%;
+  display: none;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .question .question-detail-btn p {
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding-right: 3px;
+  padding-top: 1px;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .question .question-detail-btn button {
+  width: 35px;
+}
+
+.dragula-container .drag-section .section-containers .drag-parent .dragthing-drag .question .question-detail-btn button i {
+  font-size: 24px;
+}
+
+.gu-mirror {
+  position: fixed !important;
+  margin: 0 !important;
+  z-index: 9999 !important;
+  opacity: 0.3;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  filter: alpha(opacity=80);
+}
+
+.gu-hide {
+  display: none !important;
+}
+
+.gu-unselectable {
+  user-select: none !important;
+}
+
+.gu-transit {
+  opacity: 0.2;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity=20);
+}
+
+.dragthing-drop {
+  width: 100%;
+  margin-bottom: 1rem;
+  background-color: white;
+  border-radius: 4px;
+  padding: 7px;
+}
+
+.dragthing-drop .q-type {
+  width: 100%;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+  display: none;
+}
+
+.dragthing-drop .question {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.dragthing-drop .question .question-title {
+  width: 85%;
+  font-size: 1.1rem;
+  font-weight: 500;
+  background-color: #f5f1f1;
+  border-radius: 4px;
+  border-bottom: solid 1px #141414;
+  outline: none;
+  margin-bottom: 12px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  resize: none;
+  pointer-events: all;
+}
+
+.dragthing-drop .question .question-garbage {
+  width: 15%;
+  display: flex;
+  justify-content: end;
+  padding-right: 8px;
+  align-self: flex-start;
+}
+
+.dragthing-drop .question .q-option {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.dragthing-drop .question .q-option .item-short {
+  width: 100%;
+  outline: none;
+  margin-bottom: 12px;
+  border-radius: 4px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  resize: none;
+}
+
+.dragthing-drop .question .q-option .item-short:focus {
+  border-bottom: solid 1px #141414;
+}
+
+.dragthing-drop .question .q-option .q-option-item {
+  width: 100%;
+  display: flex;
+  margin-bottom: 6px;
+}
+
+.dragthing-drop .question .q-option .q-option-item .q-option-item-center {
+  display: flex;
+  align-items: center;
+}
+
+.dragthing-drop .question .q-option .q-option-item .q-option-item-center input[type="radio"] {
+  outline: none;
+}
+
+.dragthing-drop .question .q-option .q-option-item .q-option-item-center input[type="checkbox"] {
+  outline: none;
+}
+
+.dragthing-drop .question .q-option .q-option-item input[type="text"] {
+  width: 100%;
+  margin-left: 6px;
+  outline: none;
+  border-bottom: none;
+  pointer-events: all;
+}
+
+.dragthing-drop .question .q-option .q-option-item i {
+  padding-right: 8px;
+}
+
+.dragthing-drop .question .q-option .question-control {
+  width: 100%;
+  display: flex;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.dragthing-drop .question .q-option .question-control .q-option-item-c1 {
+  cursor: pointer;
+  color: #5d82e9;
+  margin-right: 8px;
+}
+
+.dragthing-drop .question .q-option .question-control .q-option-item-c2 {
+  cursor: pointer;
+  color: #5d82e9;
+  margin-left: 6px;
+}
+
+.dragthing-drop .question .is-required {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  padding-right: 8px;
+  margin-bottom: 9px;
+}
+
+.dragthing-drop .question .is-required .is-required-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding-right: 3px;
+  padding-top: 1px;
+}
+
+.dragthing-drop .question .is-required .toggle-control {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  user-select: none;
+}
+
+.dragthing-drop .question .is-required .toggle-control input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.dragthing-drop .question .is-required .toggle-control input:checked ~ .control {
+  background-color: dodgerblue;
+}
+
+.dragthing-drop .question .is-required .toggle-control input:checked ~ .control:after {
+  left: 20px;
+}
+
+.dragthing-drop .question .is-required .toggle-control .control {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 35px;
+  border-radius: 10px;
+  background-color: darkgray;
+  transition: background-color 0.15s ease-in;
+}
+
+.dragthing-drop .question .is-required .toggle-control .control:after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  background: white;
+  transition: left 0.15s ease-in;
+}
+
+.dragthing-drop .question .question-detail-btn {
+  display: flex;
+  justify-content: end;
+  padding-right: 8px;
+  width: 100%;
+}
+
+.dragthing-drop .question .question-detail-btn p {
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding-right: 3px;
+  padding-top: 1px;
+}
+
+.dragthing-drop .question .question-detail-btn button {
+  width: 35px;
+}
+
+.dragthing-drop .question .question-detail-btn button i {
+  font-size: 24px;
+}
+
+.dragthing-drag {
+  width: 100%;
+  margin-bottom: 1rem;
+  background-color: #dbd7d7;
+  border-radius: 4px;
+  padding: 7px;
+}
+
+.dragthing-drag .q-type {
+  width: 100%;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.dragthing-drag .question {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.dragthing-drag .question .question-title {
+  width: 85%;
+  font-size: 1.1rem;
+  font-weight: 500;
+  background-color: #c5bcbc;
+  border-radius: 4px;
+  border-bottom: solid 1px #141414;
+  outline: none;
+  margin-bottom: 12px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  resize: none;
+  pointer-events: none;
+}
+
+.dragthing-drag .question .question-garbage {
+  width: 15%;
+  display: flex;
+  justify-content: end;
+  padding-right: 8px;
+  align-self: flex-start;
+  display: none;
+}
+
+.dragthing-drag .question .q-option {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.dragthing-drag .question .q-option .item-short {
+  width: 100%;
+  outline: none;
+  margin-bottom: 12px;
+  border-radius: 4px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  resize: none;
+  pointer-events: none;
+}
+
+.dragthing-drag .question .q-option .item-short:focus {
+  border-bottom: solid 1px #141414;
+}
+
+.dragthing-drag .question .q-option .q-option-item {
+  width: 100%;
+  display: flex;
+  margin-bottom: 6px;
+  pointer-events: none;
+}
+
+.dragthing-drag .question .q-option .q-option-item .q-option-item-center {
+  display: flex;
+  align-items: center;
+}
+
+.dragthing-drag .question .q-option .q-option-item input[type="text"] {
+  margin-left: 6px;
+  outline: none;
+  width: 2.5rem;
+  border-bottom: solid 0.5px black;
+}
+
+.dragthing-drag .question .q-option .q-option-item i {
+  display: none;
+}
+
+.dragthing-drag .question .q-option .question-control {
+  width: 100%;
+  display: flex;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  display: none;
+}
+
+.dragthing-drag .question .q-option .question-control .q-option-item-c1 {
+  cursor: pointer;
+  color: #5d82e9;
+  margin-right: 8px;
+}
+
+.dragthing-drag .question .q-option .question-control .q-option-item-c2 {
+  cursor: pointer;
+  color: #5d82e9;
+  margin-left: 6px;
+}
+
+.dragthing-drag .question .is-required {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  padding-right: 8px;
+  margin-bottom: 9px;
+  display: none;
+}
+
+.dragthing-drag .question .is-required .is-required-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding-right: 3px;
+  padding-top: 1px;
+}
+
+.dragthing-drag .question .is-required .toggle-control {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  user-select: none;
+}
+
+.dragthing-drag .question .is-required .toggle-control input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.dragthing-drag .question .is-required .toggle-control input:checked ~ .control {
+  background-color: dodgerblue;
+}
+
+.dragthing-drag .question .is-required .toggle-control input:checked ~ .control:after {
+  left: 20px;
+}
+
+.dragthing-drag .question .is-required .toggle-control .control {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 35px;
+  border-radius: 10px;
+  background-color: darkgray;
+  transition: background-color 0.15s ease-in;
+}
+
+.dragthing-drag .question .is-required .toggle-control .control:after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  background: white;
+  transition: left 0.15s ease-in;
+}
+
+.dragthing-drag .question .question-detail-btn {
+  display: flex;
+  justify-content: end;
+  padding-right: 8px;
+  width: 100%;
+  display: none;
+}
+
+.dragthing-drag .question .question-detail-btn p {
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding-right: 3px;
+  padding-top: 1px;
+}
+
+.dragthing-drag .question .question-detail-btn button {
+  width: 35px;
+}
+
+.dragthing-drag .question .question-detail-btn button i {
+  font-size: 24px;
+}
+/*# sourceMappingURL=survey-list.css.map */
