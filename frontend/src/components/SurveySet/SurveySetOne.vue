@@ -41,7 +41,7 @@
             :key="idx"
             @click="selectGeneration(element)"
           >
-            {{ element }}
+            {{ element == '전체' ? element : element + '기' }}
           </button>
         </ul>
       </div>
@@ -71,12 +71,25 @@
           </button>
         </ul>
       </div>
-      <div class="item" v-if="isOpenTeamRolls">
+      <div class="item" v-if="isOpenTeams">
+        <p class="container-subtitle">팀</p>
+        <ul class="select-box" @click="colorEvent">
+          <button
+            id="class"
+            v-for="(element, idx) in teams"
+            :key="idx"
+            @click="selectTeam(element)"
+          >
+            {{ element }}
+          </button>
+        </ul>
+      </div>
+      <div class="item" v-if="isOpenTeam_rolls">
         <p class="container-subtitle">역할</p>
         <ul class="select-box" @click="colorEvent">
           <button
             id="teamroll"
-            v-for="(element, idx) in teamRolls"
+            v-for="(element, idx) in Team_rolls"
             :key="idx"
             @click="selectTeamRoll(element)"
           >
@@ -103,24 +116,26 @@
             type="search"
             placeholder="이름"
             autocomplete="off"
+            v-model="inputSearch"
+            @keyup.enter="merberUidSearch"
           />
           <label for="search">
-            <i class="fa fa-search"></i>
+            <i class="fa fa-search" @click="merberUidSearch"></i>
           </label>
         </div>
       </div>
       <div class="item user-list-box">
-        <div class="user-list">
+        <div v-if="searchUsers" class="user-list">
           <div
             class="user-item"
             v-for="(element, idx) in searchUsers"
             :key="idx"
             @click="plusSearchTarget(idx)"
           >
-            <p>{{ element['nickname'] }}</p>
+            <p>{{ element['name'] }}</p>
             <p v-if="element.hasOwnProperty('generation')">
-              {{ element['generation'] }}/{{ element['area'] }}/{{
-                element['group']
+              {{ element['generation'] + '기' }}/{{ element['area'] }}/{{
+                element['group'] + '반'
               }}
             </p>
             <p>{{ element['position'] }}</p>
@@ -158,42 +173,39 @@
 </template>
 
 <script>
+import UserApi from '@/api/UserApi'
 export default {
   data() {
     return {
       positions: ['전체', '컨설턴트', '교육생', '교육프로', '코치'],
-      generations: ['전체', '5기', '6기'],
+      generations: ['전체', 5, 6],
       areas: ['전체', '서울', '대전', '광주', '구미', '부울경'],
       classes: ['전체', '1반', '2반', '3반', '4반', '5반', '6반'],
-      teamRolls: ['전체', '팀장', '팀원'],
-      searchUsers: [
-        {
-          nickname: '민찬우',
-          position: '교육생',
-          generation: '5기',
-          area: '광주',
-          group: '1반',
-        },
-        { nickname: '김코치', position: '컨설턴트' },
-      ],
+      teams: ['전체', '1팀', '2팀', '3팀', '4팀', '5팀', '6팀'],
+      Team_rolls: ['전체', '팀장', '팀원'],
+      searchUsers: [],
       target: {
         position: null,
         generation: null,
         area: null,
         class: null,
+        team: null,
         team_roll: null,
       },
       targets: [],
+      inputSearch: null,
       isOpenGenerations: false,
       isOpenAreas: false,
       isOpenClasses: false,
-      isOpenTeamRolls: false,
+      isOpenTeams: false,
+      isOpenTeam_rolls: false,
       isClkSelectMenu: true,
       isClkSearchMenu: false,
       Clkposition: null,
       Clkgeneration: null,
       Clkarea: null,
       Clkclass: null,
+      Clkteam: null,
       Clkteamroll: null,
       scrollHeightOne: null,
     }
@@ -218,7 +230,9 @@ export default {
         this.target['area'] = null
         this.isOpenClasses = false
         this.target['class'] = null
-        this.isOpenTeamRolls = false
+        this.isOpenTeams = false
+        this.target['team'] = null
+        this.isOpenTeam_rolls = false
         this.target['team_roll'] = null
       }
     },
@@ -231,7 +245,9 @@ export default {
         this.target['area'] = null
         this.isOpenClasses = false
         this.target['class'] = null
-        this.isOpenTeamRolls = false
+        this.isOpenTeams = false
+        this.target['team'] = null
+        this.isOpenTeam_rolls = false
         this.target['team_roll'] = null
       }
     },
@@ -242,16 +258,29 @@ export default {
       } else {
         this.isOpenClasses = false
         this.target['class'] = null
-        this.isOpenTeamRolls = false
+        this.isOpenTeams = false
+        this.target['team'] = null
+        this.isOpenTeam_rolls = false
         this.target['team_roll'] = null
       }
     },
     selectClass(element) {
       this.target['class'] = element
       if (element !== '전체') {
-        this.isOpenTeamRolls = true
+        this.isOpenTeams = true
       } else {
-        this.isOpenTeamRolls = false
+        this.isOpenTeams = false
+        this.target['team'] = null
+        this.isOpenTeam_rolls = false
+        this.target['team_roll'] = null
+      }
+    },
+    selectTeam(element) {
+      this.target['team'] = element
+      if (element !== '전체') {
+        this.isOpenTeam_rolls = true
+      } else {
+        this.isOpenTeam_rolls = false
         this.target['team_roll'] = null
       }
     },
@@ -273,26 +302,85 @@ export default {
         }
       }
     },
-    plusTarget(check) {
+    async plusTarget(check) {
       let tempStr = ''
       if (check === 'select' && this.target['position']) {
-        for (let property in this.target) {
-          if (this.target[property]) {
-            tempStr += `${this.target[property]}/`
+        let payload = ''
+        for (let key in this.target) {
+          if (this.target[key] && this.target[key] != '전체') {
+            payload += `${key}=${this.target[key]}&`
           }
         }
-        this.targets.push(tempStr.substr(0, tempStr.length - 1))
-        this.initTarget()
+        UserApi.searchMember(
+          payload.substring(0, payload.length - 1),
+          res => {
+            if (res.data['검색 결과'].length == 0) {
+              console.log('검색결과가 없습니다.')
+            } else {
+              let targetTemp = new Set(
+                this.$store.state.surveySet.survey.target,
+              )
+              for (let user of res.data['검색 결과']) {
+                targetTemp.add(user.uid)
+              }
+              this.$store.state.surveySet.survey.target = Array.from(targetTemp)
+              this.$store.state.surveySet.survey.incomplete = Array.from(
+                targetTemp,
+              )
+              for (let property in this.target) {
+                if (this.target[property]) {
+                  tempStr += `${this.target[property]}/`
+                }
+              }
+              this.targets.push(tempStr.substr(0, tempStr.length - 1))
+              this.initTarget()
+            }
+          },
+          err => {
+            console.log(err)
+          },
+        )
       } else {
         console.log('설문대상자 선택해줄래?')
       }
     },
+    merberUidSearch() {
+      if (this.inputSearch) {
+        let payload = `name=${this.inputSearch}&`
+        for (let key in this.target) {
+          if (this.target[key] && this.target[key] != '전체') {
+            payload += `${key}=${this.target[key]}&`
+          }
+        }
+        UserApi.searchMember(
+          payload.substring(0, payload.length - 1),
+          res => {
+            console.log(res)
+            if (res.data['검색 결과'].length == 0) {
+              console.log('검색결과가 없습니다.')
+            } else {
+              this.searchUsers = res.data['검색 결과']
+            }
+          },
+          err => {
+            console.log(err)
+          },
+        )
+      } else {
+        console.log('검색창에 이름 입력해줄래?')
+      }
+    },
     plusSearchTarget(idx) {
+      let targetTemp = new Set(this.$store.state.surveySet.survey.target)
+      targetTemp.add(this.searchUsers[idx]['uid'])
+      this.$store.state.surveySet.survey.target = Array.from(targetTemp)
+      this.$store.state.surveySet.survey.incomplete = Array.from(targetTemp)
+
       let tempStr = ''
       if (this.searchUsers[idx]['generation']) {
-        tempStr += `${this.searchUsers[idx]['generation']}/${this.searchUsers[idx]['area']}/${this.searchUsers[idx]['group']} ${this.searchUsers[idx]['nickname']}`
+        tempStr += `${this.searchUsers[idx]['generation']}기/${this.searchUsers[idx]['area']}${this.searchUsers[idx]['group']}/${this.searchUsers[idx]['name']}`
       } else {
-        tempStr += `${this.searchUsers[idx]['position']} ${this.searchUsers[idx]['nickname']}`
+        tempStr += `${this.searchUsers[idx]['position']} ${this.searchUsers[idx]['name']}`
       }
       this.targets.push(tempStr)
     },
@@ -307,9 +395,11 @@ export default {
       this.target['area'] = null
       this.isOpenClasses = false
       this.target['class'] = null
-      this.isOpenTeamRolls = false
+      this.isOpenTeams = false
+      this.target['team'] = null
+      this.isOpenTeam_rolls = false
       this.target['team_roll'] = null
-      let itemIds = ['position', 'generation', 'area', 'class']
+      let itemIds = ['position', 'generation', 'area', 'team', 'class']
       for (let itemId of itemIds) {
         if (this[`Clk${itemId}`]) {
           this[`Clk${itemId}`].classList.remove('btn-active')

@@ -17,9 +17,11 @@
             type="search"
             placeholder="이름"
             autocomplete="off"
+            v-model="inputSearch"
+            @keyup.enter="merberUidSearch"
           />
           <label for="search">
-            <i class="fa fa-search"></i>
+            <i class="fa fa-search" @click="merberUidSearch"></i>
           </label>
         </div>
       </div>
@@ -31,9 +33,9 @@
             :key="idx"
             @click="plusSearchTarget(idx)"
           >
-            <p>{{ element['nickname'] }}</p>
+            <p>{{ element['name'] }}</p>
             <p v-if="element.hasOwnProperty('generation')">
-              {{ element['generation'] }}/{{ element['area'] }}/{{
+              {{ element['generation'] + '기' }}/{{ element['area'] }}/{{
                 element['group']
               }}
             </p>
@@ -68,29 +70,46 @@
 </template>
 
 <script>
+import UserApi from '@/api/UserApi'
 export default {
   data() {
     return {
-      searchUsers: [
-        {
-          nickname: '민찬우',
-          position: '교육생',
-          generation: '5기',
-          area: '광주',
-          group: '1반',
-        },
-        { nickname: '김코치', position: '컨설턴트' },
-      ],
+      searchUsers: [],
       targets: [],
+      inputSearch: null,
     }
   },
   methods: {
+    merberUidSearch() {
+      if (this.inputSearch) {
+        let payload = `name=${this.inputSearch}`
+        UserApi.searchMember(
+          payload,
+          res => {
+            console.log(res)
+            if (res.data['검색 결과'].length == 0) {
+              console.log('검색결과가 없습니다.')
+            } else {
+              this.searchUsers = res.data['검색 결과']
+            }
+          },
+          err => {
+            console.log(err)
+          },
+        )
+      } else {
+        console.log('검색창에 이름 입력해줄래?')
+      }
+    },
     plusSearchTarget(idx) {
       let tempStr = ''
+      let shareTemp = new Set(this.$store.state.surveySet.survey.share)
+      shareTemp.add(this.searchUsers[idx]['uid'])
+      this.$store.state.surveySet.survey.share = Array.from(shareTemp)
       if (this.searchUsers[idx]['generation']) {
-        tempStr += `${this.searchUsers[idx]['generation']}/${this.searchUsers[idx]['area']}/${this.searchUsers[idx]['group']} ${this.searchUsers[idx]['nickname']}`
+        tempStr += `${this.searchUsers[idx]['generation']}기/${this.searchUsers[idx]['area']}/${this.searchUsers[idx]['group']} ${this.searchUsers[idx]['name']}`
       } else {
-        tempStr += `${this.searchUsers[idx]['position']} ${this.searchUsers[idx]['nickname']}`
+        tempStr += `${this.searchUsers[idx]['position']} ${this.searchUsers[idx]['name']}`
       }
       this.targets.push(tempStr)
     },

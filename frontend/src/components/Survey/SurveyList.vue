@@ -219,11 +219,14 @@ export default {
         start_date: null, // surveyset 페이지에서 작성
         end_date: null, // surveyset 페이지에서 작성
         question: [],
-        state: null, // surveyset 페이지에서 보낼 때 결정
+        state: 'EXPECTED', // surveyset 페이지에서 보낼 때 결정
         share: [], // surveyset에서
         target: [], // surveyset에서
+        complete: [], //빈 배열로
+        incomplete: [], // surveyset에서 target과 동일한 값으로
         use_template: null,
         template: null,
+        writer: this.$store.state.uid,
       },
       // question: {
       //   q_number: null, // 1, 1-1, 1-2, 2
@@ -264,7 +267,7 @@ export default {
             is_required: true,
             q_option: [], // q_type이 SHORT 경우 q_option은 빈 배열
           }
-          question.q_number = index1 + 1
+          question.q_number = `${index1 + 1}`
           question.q_explantion = `${element1.childNodes[1].childNodes[0].value}`
           question.q_type = `${element1.id}`
           if (
@@ -286,11 +289,11 @@ export default {
                 }
                 if (element2.classList.contains('q-option-item')) {
                   if (element2.childNodes[1].placeholder == '선택') {
-                    q_option.o_number = index2 + 1
+                    q_option.o_number = `${index2 + 1}`
                     q_option.o_explanation = `${element2.childNodes[1].value}`
                     q_option.is_short = false
                   } else {
-                    q_option.o_number = index2 + 1
+                    q_option.o_number = `${index2 + 1}`
                     q_option.o_explanation = `${element2.childNodes[1].placeholder}`
                     q_option.is_short = true
                   }
