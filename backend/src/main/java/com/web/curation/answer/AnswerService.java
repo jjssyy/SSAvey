@@ -44,7 +44,27 @@ public class AnswerService {
 	public void CreateSurveyAnswer(SurveyAnswer surveyAnswer,String sid,String uid) {
 		surveyAnswer.setAid(sid+uid);
 		surveyAnswerDao.save(surveyAnswer);
+		Survey survey=surveyDao.findById(sid)
+				.orElseThrow(()-> new CustomException(ErrorCode.SURVEY_NOT_FOUND));
+		//설문완료하면  미완료자에서 완료자로 이동..
+		List<String> complete=survey.getComplete();
+		List<String> inComplete=survey.getIncomplete();
+		complete.add(uid);
+		inComplete.remove(uid);
+		survey.setComplete(complete);
+		survey.setIncomplete(inComplete);
+		surveyDao.save(survey);
 		
+		//유저에게 할당된 설문에서 응답 설문으로 이동과정
+		User user  = userDao.findById(uid)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+		List<String> user_survey=user.getSurvey();
+		List<String> answer_survey=user.getAnswer_survey();
+		user_survey.remove(sid);
+		answer_survey.add(sid);
+		user.setAnswer_survey(answer_survey);
+		user.setSurvey(user_survey);
+		userDao.save(user);
 	}
 	
 	public boolean CheckSurveyAnswer(String sid,String uid) {
