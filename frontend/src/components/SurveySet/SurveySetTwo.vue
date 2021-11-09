@@ -103,9 +103,9 @@ export default {
     },
     plusSearchTarget(idx) {
       let tempStr = ''
-      let shareTemp = new Set(this.$store.state.surveySet.survey.share)
-      shareTemp.add(this.searchUsers[idx]['uid'])
-      this.$store.state.surveySet.survey.share = Array.from(shareTemp)
+      let shareTemp = []
+      shareTemp.push(this.searchUsers[idx]['uid'])
+      this.$store.state.surveySet.survey.share.push(shareTemp)
       if (this.searchUsers[idx]['generation']) {
         tempStr += `${this.searchUsers[idx]['generation']}기/${this.searchUsers[idx]['area']}/${this.searchUsers[idx]['group']} ${this.searchUsers[idx]['name']}`
       } else {
@@ -115,6 +115,7 @@ export default {
     },
     cancelTarget(idx) {
       this.targets.splice(idx, 1)
+      this.$store.state.surveySet.survey.share.splice(idx, 1)
     },
     nextSet() {
       this.$emit('nextSet')

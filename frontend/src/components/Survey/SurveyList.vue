@@ -230,7 +230,7 @@ export default {
       },
       // question: {
       //   q_number: null, // 1, 1-1, 1-2, 2
-      //   q_explantion: null,
+      //   q_explanation: null,
       //   q_type: null, // SINGLE, MULTIPLE, SHORT
       //   is_required: true,
       //   q_option: [], // q_type이 SHORT 경우 q_option은 빈 배열
@@ -262,13 +262,13 @@ export default {
         .childNodes.forEach((element1, index1) => {
           let question = {
             q_number: null, // 1, 1-1, 1-2, 2
-            q_explantion: null,
+            q_explanation: null,
             q_type: null, // SINGLE, MULTIPLE, SHORT
             is_required: true,
             q_option: [], // q_type이 SHORT 경우 q_option은 빈 배열
           }
           question.q_number = `${index1 + 1}`
-          question.q_explantion = `${element1.childNodes[1].childNodes[0].value}`
+          question.q_explanation = `${element1.childNodes[1].childNodes[0].value}`
           question.q_type = `${element1.id}`
           if (
             element1.childNodes[1].childNodes[4].childNodes[1].childNodes[0].classList.contains(

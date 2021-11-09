@@ -24,7 +24,7 @@ export default {
     Survey,
     SurveySet,
   },
-  created() {
+  mounted() {
     if (this.$store.getters.getSurveySet.isWriting) {
       this.survey = this.$store.getters.getSurveySet.survey
     } else {

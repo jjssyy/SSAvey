@@ -246,8 +246,25 @@ export default {
         }` + ':00'
       this.$store.state.surveySet.survey.start_date = startResult
       this.$store.state.surveySet.survey.end_date = endResult
-      // 탬플릿 생성할 때 구현해야함
+      // (중요!!!)탬플릿 생성할 때 구현해야함
       this.$store.state.surveySet.survey.use_template = false
+      // 최종 target과 incomplete 수정
+      let tempTarget = new Set()
+      for (let targetItem of this.$store.state.surveySet.survey.target) {
+        targetItem.forEach(function(element) {
+          tempTarget.add(element)
+        })
+      }
+      // 최종 share 수정
+      let tempShare = new Set()
+      for (let shareItem of this.$store.state.surveySet.survey.share) {
+        shareItem.forEach(function(element) {
+          tempShare.add(element)
+        })
+      }
+      this.$store.state.surveySet.survey.target = Array.from(tempTarget)
+      this.$store.state.surveySet.survey.incomplete = Array.from(tempTarget)
+      this.$store.state.surveySet.survey.share = Array.from(tempShare)
       SurveyApi.makeSurvey(
         this.$store.state.surveySet.survey,
         res => {
