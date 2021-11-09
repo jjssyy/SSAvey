@@ -46,12 +46,13 @@
       <button @click="prevSet" class="prev-btn">
         <i class="fas fa-chevron-left fa-lg"></i>
       </button>
-      <button class="update-btn">배포하기</button>
+      <button class="update-btn" @click="submit">배포하기</button>
     </div>
   </div>
 </template>
 
 <script>
+import SurveyApi from '@/api/SurveyApi'
 export default {
   data() {
     return {
@@ -155,7 +156,113 @@ export default {
     prevSet() {
       this.$emit('prevSet')
     },
-    submit() {},
+    submit() {
+      let temp1 = null
+      let temp2 = null
+      if (this.dates.length == 1) {
+        temp1 = 0
+        temp2 = 0
+      } else {
+        temp1 = 0
+        temp2 = 1
+      }
+      let tempDateOne = new Date()
+      let tempDateTwo = new Date()
+      //년, 월, 일 설정(start)
+      tempDateOne.setFullYear(
+        Number(this.dates[temp1].substring(0, 4)),
+        Number(this.dates[temp1].substring(5, 7)),
+        Number(this.dates[temp1].substring(8, 10)),
+      )
+      // 시간과 분 설정
+      tempDateOne.setHours(Number(this.startTime[0]) + 9)
+      tempDateOne.setMinutes(Number(this.startTime[1]))
+      //년, 월, 일 설정(end)
+      tempDateTwo.setFullYear(
+        Number(this.dates[temp2].substring(0, 4)),
+        Number(this.dates[temp2].substring(5, 7)),
+        Number(this.dates[temp2].substring(8, 10)),
+      )
+      // 시간과 분 설정
+      tempDateTwo.setHours(Number(this.endTime[0]) + 9)
+      tempDateTwo.setMinutes(Number(this.endTime[1]))
+      console.log(tempDateOne)
+      console.log(tempDateTwo)
+
+      let startResult = ''
+      let endResult = ''
+      // 년
+      startResult += `${tempDateOne.getFullYear()}` + '-'
+      endResult += `${tempDateTwo.getFullYear()}` + '-'
+      //월
+      startResult +=
+        `${
+          String(tempDateOne.getMonth()).length == 1
+            ? '0' + String(tempDateOne.getMonth())
+            : tempDateOne.getMonth()
+        }` + '-'
+      endResult +=
+        `${
+          String(tempDateTwo.getMonth()).length == 1
+            ? '0' + String(tempDateTwo.getMonth())
+            : tempDateTwo.getMonth()
+        }` + '-'
+      // 일
+      startResult += `${
+        String(tempDateOne.getDate()).length == 1
+          ? '0' + String(tempDateOne.getDate())
+          : tempDateOne.getDate()
+      }T`
+      endResult += `${
+        String(tempDateTwo.getDate()).length == 1
+          ? '0' + String(tempDateTwo.getDate())
+          : tempDateTwo.getDate()
+      }T`
+      // 시간
+      startResult +=
+        `${
+          String(tempDateOne.getHours()).length == 1
+            ? '0' + String(tempDateOne.getHours())
+            : tempDateOne.getHours()
+        }` + ':'
+      endResult +=
+        `${
+          String(tempDateTwo.getHours()).length == 1
+            ? '0' + String(tempDateTwo.getHours())
+            : tempDateTwo.getHours()
+        }` + ':'
+      // 분
+      startResult +=
+        `${
+          String(tempDateOne.getMinutes()).length == 1
+            ? '0' + String(tempDateOne.getMinutes())
+            : tempDateOne.getMinutes()
+        }` + ':00'
+      endResult +=
+        `${
+          String(tempDateTwo.getMinutes()).length == 1
+            ? '0' + String(tempDateTwo.getMinutes())
+            : tempDateTwo.getMinutes()
+        }` + ':00'
+      this.$store.state.surveySet.survey.start_date = startResult
+      this.$store.state.surveySet.survey.end_date = endResult
+      // 탬플릿 생성할 때 구현해야함
+      this.$store.state.surveySet.survey.use_template = false
+      SurveyApi.makeSurvey(
+        this.$store.state.surveySet.survey,
+        res => {
+          console.log(res)
+          let payload = {
+            isWriting: false,
+            surveySet: {},
+          }
+          this.$store.commit('setSurveySet', payload)
+        },
+        err => {
+          console.log(err)
+        },
+      )
+    },
   },
 }
 </script>
