@@ -19,8 +19,6 @@ public class ConvertUid {
 
 	    private String uid;
 
-	    private String email;
-
 	    private String name;
 
 	    private String position;
