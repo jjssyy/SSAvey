@@ -49,13 +49,6 @@
                 <v-list>
                   <v-list-item>
                     <v-list-item-title
-                      >결과보기
-                      <i class="fas fa-file-alt fa-sm" style="float: right;"></i
-                    ></v-list-item-title>
-                  </v-list-item>
-                  <v-divider></v-divider>
-                  <v-list-item>
-                    <v-list-item-title
                       >공유
                       <i
                         class="fas fa-share-alt fa-sm"
