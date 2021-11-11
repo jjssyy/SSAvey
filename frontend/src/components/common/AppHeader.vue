@@ -40,7 +40,7 @@
         </div>
         <ul id="ul-1" :class="{ 'open-list-1': isOpenUl1 }">
           <li @click="moveSurvey">설문 만들기</li>
-          <li>내 탬플릿 보기</li>
+          <li @click="moveTemplete">내 탬플릿 보기</li>
         </ul>
       </div>
       <div class="items">
@@ -159,6 +159,9 @@ export default {
     },
     moveSetting() {
       this.$router.push('/setting')
+    },
+    moveTemplete() {
+      this.$router.push('/templete')
     },
   },
   watch: {
