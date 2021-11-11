@@ -44,13 +44,22 @@ public class SurveyController {
     @GetMapping("/state/{state}")
     public ResponseEntity<Map<String, Object>> getSurvey(
     		@PathVariable String state,
-    		@RequestParam String uid
+    		@RequestParam String uid,
+    		@RequestParam int pageNumber
     		){
     	Map<String, Object> resultmap=new HashMap<String, Object>();
     	List<Survey> result=surveyService.getSurvey(state, uid);
-    	
+    	//페이징처리
+    	int maxSize=result.size();
+    	int start=pageNumber*10;
+    	int end=start+10;
+    	if(end>maxSize)end=maxSize;
     	resultmap.put("status", HttpStatus.OK);
     	resultmap.put("data", result);
+    	resultmap.put("Pagecount", maxSize/10+1);
+    	if(result.size()==0) {
+    		resultmap.put("message","설문 목록이 없습니다.");
+    	}
     	return new ResponseEntity<>(resultmap,HttpStatus.OK); 	
     }
     

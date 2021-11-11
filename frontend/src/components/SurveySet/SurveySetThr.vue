@@ -63,11 +63,6 @@ export default {
       endTime: ['00', '00'],
     }
   },
-  computed: {
-    dateRangeText() {
-      return this.dates.join(' ~ ')
-    },
-  },
   watch: {
     dates: function(newVal) {
       // 달력에서 한번만 클릭을 하면 배열의 길이는 1이 된다.
@@ -271,6 +266,7 @@ export default {
           console.log(res)
           let payload = {
             isWriting: false,
+            isClkUpdate: false,
             surveySet: {},
           }
           this.$store.commit('setSurveySet', payload)
