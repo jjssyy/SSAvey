@@ -167,7 +167,7 @@
       </div>
     </section>
     <div class="bottom-btn">
-      <button class="update-btn">수정하기</button>
+      <button class="update-btn" @click="moveSurvey">수정하기</button>
       <button @click="nextSet" class="next-btn">
         <i class="fas fa-chevron-right fa-lg"></i>
       </button>
@@ -383,6 +383,10 @@ export default {
     },
     nextSet() {
       this.$emit('nextSet')
+    },
+    moveSurvey() {
+      this.$store.commit('setIsClkUpdate', true)
+      this.$router.push('/survey')
     },
   },
 }

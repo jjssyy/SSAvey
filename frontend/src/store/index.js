@@ -12,8 +12,10 @@ export default new Vuex.Store({
     selectedTemplate: {},
     surveySet: {
       isWriting: false,
+      isClkUpdate: false,
       survey: {},
     },
+    surveyDragThing: [],
   },
   // 값 가져오기
   getters: {
@@ -31,6 +33,9 @@ export default new Vuex.Store({
     },
     getSurveySet(state) {
       return state.surveySet
+    },
+    getSurveyDragThing(state) {
+      return state.surveyDragThing
     },
   },
   // 값 넣기
@@ -52,6 +57,15 @@ export default new Vuex.Store({
     },
     setSurveySet(state, payload) {
       state.surveySet = payload
+    },
+    setIsClkUpdate(state, payload) {
+      state.surveySet.isClkUpdate = payload
+    },
+    setSurveyDragThing(state, payload) {
+      state.surveyDragThing.push(payload)
+    },
+    resetSurveyDragThing(state, payload) {
+      state.surveyDragThing = payload
     },
   },
   actions: {},

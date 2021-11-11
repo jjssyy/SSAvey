@@ -378,7 +378,8 @@ $toggle-control-size: $toggle-height - ($toggle-gutter * 2);
             background-color: #ff8585;
           }
           .create {
-            width: 80px;
+            width: 120px;
+            color: rgb(36, 34, 34);
             border-radius: 4px;
             padding: 8px 5px;
             margin-left: 1rem;
@@ -402,19 +403,21 @@ $toggle-control-size: $toggle-height - ($toggle-gutter * 2);
         width: 100%;
         display: flex;
         flex-wrap: wrap;
-        width: 30.8%;
+        width: 38%;
         height: 2.3rem;
         background-color: #F2F2F2;
-        border-radius: 3px;
+        border-radius: 4px;
         font-size: 0.9rem;
         color: rgb(19, 18, 18);
         font-weight: 500;
         margin-bottom: 1rem;
         .sub-button-q {
           width: 50%;
+          border-radius: 4px;
         }
         .sub-button-t {
           width: 50%;
+          border-radius: 4px;
         }
       }
       .sub-title {
@@ -1002,4 +1005,7 @@ $toggle-control-size: $toggle-height - ($toggle-gutter * 2);
       }
     }
   }
+}
+.btn-active {
+  background-color: #4E7AF5 !important;
 }
