@@ -11,6 +11,7 @@ import SurveyCompleted from '@/views/SurveyCompleted.vue'
 import MySurveyExpected from '@/views/MySurveyExpected.vue'
 import MySurveyProceeding from '@/views/MySurveyProceeding.vue'
 import MySurveyCompleted from '@/views/MySurveyCompleted.vue'
+import SurveyAnswer from '@/views/SurveyAnswer.vue'
 import SettingPage from '@/views/SettingPage.vue'
 import Profile from '@/views/Profile.vue'
 import Template from '@/components/SurveyEdit/Template.vue'
@@ -82,6 +83,12 @@ export default new VueRouter({
       path: '/my-survey/state/completed',
       name: 'MySurveyCompleted',
       component: MySurveyCompleted,
+      meta: { auth: true },
+    },
+    {
+      path: '/answer/survey',
+      name: 'SurveyAnswer',
+      component: SurveyAnswer,
       meta: { auth: true },
     },
     {

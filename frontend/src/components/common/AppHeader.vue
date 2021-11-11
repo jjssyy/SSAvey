@@ -53,9 +53,9 @@
           ></i>
         </div>
         <ul id="ul-2" :class="{ 'open-list-2': isOpenUl2 }">
-          <li>예정</li>
-          <li>진행중</li>
-          <li>완료</li>
+          <li @click="moveExpected">예정</li>
+          <li @click="moveProceeding">진행중</li>
+          <li @click="moveCompleted">완료</li>
         </ul>
       </div>
       <div class="items">
@@ -68,9 +68,9 @@
           ></i>
         </div>
         <ul id="ul-3" :class="{ 'open-list-3': isOpenUl3 }">
-          <li>예정</li>
-          <li>진행중</li>
-          <li>완료</li>
+          <li @click="moveMyExpected">예정</li>
+          <li @click="moveMyProceeding">진행중</li>
+          <li @click="moveMyCompleted">완료</li>
         </ul>
       </div>
       <div class="items">
@@ -160,10 +160,29 @@ export default {
     moveSetting() {
       this.$router.push('/setting')
     },
+    moveExpected() {
+      this.$router.push('/survey/state/expected')
+    },
+    moveProceeding() {
+      this.$router.push('/survey/state/proceeding')
+    },
+    moveCompleted() {
+      this.$router.push('/survey/state/completed')
+    },
+    moveMyExpected() {
+      this.$router.push('/my-survey/state/expected')
+    },
+    moveMyProceeding() {
+      this.$router.push('/my-survey/state/proceeding')
+    },
+    moveMyCompleted() {
+      this.$router.push('/my-survey/state/completed')
+    },
     moveTemplete() {
       this.$router.push('/templete')
     },
   },
+
   watch: {
     windowWidth(newWidth) {
       if (newWidth >= 768 && newWidth < 1200) {

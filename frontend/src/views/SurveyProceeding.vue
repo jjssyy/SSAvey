@@ -9,7 +9,7 @@
         </v-btn>
       </v-toolbar>
 
-      <v-list three-line>
+      <v-list three-line v-if="surveys.length != 0">
         <template v-for="(item, index) in surveys">
           <v-subheader
             v-if="item.header"
@@ -45,6 +45,11 @@
               </v-btn>
             </v-list-item-action>
           </v-list-item>
+        </template>
+      </v-list>
+      <v-list v-else three-line>
+        <template>
+          <v-subheader v-text="'진행중인 설문이 없습니다.'"></v-subheader>
         </template>
       </v-list>
     </v-card>
