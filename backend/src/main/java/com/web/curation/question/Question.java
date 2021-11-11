@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Question {
-	private int q_number;
+	private String q_number;
 	
 	private String q_explanation;
 	

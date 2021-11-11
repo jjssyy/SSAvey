@@ -18,58 +18,159 @@ $toggle-control-size: $toggle-height - ($toggle-gutter * 2);
   .drop-section {
     width: 70%;
     margin-right: 1%;
-    background-color: wheat;
-  }
-  .drag-section {
-    width: 29%;
-    border-radius: 10px;
-    background-color: white;
-    padding: 16px 10px;
     .section-containers {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
       width: 100%;
-      .sub-button {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      .section-title {
         width: 100%;
+        background-color: white;
+        border-radius: 8px;
+        padding: 10px 10px;
+        margin-bottom: 1rem;
         display: flex;
         flex-wrap: wrap;
-        width: 30.8%;
-        height: 2.3rem;
-        background-color: #F2F2F2;
-        border-radius: 3px;
-        font-size: 0.9rem;
-        color: rgb(19, 18, 18);
-        font-weight: 500;
+        .survey-title {
+          width: 100%;
+          padding-bottom: 1rem;
+          textarea[type="text"] {
+            width: 100%;
+            outline: none;
+            font-size: 1.8rem;
+            font-weight: 500;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            resize: none;
+            overflow-y: hidden;
+            height: 2.1rem; // 임시
+          }
+          textarea[type="text"]:focus {
+            border-bottom: solid 1px black;
+          }
+        }
+        .survey-explain {
+          width: 100%;
+          textarea[type="text"] {
+            width: 100%;
+            outline: none;
+            font-size: 1.2rem;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            resize: none;
+            overflow-y: hidden;
+            height: 1.5rem; // 임시
+          }
+          textarea[type="text"]:focus {
+            border-bottom: solid 1px black;
+          }
+        }
+      }
+      .section-survey-option {
+        width: 100%;
+        background-color: white;
+        border-radius: 8px;
+        padding: 10px 10px;
         margin-bottom: 1rem;
-        .sub-button-q {
-          width: 50%;
+        display: flex;
+        justify-content: space-between;
+        font-weight: 500;
+        .option-st {
+          display: flex;
+          .option-s {
+            display: flex;
+            padding-right: 1rem;
+            .option-s-center {
+              display: flex;
+              align-items: center;
+              padding-right: 0.3rem;
+            }
+          }
+          .option-t {
+            display: flex;
+            .option-t-center {
+              display: flex;
+              align-items: center;
+              padding-right: 0.3rem;
+            }
+          }
         }
-        .sub-button-t {
-          width: 50%;
+        .option-anony {
+          display: flex;
+          // 토글 scss start
+          .option-anony-item {
+            padding-right: 0.3rem;
+          }
+          .toggle-control {
+            display: block;
+            position: relative;
+            padding-left: $toggle-width;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 22px;
+            user-select: none;
+          
+            input {
+              position: absolute;
+              opacity: 0;
+              cursor: pointer;
+              height: 0;
+              width: 0;
+            }
+          
+            input:checked ~ .control {
+              background-color: $toggle-background-color-on;
+              
+              &:after {
+                left: $toggle-width - $toggle-control-size - $toggle-gutter;
+              }
+            }
+          
+            .control {
+              position: absolute;
+              top: 0;
+              left: 0;
+              height: $toggle-height;
+              width: $toggle-width;
+              border-radius: $toggle-radius;
+              background-color: $toggle-background-color-off;
+              transition: background-color $toggle-control-speed $toggle-control-ease;
+          
+              &:after {
+                content: "";
+                position: absolute;
+                left: $toggle-gutter;
+                top: $toggle-gutter;
+                width: $toggle-control-size;
+                height: $toggle-control-size;
+                border-radius: $toggle-radius;
+                background: $toggle-control-color;
+                transition: left $toggle-control-speed $toggle-control-ease;
+              }
+            }
+          }
+          // 토글 scss end
         }
       }
-      .sub-title {
+      .drop-parent {
         width: 100%;
-        margin-bottom: 1.5rem;
-        .sub-title-text {
-          font-size: 1.4rem;
-          font-weight: 500;
-        }
-      }
-      .drag-parent {
-        width: 100%;
-        .dragthing {
+        height: 100%;
+        margin-bottom: 1rem;
+        overflow-y: auto;
+        .dragthing-drop {
           width: 100%;
           margin-bottom: 1rem;
-          background-color: rgb(219, 215, 215);
+          background-color: white;
           border-radius: 4px;
           padding: 7px;
+          box-shadow: 3px 3px 9px 0px rgba(187, 182, 182, 0.5);
           .q-type {
             width: 100%;
             font-size: 1.2rem;
             font-weight: 500;
             margin-bottom: 8px;
+            display: none;
           }
           .question {
             display: flex;
@@ -79,7 +180,7 @@ $toggle-control-size: $toggle-height - ($toggle-gutter * 2);
               width: 85%;
               font-size: 1.1rem;
               font-weight: 500;
-              background-color:rgb(197, 188, 188);
+              background-color:rgb(245, 241, 241);
               border-radius: 4px;
               border-bottom: solid 1px rgb(20, 20, 20);
               outline: none;
@@ -87,6 +188,7 @@ $toggle-control-size: $toggle-height - ($toggle-gutter * 2);
               word-wrap: break-word;
               white-space: pre-wrap;
               resize: none;
+              pointer-events: all;
             }
             .question-garbage {
               width: 15%;
@@ -106,6 +208,7 @@ $toggle-control-size: $toggle-height - ($toggle-gutter * 2);
                 outline: none;
                 margin-bottom: 12px;
                 border-radius: 4px;
+                pointer-events: none;
                 word-wrap: break-word;
                 white-space: pre-wrap;
                 resize: none;
@@ -120,16 +223,31 @@ $toggle-control-size: $toggle-height - ($toggle-gutter * 2);
                 .q-option-item-center {
                   display: flex;
                   align-items: center;
+                  pointer-events: none;
                   input[type="radio"] {
+                    outline: none;
                   }
                   input[type="checkbox"] {
+                    outline: none;
                   }
                 }
                 input[type="text"] {
                   margin-left: 6px;
                   outline: none;
-                  width: 2.5rem;
-                  border-bottom: solid 0.5px black;
+                  width: 100%;
+                  pointer-events: all;
+                }
+                input[type="text"]:focus {
+                  border-bottom: 2px solid #5d82e9;
+                }
+                i {
+                  cursor: pointer;
+                  padding-right: 8px;
+                }
+              }
+              .q-option-item:hover {
+                input[type="text"] {
+                  border-bottom: 1px solid #dfe1e6;
                 }
               }
               .question-control {
@@ -232,6 +350,655 @@ $toggle-control-size: $toggle-height - ($toggle-gutter * 2);
             }
           }
         }
+      }
+      .drop-parent::-webkit-scrollbar {
+        width: 10px;
+        border-radius: 5px;
+        margin: 10px;
+        background-color: #d4c9c9;
+      }
+      .drop-parent::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background-color: #737272;
+      }
+      .section-control {
+        width: 100%;
+        .control-box {
+          width: 100%;
+          display: flex;
+          justify-content: flex-end;
+          font-size: 1.1rem;
+          font-weight: 500;
+          margin-bottom: 1rem;
+          .cancel {
+            width: 80px;
+            border-radius: 4px;
+            padding: 8px 5px;
+            background-color: #ff8585;
+          }
+          .create {
+            width: 80px;
+            border-radius: 4px;
+            padding: 8px 5px;
+            margin-left: 1rem;
+            background-color: #5d82e9;
+          }
+        }
+      }
+    }
+  }
+  .drag-section {
+    width: 29%;
+    border-radius: 10px;
+    background-color: white;
+    padding: 16px 10px;
+    .section-containers {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      width: 100%;
+      .sub-button {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        width: 30.8%;
+        height: 2.3rem;
+        background-color: #F2F2F2;
+        border-radius: 3px;
+        font-size: 0.9rem;
+        color: rgb(19, 18, 18);
+        font-weight: 500;
+        margin-bottom: 1rem;
+        .sub-button-q {
+          width: 50%;
+        }
+        .sub-button-t {
+          width: 50%;
+        }
+      }
+      .sub-title {
+        width: 100%;
+        margin-bottom: 1.5rem;
+        .sub-title-text {
+          font-size: 1.4rem;
+          font-weight: 500;
+        }
+      }
+      .drag-parent {
+        width: 100%;
+        .dragthing-drag {
+          width: 100%;
+          margin-bottom: 1rem;
+          background-color: rgb(219, 215, 215);
+          border-radius: 4px;
+          padding: 7px;
+          .q-type {
+            width: 100%;
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+          }
+          .question {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            .question-title {
+              width: 85%;
+              font-size: 1.1rem;
+              font-weight: 500;
+              background-color:rgb(197, 188, 188);
+              border-radius: 4px;
+              border-bottom: solid 1px rgb(20, 20, 20);
+              outline: none;
+              margin-bottom: 12px;
+              word-wrap: break-word;
+              white-space: pre-wrap;
+              resize: none;
+              pointer-events: none;
+            }
+            .question-garbage {
+              width: 15%;
+              display: flex;
+              justify-content: end;
+              padding-right: 8px;
+              align-self: flex-start;
+              display: none;
+              button {
+              }
+            }
+            .q-option {
+              width: 100%;
+              display: flex;
+              flex-wrap: wrap;
+              .item-short {
+                width: 100%;
+                outline: none;
+                margin-bottom: 12px;
+                border-radius: 4px;
+                word-wrap: break-word;
+                white-space: pre-wrap;
+                resize: none;
+                pointer-events: none;
+              }
+              .item-short:focus {
+                border-bottom: solid 1px rgb(20, 20, 20);
+              }
+              .q-option-item {
+                width: 100%;
+                display: flex;
+                margin-bottom: 6px;
+                pointer-events: none;
+                .q-option-item-center {
+                  display: flex;
+                  align-items: center;
+                  input[type="radio"] {
+                    
+                  }
+                  input[type="checkbox"] {
+                  }
+                }
+                input[type="text"] {
+                  margin-left: 6px;
+                  outline: none;
+                  width: 2.5rem;
+                  border-bottom: solid 0.5px black;
+                }
+              }
+              .question-control {
+                width: 100%;
+                display: flex;
+                font-size: 0.9rem;
+                margin-bottom: 8px;
+                display: none;
+                .q-option-item-c1 {
+                  cursor: pointer;
+                  color: #5d82e9;
+                  margin-right: 8px;
+                }
+                .q-option-item-c2 {
+                  cursor: pointer;
+                  color: #5d82e9;
+                  margin-left: 6px;
+                }
+              }
+            }
+            .is-required {
+              display: flex;
+              justify-content: end;
+              width: 100%;
+              padding-right: 8px;
+              margin-bottom: 9px;
+              display: none;
+              .is-required-text {
+                font-size: 0.9rem;
+                font-weight: 500;
+                padding-right: 3px;
+                padding-top: 1px;
+              }
+              // 토글 scss start
+              .toggle-control {
+                display: block;
+                position: relative;
+                padding-left: $toggle-width;
+                margin-bottom: 12px;
+                cursor: pointer;
+                font-size: 22px;
+                user-select: none;
+              
+                input {
+                  position: absolute;
+                  opacity: 0;
+                  cursor: pointer;
+                  height: 0;
+                  width: 0;
+                }
+              
+                input:checked ~ .control {
+                  background-color: $toggle-background-color-on;
+                  
+                  &:after {
+                    left: $toggle-width - $toggle-control-size - $toggle-gutter;
+                  }
+                }
+              
+                .control {
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  height: $toggle-height;
+                  width: $toggle-width;
+                  border-radius: $toggle-radius;
+                  background-color: $toggle-background-color-off;
+                  transition: background-color $toggle-control-speed $toggle-control-ease;
+              
+                  &:after {
+                    content: "";
+                    position: absolute;
+                    left: $toggle-gutter;
+                    top: $toggle-gutter;
+                    width: $toggle-control-size;
+                    height: $toggle-control-size;
+                    border-radius: $toggle-radius;
+                    background: $toggle-control-color;
+                    transition: left $toggle-control-speed $toggle-control-ease;
+                  }
+                }
+              }
+              // 토글 scss end
+            }
+            .question-detail-btn {
+              display: flex;
+              justify-content: end;
+              padding-right: 8px;
+              width: 100%;
+              display: none;
+              p {
+                font-size: 0.9rem;
+                font-weight: 500;
+                padding-right: 3px;
+                padding-top: 1px;
+              }
+              button {
+               width: 35px;
+               i {
+                 font-size: 24px;
+               }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// dragula
+.gu-mirror {
+  position: fixed !important;
+  margin: 0 !important;
+  z-index: 9999 !important;
+  opacity: 0.3;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  filter: alpha(opacity=80);
+}
+.gu-hide {
+  display: none !important;
+}
+.gu-unselectable {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+.gu-transit {
+  opacity: 0.2;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity=20);
+}
+
+// dragthing-drop
+.dragthing-drop {
+  width: 100%;
+  margin-bottom: 1rem;
+  background-color: white;
+  border-radius: 4px;
+  padding: 7px;
+  .q-type {
+    width: 100%;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: none;
+  }
+  .question {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    .question-title {
+      width: 85%;
+      font-size: 1.1rem;
+      font-weight: 500;
+      background-color:rgb(245, 241, 241);
+      border-radius: 4px;
+      border-bottom: solid 1px rgb(20, 20, 20);
+      outline: none;
+      margin-bottom: 12px;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      resize: none;
+      pointer-events: all;
+    }
+    .question-garbage {
+      width: 15%;
+      display: flex;
+      justify-content: end;
+      padding-right: 8px;
+      align-self: flex-start;
+      button {
+      }
+    }
+    .q-option {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      .item-short {
+        width: 100%;
+        outline: none;
+        margin-bottom: 12px;
+        border-radius: 4px;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        resize: none;
+      }
+      .item-short:focus {
+        border-bottom: solid 1px rgb(20, 20, 20);
+      }
+      .q-option-item {
+        width: 100%;
+        display: flex;
+        margin-bottom: 6px;
+        .q-option-item-center {
+          display: flex;
+          align-items: center;
+          input[type="radio"] {
+            outline: none;
+          }
+          input[type="checkbox"] {
+            outline: none;
+          }
+        }
+        input[type="text"] {
+          width: 100%;
+          margin-left: 6px;
+          outline: none;
+          border-bottom: none;
+          pointer-events: all;
+        }
+        i {
+          padding-right: 8px;
+        }
+      }
+      .question-control {
+        width: 100%;
+        display: flex;
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+        .q-option-item-c1 {
+          cursor: pointer;
+          color: #5d82e9;
+          margin-right: 8px;
+        }
+        .q-option-item-c2 {
+          cursor: pointer;
+          color: #5d82e9;
+          margin-left: 6px;
+        }
+      }
+    }
+    .is-required {
+      display: flex;
+      justify-content: end;
+      width: 100%;
+      padding-right: 8px;
+      margin-bottom: 9px;
+      .is-required-text {
+        font-size: 0.9rem;
+        font-weight: 500;
+        padding-right: 3px;
+        padding-top: 1px;
+      }
+      // 토글 scss start
+      .toggle-control {
+        display: block;
+        position: relative;
+        padding-left: $toggle-width;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 22px;
+        user-select: none;
+      
+        input {
+          position: absolute;
+          opacity: 0;
+          cursor: pointer;
+          height: 0;
+          width: 0;
+        }
+      
+        input:checked ~ .control {
+          background-color: $toggle-background-color-on;
+          
+          &:after {
+            left: $toggle-width - $toggle-control-size - $toggle-gutter;
+          }
+        }
+      
+        .control {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: $toggle-height;
+          width: $toggle-width;
+          border-radius: $toggle-radius;
+          background-color: $toggle-background-color-off;
+          transition: background-color $toggle-control-speed $toggle-control-ease;
+      
+          &:after {
+            content: "";
+            position: absolute;
+            left: $toggle-gutter;
+            top: $toggle-gutter;
+            width: $toggle-control-size;
+            height: $toggle-control-size;
+            border-radius: $toggle-radius;
+            background: $toggle-control-color;
+            transition: left $toggle-control-speed $toggle-control-ease;
+          }
+        }
+      }
+      // 토글 scss end
+    }
+    .question-detail-btn {
+      display: flex;
+      justify-content: end;
+      padding-right: 8px;
+      width: 100%;
+      p {
+        font-size: 0.9rem;
+        font-weight: 500;
+        padding-right: 3px;
+        padding-top: 1px;
+      }
+      button {
+       width: 35px;
+       i {
+         font-size: 24px;
+       }
+      }
+    }
+  }
+}
+// dragthing-drag
+.dragthing-drag {
+  width: 100%;
+  margin-bottom: 1rem;
+  background-color: rgb(219, 215, 215);
+  border-radius: 4px;
+  padding: 7px;
+  .q-type {
+    width: 100%;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .question {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    .question-title {
+      width: 85%;
+      font-size: 1.1rem;
+      font-weight: 500;
+      background-color:rgb(197, 188, 188);
+      border-radius: 4px;
+      border-bottom: solid 1px rgb(20, 20, 20);
+      outline: none;
+      margin-bottom: 12px;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      resize: none;
+      pointer-events: none;
+    }
+    .question-garbage {
+      width: 15%;
+      display: flex;
+      justify-content: end;
+      padding-right: 8px;
+      align-self: flex-start;
+      display: none;
+      button {
+      }
+    }
+    .q-option {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      .item-short {
+        width: 100%;
+        outline: none;
+        margin-bottom: 12px;
+        border-radius: 4px;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        resize: none;
+        pointer-events: none;
+      }
+      .item-short:focus {
+        border-bottom: solid 1px rgb(20, 20, 20);
+      }
+      .q-option-item {
+        width: 100%;
+        display: flex;
+        margin-bottom: 6px;
+        pointer-events: none;
+        .q-option-item-center {
+          display: flex;
+          align-items: center;
+          input[type="radio"] {
+          }
+          input[type="checkbox"] {
+          }
+        }
+        input[type="text"] {
+          margin-left: 6px;
+          outline: none;
+          width: 2.5rem;
+          border-bottom: solid 0.5px black;
+        }
+        i {
+          display: none;
+        }
+      }
+      .question-control {
+        width: 100%;
+        display: flex;
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+        display: none;
+        .q-option-item-c1 {
+          cursor: pointer;
+          color: #5d82e9;
+          margin-right: 8px;
+        }
+        .q-option-item-c2 {
+          cursor: pointer;
+          color: #5d82e9;
+          margin-left: 6px;
+        }
+      }
+    }
+    .is-required {
+      display: flex;
+      justify-content: end;
+      width: 100%;
+      padding-right: 8px;
+      margin-bottom: 9px;
+      display: none;
+      .is-required-text {
+        font-size: 0.9rem;
+        font-weight: 500;
+        padding-right: 3px;
+        padding-top: 1px;
+      }
+      // 토글 scss start
+      .toggle-control {
+        display: block;
+        position: relative;
+        padding-left: $toggle-width;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 22px;
+        user-select: none;
+      
+        input {
+          position: absolute;
+          opacity: 0;
+          cursor: pointer;
+          height: 0;
+          width: 0;
+        }
+      
+        input:checked ~ .control {
+          background-color: $toggle-background-color-on;
+          
+          &:after {
+            left: $toggle-width - $toggle-control-size - $toggle-gutter;
+          }
+        }
+      
+        .control {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: $toggle-height;
+          width: $toggle-width;
+          border-radius: $toggle-radius;
+          background-color: $toggle-background-color-off;
+          transition: background-color $toggle-control-speed $toggle-control-ease;
+      
+          &:after {
+            content: "";
+            position: absolute;
+            left: $toggle-gutter;
+            top: $toggle-gutter;
+            width: $toggle-control-size;
+            height: $toggle-control-size;
+            border-radius: $toggle-radius;
+            background: $toggle-control-color;
+            transition: left $toggle-control-speed $toggle-control-ease;
+          }
+        }
+      }
+      // 토글 scss end
+    }
+    .question-detail-btn {
+      display: flex;
+      justify-content: end;
+      padding-right: 8px;
+      width: 100%;
+      display: none;
+      p {
+        font-size: 0.9rem;
+        font-weight: 500;
+        padding-right: 3px;
+        padding-top: 1px;
+      }
+      button {
+       width: 35px;
+       i {
+         font-size: 24px;
+       }
       }
     }
   }

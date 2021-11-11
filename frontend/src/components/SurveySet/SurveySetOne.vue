@@ -32,7 +32,7 @@
           </button>
         </ul>
       </div>
-      <div class="item" v-if="isOpenGenerations">
+      <div class="item" v-if="isOpenStudent">
         <p class="container-subtitle">기수</p>
         <ul class="select-box" @click="colorEvent">
           <button
@@ -41,11 +41,11 @@
             :key="idx"
             @click="selectGeneration(element)"
           >
-            {{ element }}
+            {{ element == '전체' ? element : element + '기' }}
           </button>
         </ul>
       </div>
-      <div class="item" v-if="isOpenAreas">
+      <div class="item" v-if="isOpenStudent">
         <p class="container-subtitle">지역</p>
         <ul class="select-box" @click="colorEvent">
           <button
@@ -58,7 +58,7 @@
           </button>
         </ul>
       </div>
-      <div class="item" v-if="isOpenClasses">
+      <div class="item" v-if="isOpenStudent">
         <p class="container-subtitle">분반</p>
         <ul class="select-box" @click="colorEvent">
           <button
@@ -71,12 +71,25 @@
           </button>
         </ul>
       </div>
-      <div class="item" v-if="isOpenTeamRolls">
+      <div class="item" v-if="isOpenStudent">
+        <p class="container-subtitle">팀</p>
+        <ul class="select-box" @click="colorEvent">
+          <button
+            id="team"
+            v-for="(element, idx) in teams"
+            :key="idx"
+            @click="selectTeam(element)"
+          >
+            {{ element }}
+          </button>
+        </ul>
+      </div>
+      <div class="item" v-if="isOpenStudent">
         <p class="container-subtitle">역할</p>
         <ul class="select-box" @click="colorEvent">
           <button
             id="teamroll"
-            v-for="(element, idx) in teamRolls"
+            v-for="(element, idx) in Team_rolls"
             :key="idx"
             @click="selectTeamRoll(element)"
           >
@@ -103,9 +116,11 @@
             type="search"
             placeholder="이름"
             autocomplete="off"
+            v-model="inputSearch"
+            @keyup.enter="merberUidSearch"
           />
           <label for="search">
-            <i class="fa fa-search"></i>
+            <i class="fa fa-search" @click="merberUidSearch"></i>
           </label>
         </div>
       </div>
@@ -117,13 +132,16 @@
             :key="idx"
             @click="plusSearchTarget(idx)"
           >
-            <p>{{ element['nickname'] }}</p>
+            <p>{{ element['name'] }}</p>
             <p v-if="element.hasOwnProperty('generation')">
-              {{ element['generation'] }}/{{ element['area'] }}/{{
+              {{ element['generation'] + '기' }}/{{ element['area'] }}/{{
                 element['group']
               }}
             </p>
             <p>{{ element['position'] }}</p>
+          </div>
+          <div class="user-none-item" v-if="isNoneUser">
+            <p>검색결과가 없습니다.</p>
           </div>
         </div>
       </div>
@@ -158,44 +176,39 @@
 </template>
 
 <script>
+import UserApi from '@/api/UserApi'
 export default {
   data() {
     return {
-      positions: ['전체', '컨설턴트', '교육생', '교육프로', '코치'],
-      generations: ['전체', '5기', '6기'],
+      positions: ['전체', '컨설턴트', '교육생', '교육프로', '실습코치'],
+      generations: ['전체', 5, 6],
       areas: ['전체', '서울', '대전', '광주', '구미', '부울경'],
       classes: ['전체', '1반', '2반', '3반', '4반', '5반', '6반'],
-      teamRolls: ['전체', '팀장', '팀원'],
-      searchUsers: [
-        {
-          nickname: '민찬우',
-          position: '교육생',
-          generation: '5기',
-          area: '광주',
-          group: '1반',
-        },
-        { nickname: '김코치', position: '컨설턴트' },
-      ],
+      teams: ['전체', '1팀', '2팀', '3팀', '4팀', '5팀', '6팀'],
+      Team_rolls: ['전체', '팀장', '팀원'],
+      searchUsers: [],
       target: {
         position: null,
         generation: null,
         area: null,
         class: null,
+        team: null,
         team_roll: null,
       },
+      targetTags: {},
       targets: [],
-      isOpenGenerations: false,
-      isOpenAreas: false,
-      isOpenClasses: false,
-      isOpenTeamRolls: false,
+      inputSearch: null,
+      isOpenStudent: false,
       isClkSelectMenu: true,
       isClkSearchMenu: false,
       Clkposition: null,
       Clkgeneration: null,
       Clkarea: null,
       Clkclass: null,
+      Clkteam: null,
       Clkteamroll: null,
       scrollHeightOne: null,
+      isNoneUser: false,
     }
   },
   methods: {
@@ -210,56 +223,40 @@ export default {
     selectPosition(element) {
       this.target['position'] = element
       if (element === '교육생') {
-        this.isOpenGenerations = true
+        this.isOpenStudent = true
       } else {
-        this.isOpenGenerations = false
+        this.isOpenStudent = false
         this.target['generation'] = null
-        this.isOpenAreas = false
         this.target['area'] = null
-        this.isOpenClasses = false
         this.target['class'] = null
-        this.isOpenTeamRolls = false
+        this.target['team'] = null
         this.target['team_roll'] = null
       }
     },
     selectGeneration(element) {
       this.target['generation'] = element
-      if (element !== '전체') {
-        this.isOpenAreas = true
-      } else {
-        this.isOpenAreas = false
-        this.target['area'] = null
-        this.isOpenClasses = false
-        this.target['class'] = null
-        this.isOpenTeamRolls = false
-        this.target['team_roll'] = null
-      }
     },
     selectArea(element) {
       this.target['area'] = element
-      if (element !== '전체') {
-        this.isOpenClasses = true
-      } else {
-        this.isOpenClasses = false
-        this.target['class'] = null
-        this.isOpenTeamRolls = false
-        this.target['team_roll'] = null
-      }
     },
     selectClass(element) {
       this.target['class'] = element
-      if (element !== '전체') {
-        this.isOpenTeamRolls = true
-      } else {
-        this.isOpenTeamRolls = false
-        this.target['team_roll'] = null
-      }
+    },
+    selectTeam(element) {
+      this.target['team'] = element
     },
     selectTeamRoll(element) {
       this.target['team_roll'] = element
     },
     colorEvent(e) {
-      let itemIds = ['position', 'generation', 'area', 'class', 'teamroll']
+      let itemIds = [
+        'position',
+        'generation',
+        'area',
+        'class',
+        'team',
+        'teamroll',
+      ]
       if (e.target.tagName == 'BUTTON') {
         for (let itemId of itemIds) {
           if (e.target.id == itemId) {
@@ -273,43 +270,110 @@ export default {
         }
       }
     },
-    plusTarget(check) {
+    async plusTarget(check) {
       let tempStr = ''
       if (check === 'select' && this.target['position']) {
-        for (let property in this.target) {
-          if (this.target[property]) {
-            tempStr += `${this.target[property]}/`
+        let payload = ''
+        for (let key in this.target) {
+          if (this.target[key] && this.target[key] != '전체') {
+            payload += `${key}=${this.target[key]}&`
           }
         }
-        this.targets.push(tempStr.substr(0, tempStr.length - 1))
-        this.initTarget()
+        console.log(payload)
+        UserApi.searchMember(
+          payload.substring(0, payload.length - 1),
+          res => {
+            if (res.data['검색 결과'].length == 0) {
+              console.log('검색결과가 없습니다.')
+              this.$swal({
+                title: '검색결과가 없습니다.',
+                icon: 'warning',
+                target: '.container-set',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: '확인',
+              })
+            } else {
+              let targetTemp = []
+              for (let user of res.data['검색 결과']) {
+                targetTemp.push(user.uid)
+              }
+              this.$store.state.surveySet.survey.target.push(targetTemp)
+              this.$store.state.surveySet.survey.incomplete.push(targetTemp)
+              for (let property in this.target) {
+                if (this.target[property]) {
+                  tempStr += `${this.target[property]}/`
+                }
+              }
+              this.targets.push(tempStr.substr(0, tempStr.length - 1))
+              this.initTarget()
+            }
+          },
+          err => {
+            console.log(err)
+          },
+        )
       } else {
         console.log('설문대상자 선택해줄래?')
       }
     },
+    merberUidSearch() {
+      if (this.inputSearch) {
+        let payload = `name=${this.inputSearch}&`
+        for (let key in this.target) {
+          if (this.target[key] && this.target[key] != '전체') {
+            payload += `${key}=${this.target[key]}&`
+          }
+        }
+        UserApi.searchMember(
+          payload.substring(0, payload.length - 1),
+          res => {
+            console.log(res)
+            if (res.data['검색 결과'].length == 0) {
+              console.log('검색결과가 없습니다.')
+              this.searchUsers = null
+              this.isNoneUser = true
+            } else {
+              this.searchUsers = res.data['검색 결과']
+              this.isNoneUser = false
+            }
+          },
+          err => {
+            console.log(err)
+          },
+        )
+      } else {
+        console.log('검색창에 이름 입력해줄래?')
+      }
+    },
     plusSearchTarget(idx) {
+      let targetTemp = []
+      targetTemp.push(this.searchUsers[idx]['uid'])
+      this.$store.state.surveySet.survey.target.push(targetTemp)
+      this.$store.state.surveySet.survey.incomplete.push(targetTemp)
+
       let tempStr = ''
       if (this.searchUsers[idx]['generation']) {
-        tempStr += `${this.searchUsers[idx]['generation']}/${this.searchUsers[idx]['area']}/${this.searchUsers[idx]['group']} ${this.searchUsers[idx]['nickname']}`
+        tempStr += `${this.searchUsers[idx]['generation']}기/${this.searchUsers[idx]['area']}${this.searchUsers[idx]['group']}/${this.searchUsers[idx]['name']}`
       } else {
-        tempStr += `${this.searchUsers[idx]['position']} ${this.searchUsers[idx]['nickname']}`
+        tempStr += `${this.searchUsers[idx]['position']} ${this.searchUsers[idx]['name']}`
       }
       this.targets.push(tempStr)
     },
     cancelTarget(idx) {
       this.targets.splice(idx, 1)
+      this.$store.state.surveySet.survey.target.splice(idx, 1)
+      this.$store.state.surveySet.survey.incomplete.splice(idx, 1)
     },
     initTarget() {
       this.target['position'] = null
-      this.isOpenGenerations = false
+      this.isOpenStudent = false
       this.target['generation'] = null
-      this.isOpenAreas = false
       this.target['area'] = null
-      this.isOpenClasses = false
       this.target['class'] = null
-      this.isOpenTeamRolls = false
+      this.target['team'] = null
       this.target['team_roll'] = null
-      let itemIds = ['position', 'generation', 'area', 'class']
+      let itemIds = ['position', 'generation', 'area', 'team', 'class']
       for (let itemId of itemIds) {
         if (this[`Clk${itemId}`]) {
           this[`Clk${itemId}`].classList.remove('btn-active')

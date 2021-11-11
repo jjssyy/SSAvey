@@ -20,6 +20,13 @@ const updateUser = (payload, callback, errorCallback) => {
     .catch(err => errorCallback(err))
 }
 
+const searchMember = (payload, callback, errorCallback) => {
+  instance
+    .get(`/member/search?${payload}`)
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
+}
+
 const UserApi = {
   Login: (data, callback, errorCallback) =>
     Login(data, callback, errorCallback),
@@ -27,6 +34,8 @@ const UserApi = {
     updateUser(data, callback, errorCallback),
   userInfo: (data, callback, errorCallback) =>
     userInfo(data, callback, errorCallback),
+  searchMember: (data, callback, errorCallback) =>
+    searchMember(data, callback, errorCallback),
 }
 
 export default UserApi

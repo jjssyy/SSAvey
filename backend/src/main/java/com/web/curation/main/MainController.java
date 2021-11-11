@@ -51,10 +51,18 @@ public class MainController {
     	List<Survey> EX_Survey=new ArrayList<Survey>();
     	List<Survey> PRO_Survey=new ArrayList<Survey>();
     	List<Survey> COM_Survey=new ArrayList<Survey>();
-    	EX_Survey=surveyService.getSurvey("EXPECTED",uid);
-    	PRO_Survey=surveyService.getSurvey("PROCEEDING",uid);
-    	COM_Survey=surveyService.getSurvey("COMPLETED",uid);
-    	
+    	EX_Survey=mainService.getSurvey("EXPECTED",uid);
+    	PRO_Survey=mainService.getSurvey("PROCEEDING",uid);
+    	COM_Survey=mainService.getSurvey("COMPLETED",uid);
+    	if(EX_Survey.size()>5) {
+    		EX_Survey=new ArrayList<Survey>(EX_Survey.subList(0, 5));
+    	}
+    	if(PRO_Survey.size()>5) {
+    		PRO_Survey=new ArrayList<Survey>(PRO_Survey.subList(0, 5));
+    	}
+    	if(COM_Survey.size()>5) {
+    		COM_Survey=new ArrayList<Survey>(COM_Survey.subList(0, 5));
+    	}
     	resultmap.put("status", HttpStatus.OK);
     	resultmap.put("EXPECTED", EX_Survey);
     	resultmap.put("PROCEEDING", PRO_Survey);

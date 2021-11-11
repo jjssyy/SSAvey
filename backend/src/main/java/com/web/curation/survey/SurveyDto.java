@@ -1,25 +1,24 @@
 package com.web.curation.survey;
 
-import lombok.*;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
+import com.web.curation.member.ConvertUid;
 import com.web.curation.question.Question;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection ="Survey")
-public class Survey {
-	@Id
+public class SurveyDto {
+
 	private String sid;
 
 	private String title;
@@ -40,16 +39,15 @@ public class Survey {
 
 	private List<String> target;
 
-	private List<String> incomplete;
+	private List<ConvertUid> incomplete;
 
-	private List<String> complete;
+	private List<ConvertUid> complete;
 
 	private State state;
 
 	private boolean use_template;
 
 	private String template;
-
-
-
+	
+	private List<SurveyAnswerDto> answers;
 }
