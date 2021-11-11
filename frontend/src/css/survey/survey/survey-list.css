@@ -413,7 +413,8 @@
 }
 
 .dragula-container .drop-section .section-containers .section-control .control-box .create {
-  width: 80px;
+  width: 120px;
+  color: #242222;
   border-radius: 4px;
   padding: 8px 5px;
   margin-left: 1rem;
@@ -438,10 +439,10 @@
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  width: 30.8%;
+  width: 38%;
   height: 2.3rem;
   background-color: #F2F2F2;
-  border-radius: 3px;
+  border-radius: 4px;
   font-size: 0.9rem;
   color: #131212;
   font-weight: 500;
@@ -450,10 +451,12 @@
 
 .dragula-container .drag-section .section-containers .sub-button .sub-button-q {
   width: 50%;
+  border-radius: 4px;
 }
 
 .dragula-container .drag-section .section-containers .sub-button .sub-button-t {
   width: 50%;
+  border-radius: 4px;
 }
 
 .dragula-container .drag-section .section-containers .sub-title {
@@ -1082,5 +1085,9 @@
 
 .dragthing-drag .question .question-detail-btn button i {
   font-size: 24px;
+}
+
+.btn-active {
+  background-color: #4E7AF5 !important;
 }
 /*# sourceMappingURL=survey-list.css.map */
