@@ -2,7 +2,9 @@
   <v-app>
     <v-card width="1000" class="mx-auto">
       <v-toolbar color="#4E7AF5" dark>
-        <v-toolbar-title>{{ this.items[0].title }}</v-toolbar-title>
+        <v-toolbar-title
+          >{{ this.items[0].title }} {{ result }}</v-toolbar-title
+        >
         <v-spacer></v-spacer>
       </v-toolbar>
       <v-list>
@@ -17,10 +19,14 @@
               <v-list-item-title>
                 {{ ques.q_number }}. {{ ques.q_explanation }}
               </v-list-item-title>
-              <v-radio-group v-if="ques.q_type == 'SINGLE'" class="mx-5">
+              <v-radio-group
+                v-model="result[index + 1 + '번']"
+                v-if="ques.q_type == 'SINGLE'"
+                class="mx-5"
+              >
                 <v-radio
-                  v-for="(answer, index) in ques.q_option"
-                  :key="index + 2"
+                  v-for="(answer, r_index) in ques.q_option"
+                  :key="r_index + 2"
                   :label="`${answer.o_explanation}`"
                   :value="`${answer.o_number}`"
                 >
@@ -28,9 +34,10 @@
               </v-radio-group>
               <v-container class="mx-2" v-if="ques.q_type == 'MULTIPLE'">
                 <v-checkbox
+                  v-for="(answer, c_index) in ques.q_option"
+                  :key="c_index + 3"
+                  v-model="result[index + 1 + '번']"
                   class="mt-0 pt-0"
-                  v-for="(answer, index) in ques.q_option"
-                  :key="index + 2"
                   :label="`${answer.o_explanation}`"
                   :value="`${answer.o_number}`"
                 >
@@ -42,6 +49,7 @@
                   counter
                   :rules="shortrules"
                   :value="shortvalue"
+                  v-model="result[index + 1 + '번']"
                   background-color="grey lighten-4"
                   color="cyan"
                   label="답변을 입력해주세요."
@@ -65,8 +73,7 @@ export default {
   data: () => ({
     shortrules: [v => v.length <= 20 || '최대 20자까지만 입력해주세요.'],
     shortvalue: '',
-    reveal: false,
-    dialog: false,
+    result: {},
     items: [
       {
         title: '설문지 제목입니다.',
@@ -89,7 +96,19 @@ export default {
           },
           {
             q_number: '2',
-            q_explanation: '2번 문항 객관식 복수 선택 제목입니다.',
+            q_explanation: '2번 문항 객관식 단일 선택 제목입니다.',
+            q_type: 'SINGLE',
+            is_required: true,
+            q_option: [
+              { o_number: '1', o_explanation: '1번선택지', is_short: false },
+              { o_number: '2', o_explanation: '2번선택지', is_short: false },
+              { o_number: '3', o_explanation: '3번선택지', is_short: false },
+              { o_number: '4', o_explanation: '기타', is_short: true },
+            ],
+          },
+          {
+            q_number: '3',
+            q_explanation: '3번 문항 객관식 복수 선택 제목입니다.',
             q_type: 'MULTIPLE',
             is_required: false,
             q_option: [
@@ -100,8 +119,20 @@ export default {
             ],
           },
           {
-            q_number: '3',
-            q_explanation: '3번 문항 주관식 제목입니다.',
+            q_number: '4',
+            q_explanation: '4번 문항 객관식 복수 선택 제목입니다.',
+            q_type: 'MULTIPLE',
+            is_required: false,
+            q_option: [
+              { o_number: '1', o_explanation: '1번 선택지', is_short: false },
+              { o_number: '2', o_explanation: '2번 선택지', is_short: false },
+              { o_number: '3', o_explanation: '3번 선택지', is_short: false },
+              { o_number: '4', o_explanation: '기타', is_short: true },
+            ],
+          },
+          {
+            q_number: '5',
+            q_explanation: '5번 문항 주관식 제목입니다.',
             q_type: 'SHORT',
             is_required: true,
             q_option: [],

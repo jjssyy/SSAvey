@@ -1,15 +1,15 @@
 <template>
   <v-app>
-    <v-card max-width="600" class="mx-auto">
+    <v-card width="600" class="mx-auto">
       <v-toolbar color="black" dark>
-        <v-toolbar-title>진행중인 설문리스트</v-toolbar-title>
+        <v-toolbar-title>완료된 내 설문리스트</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon>
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
       </v-toolbar>
 
-      <v-list three-line>
+      <v-list three-line v-if="surveys.length != 0">
         <template v-for="(item, index) in surveys">
           <v-subheader
             v-if="item.header"
@@ -69,6 +69,11 @@
               </v-menu>
             </v-list-item-action>
           </v-list-item>
+        </template>
+      </v-list>
+      <v-list v-else three-line>
+        <template>
+          <v-subheader v-text="'완료된 내 설문이 없습니다.'"></v-subheader>
         </template>
       </v-list>
     </v-card>
