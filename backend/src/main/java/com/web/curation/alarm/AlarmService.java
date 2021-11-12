@@ -9,6 +9,7 @@ import com.web.curation.survey.SurveyDao;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Slf4j
@@ -34,6 +36,7 @@ public class AlarmService{
     public void setAlarmSchdule(String sid, LocalDateTime startDateTime, LocalDateTime endDateTime){
         ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
         threadPoolTaskScheduler.initialize();
+        threadPoolTaskScheduler.setThreadNamePrefix(sid + "-");
 
         Date startDate = Timestamp.valueOf(startDateTime);
         Date endDate = Timestamp.valueOf(endDateTime);
@@ -47,6 +50,7 @@ public class AlarmService{
     public void editAlarmSchedule(String sid, LocalDateTime startDateTime, LocalDateTime endDateTime){
         ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
         threadPoolTaskScheduler.initialize();
+        threadPoolTaskScheduler.setThreadNamePrefix(sid + "-");
 
         Date startDate = Timestamp.valueOf(startDateTime);
         Date endDate = Timestamp.valueOf(endDateTime);
@@ -62,21 +66,17 @@ public class AlarmService{
         return () -> {
             String fullName = Thread.currentThread().getName();
             String prefixName = fullName.substring(0, fullName.indexOf("-"));
-            System.out.println(prefixName);
+            log.info(fullName + " 스레드 동작");
 
-            Optional<Survey> survey = surveyDao.findById(prefixName);
-            survey.get().setState(State.PROCEEDING);
-            mattermostAlarm(survey.get().getTitle(), survey.get().getEnd_date(), survey.get().getTarget());
+            Survey survey = surveyDao.findById(prefixName).get();
+            survey.setState(State.PROCEEDING);
 
-            surveyDao.save(survey.get());
+            String message = "#### " + survey.getTitle() + " 설문 시작\n기간: "
+                    + survey.getStart_date().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")) + " ~ "
+                    + survey.getEnd_date().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
 
-//            for(int i = 0; i < schedulerArr.size(); i++){
-//                if(Thread.currentThread().getName().contains(schedulerArr.get(i).getThreadNamePrefix())){
-//                    schedulerArr.get(i).shutdown();
-//                    schedulerArr.remove(i);
-//                    break;
-//                }
-//            }
+            mattermostAlarm(survey.getWriter(), survey.getTarget(), message);
+            surveyDao.save(survey);
         };
     }
 
@@ -84,34 +84,31 @@ public class AlarmService{
         return () -> {
             String fullName = Thread.currentThread().getName();
             String prefixName = fullName.substring(0, fullName.indexOf("-"));
-            System.out.println(prefixName);
+            log.info(fullName + " 스레드 동작");
 
-            Optional<Survey> survey = surveyDao.findById(prefixName);
-            survey.get().setState(State.PROCEEDING);
-            mattermostAlarm(survey.get().getTitle(), survey.get().getEnd_date(), survey.get().getTarget());
+            Survey survey = surveyDao.findById(prefixName).get();
+            survey.setState(State.COMPLETED);
+            surveyDao.save(survey);
 
-            surveyDao.save(survey.get());
+//            Duration remainDuration = Duration.between(LocalDateTime.now(), survey.getEnd_date());
+//            String message = "#### " + survey.getTitle() + " 설문\n남은 기간: " +
+//                    remainDuration.toDays() + "일 " + (remainDuration.toHours()  - remainDuration.toDays() * 24) + "시 "
+//                    + (remainDuration.toMinutes() - remainDuration.toHours() * 60) + "분\n:running_man: 서둘러주세요";
 
-//            for(int i = 0; i < schedulerArr.size(); i++){
-//                if(Thread.currentThread().getName().contains(schedulerArr.get(i).getThreadNamePrefix())){
-//                    schedulerArr.get(i).shutdown();
-//                    schedulerArr.remove(i);
-//                    break;
-//                }
-//            }
+            schedulerHashMap.get(prefixName).shutdown();
+            schedulerHashMap.remove(prefixName);
         };
     }
 
-    private void mattermostAlarm(String title, LocalDateTime endDate, List<String> targetMember){
-        for(String uid : targetMember){
-            String channelId = getDirectChannelId(uid);
-            sendPosts(channelId, title, endDate);
+    private void mattermostAlarm(String sendMember, List<String> targetMembers, String message){
+        for(String targetMember : targetMembers){
+            String channelId = getDirectChannelId(sendMember, targetMember);
+            sendPosts(channelId, message);
         }
     }
 
-    private String getDirectChannelId(String uid) {
+    private String getDirectChannelId(String sendMember, String targetMember) {
         String channelId = null;
-        String serverUid="o1ojzjw173d17c3itj67o5k5do";
         HttpURLConnection conn = null;
 
         try {
@@ -123,8 +120,8 @@ public class AlarmService{
             conn.setRequestProperty("Authorization", "Bearer " + TOKEN);
 
             JsonArray data = new JsonArray();
-            data.add(serverUid);
-            data.add(uid);
+            data.add(sendMember);
+            data.add(targetMember);
 
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 
@@ -161,7 +158,7 @@ public class AlarmService{
         return channelId;
     }
 
-    private void sendPosts(String channelId, String title, LocalDateTime endDate) {
+    private void sendPosts(String channelId, String message) {
         HttpURLConnection conn = null;
 
         try {
@@ -172,10 +169,8 @@ public class AlarmService{
             conn.setRequestProperty("Content-type", "application/json");
             conn.setRequestProperty("Authorization", "Bearer " + TOKEN);
 
-            Duration remainDuration = Duration.between(LocalDateTime.now(), endDate);
-
             JSONObject data = new JSONObject();
-            data.put("message",title + " 설문이 " + remainDuration.toDays() + "일 " + (remainDuration.toHours()  - remainDuration.toDays() * 24) + "시 " + (remainDuration.toMinutes() - remainDuration.toHours() * 60) + "분 남았습니다." );
+            data.put("message", message);
             data.put("channel_id", channelId);
 
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
