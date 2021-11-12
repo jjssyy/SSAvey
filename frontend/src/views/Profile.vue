@@ -79,40 +79,6 @@
             color="warning"
             ><i class="fas fa-window-close fa-sm"></i>취소</v-btn
           >
-          <v-btn light class="mx-5 my-5" color="error">
-            <i class="fas fa-times-circle"></i>회원탈퇴
-          </v-btn>
-          <v-menu bottom :offset-x="offset">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" dark v-bind="attrs" v-on="on">
-                <i class="fas fa-ellipsis-v"></i>
-              </v-btn>
-            </template>
-            <v-list>
-              <v-list-item>
-                <v-list-item-title
-                  >결과보기
-                  <i class="fas fa-file-alt fa-sm" style="float: right;"></i
-                ></v-list-item-title>
-              </v-list-item>
-              <v-divider></v-divider>
-              <v-list-item>
-                <v-list-item-title
-                  >공유
-                  <i class="fas fa-share-alt fa-sm" style="float: right;"></i
-                ></v-list-item-title>
-              </v-list-item>
-              <v-divider></v-divider>
-              <v-list-item>
-                <v-list-item-title
-                  >삭제<i
-                    class="fas fa-trash-alt fa-sm"
-                    style="float: right;"
-                  ></i
-                ></v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
         </v-row>
       </v-card-actions>
     </v-card>
