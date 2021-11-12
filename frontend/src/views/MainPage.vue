@@ -115,39 +115,39 @@
 
 <script>
 // import main from '@/api/main.js'
-import UserApi from "@/api/UserApi";
-import axios from "axios";
+import UserApi from '@/api/UserApi'
+import axios from 'axios'
 export default {
   data() {
     return {
       colors: [
-        "indigo",
-        "warning",
-        "pink darken-2",
-        "red lighten-1",
-        "deep-purple accent-4",
+        'indigo',
+        'warning',
+        'pink darken-2',
+        'red lighten-1',
+        'deep-purple accent-4',
       ],
-      slides: ["First", "Second", "Third", "Fourth", "Fifth"],
+      slides: ['First', 'Second', 'Third', 'Fourth', 'Fifth'],
       expectedSurvey: [],
       proceedingSurvey: [
         {
-          title: "첫번째 설문",
-          start_date: "2021.11.01 18:00",
-          end_date: "2021.11.02.09:00",
+          title: '첫번째 설문',
+          start_date: '2021.11.01 18:00',
+          end_date: '2021.11.02.09:00',
         },
         {
-          title: "첫번째 설문",
-          start_date: "2021.11.01 18:00",
-          end_date: "2021.11.02.09:00",
+          title: '첫번째 설문',
+          start_date: '2021.11.01 18:00',
+          end_date: '2021.11.02.09:00',
         },
         {
-          title: "첫번째 설문",
-          start_date: "2021.11.01 18:00",
-          end_date: "2021.11.02.09:00",
+          title: '첫번째 설문',
+          start_date: '2021.11.01 18:00',
+          end_date: '2021.11.02.09:00',
         },
       ],
       completedSurvey: [],
-    };
+    }
   },
   // async created() {
   //   main.getSurveysByStatus(
@@ -166,13 +166,13 @@ export default {
   // },
   methods: {
     gotoExpected() {
-      this.$router.push("/survey/state/expected");
+      this.$router.push('/survey/state/expected')
     },
     gotoProceeding() {
-      this.$router.push("/survey/state/proceeding");
+      this.$router.push('/survey/state/proceeding')
     },
     gotoCompleted() {
-      this.$router.push("/survey/state/completed");
+      this.$router.push('/survey/state/completed')
     },
   },
   created() {
@@ -180,27 +180,31 @@ export default {
       {
         uid: this.$store.state.uid,
       },
-      (res) => {
-        this.$store.commit("setUser", res.data.user);
+      res => {
+        this.$store.commit('setUser', res.data.user)
       },
-      (err) => {
-        console.log(err);
-        alert("올바르지 않은 UID입니다.");
-      }
-    );
+      err => {
+        console.log(err)
+        alert('올바르지 않은 UID입니다.')
+      },
+    )
     axios
-      .create({
-        baseURL: "https://meeting.ssafy.com/api/v4",
-        headers: {
-          Authorization: "Bearer uieydcqsspf87n6d7xo3kugp7r",
+      .get(
+        'https://meeting.ssafy.com/api/v4/users/' +
+          this.$store.state.uid +
+          '/image',
+        {
+          headers: {
+            Authorization: 'Bearer uieydcqsspf87n6d7xo3kugp7r',
+            'Access-Control-Allow-Origin': 'http://k5c105.p.ssafy.io',
+          },
         },
+      )
+      .then(res => {
+        console.log(res)
       })
-      .get("/users/" + this.$store.state.uid + "/image")
-      .then((res) => {
-        console.log(res);
-      });
   },
-};
+}
 </script>
 
 <style scoped>
