@@ -114,55 +114,55 @@
 </template>
 
 <script>
-import UserApi from "@/api/UserApi";
+import UserApi from '@/api/UserApi'
 export default {
   data: () => ({
-    positions: ["교육생", "컨설턴트", "교육프로", "교육코치"],
-    generations: ["5기", "6기"],
-    roles: ["없음", "팀장", "팀원"],
-    regions: ["서울", "대전", "광주", "구미"],
-    regions2: ["서울", "대전", "광주", "구미", "부울경"],
+    positions: ['교육생', '컨설턴트', '교육프로', '교육코치'],
+    generations: ['5기', '6기'],
+    roles: ['없음', '팀장', '팀원'],
+    regions: ['서울', '대전', '광주', '구미'],
+    regions2: ['서울', '대전', '광주', '구미', '부울경'],
     clss: [
-      "1반",
-      "2반",
-      "3반",
-      "4반",
-      "5반",
-      "6반",
-      "7반",
-      "8반",
-      "9반",
-      "10반",
+      '1반',
+      '2반',
+      '3반',
+      '4반',
+      '5반',
+      '6반',
+      '7반',
+      '8반',
+      '9반',
+      '10반',
     ],
     teams: [
-      "없음",
-      "1팀",
-      "2팀",
-      "3팀",
-      "4팀",
-      "5팀",
-      "6팀",
-      "7팀",
-      "8팀",
-      "9팀",
-      "10팀",
+      '없음',
+      '1팀',
+      '2팀',
+      '3팀',
+      '4팀',
+      '5팀',
+      '6팀',
+      '7팀',
+      '8팀',
+      '9팀',
+      '10팀',
     ],
-    position: "",
-    generation: "",
-    region: "",
-    cls: "",
-    team: "",
-    name: "",
-    role: "",
+    position: '',
+    generation: '',
+    region: '',
+    cls: '',
+    team: '',
+    name: '',
+    role: '',
     nameRules: [
-      (v) => !!v || "Name is required",
-      (v) => v.length <= 4 || "Name must be less than 4 characters",
+      v => !!v || 'Name is required',
+      v => v.length <= 4 || 'Name must be less than 4 characters',
     ],
   }),
   methods: {
-    Enter: function () {
+    Enter: function() {
       if (this.name.length >= 3) {
-        console.log(this.position, this.generation, this.region, this.name);
+        console.log(this.position, this.generation, this.region, this.name)
 
         UserApi.updateUser(
           {
@@ -181,16 +181,16 @@ export default {
             answer_survey: [],
           },
           // eslint-disable-next-line no-unused-vars
-          (res) => {
-            this.$router.push({ name: "MainPage" });
-          }
-        );
+          res => {
+            this.$router.push({ name: 'MainPage' })
+          },
+        )
       } else {
-        alert("name은 3글자 이상 작성해주세요");
+        alert('name은 3글자 이상 작성해주세요')
       }
     },
   },
-};
+}
 </script>
 
 <style scoped></style>
