@@ -6,7 +6,11 @@ import VueSweetalert2 from 'vue-sweetalert2'
 import './css/common/sweetalert2.min.css'
 import './css/login/styles.scss'
 import store from './store/index'
+import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 Vue.use(VueSweetalert2)
 new Vue({
