@@ -264,7 +264,7 @@ export default {
       survey: {
         title: null,
         explain: null,
-        is_anony: false, // 익명설문인지
+        anony: false, // 익명설문인지
         start_date: null, // surveyset 페이지에서 작성
         end_date: null, // surveyset 페이지에서 작성
         question: [],
@@ -281,13 +281,13 @@ export default {
       //   q_number: null, // 1, 1-1, 1-2, 2
       //   q_explanation: null,
       //   q_type: null, // SINGLE, MULTIPLE, SHORT
-      //   is_required: true,
+      //   required: true,
       //   q_option: [], // q_type이 SHORT 경우 q_option은 빈 배열
       // },
       // q_option: {
       //   o_number: null, // 문항의의 선택지 번호
       //   o_explanation: null,
-      //   is_short: null, // 객관식의 o_number 선택지가 '기타'냐?
+      //   short_answer: null, // 객관식의 o_number 선택지가 '기타'냐?
       // },
       templates: [],
       useTemplateIndex: null,
@@ -312,7 +312,7 @@ export default {
           // 해당 title과 explain 리셋시키고
           this.survey.title = this.templates[index].t_title
           this.survey.explain = this.templates[index].t_explain
-          // section-survey-option 리셋만 시킴 is_anony는 탬플릿에 없음
+          // section-survey-option 리셋만 시킴 anony는 탬플릿에 없음
           document.querySelector('.section-survey-option').remove()
           document
             .querySelector('.section-containers')
@@ -395,7 +395,7 @@ export default {
                 }
               })
             }
-            if (!element['is_required']) {
+            if (!element['required']) {
               temp.childNodes[1].childNodes[3].childNodes[1].childNodes[0].click()
             }
           })
@@ -439,7 +439,7 @@ export default {
       )
     },
     isAnony() {
-      this.survey.is_anony = !this.survey.is_anony
+      this.survey.anony = !this.survey.anony
     },
     createSurvey() {
       document
@@ -449,7 +449,7 @@ export default {
             q_number: null, // 1, 1-1, 1-2, 2
             q_explanation: null,
             q_type: null, // SINGLE, MULTIPLE, SHORT
-            is_required: true,
+            required: true,
             q_option: [], // q_type이 SHORT 경우 q_option은 빈 배열
           }
           question.q_number = `${index1 + 1}`
@@ -460,9 +460,9 @@ export default {
               'not-required',
             )
           ) {
-            question.is_required = false
+            question.required = false
           } else {
-            question.is_required = true
+            question.required = true
           }
           if (question.q_type != 'SHORT') {
             element1.childNodes[1].childNodes[3].childNodes.forEach(
@@ -470,17 +470,17 @@ export default {
                 let q_option = {
                   o_number: null, // 문항의의 선택지 번호
                   o_explanation: null,
-                  is_short: null, // 객관식의 o_number 선택지가 '기타'냐?
+                  short_answer: null, // 객관식의 o_number 선택지가 '기타'냐?
                 }
                 if (element2.classList.contains('q-option-item')) {
                   if (element2.childNodes[1].placeholder == '선택') {
                     q_option.o_number = `${index2 + 1}`
                     q_option.o_explanation = `${element2.childNodes[1].value}`
-                    q_option.is_short = false
+                    q_option.short_answer = false
                   } else {
                     q_option.o_number = `${index2 + 1}`
                     q_option.o_explanation = `${element2.childNodes[1].placeholder}`
-                    q_option.is_short = true
+                    q_option.short_answer = true
                   }
                   question.q_option.push(q_option)
                 }
@@ -608,7 +608,7 @@ export default {
       // 설문 클릭
       document.querySelector('.option-s-center>input').click()
       // 실명설문인지 아닌지
-      if (this.$store.state.surveySet.survey.is_anony) {
+      if (this.$store.state.surveySet.survey.anony) {
         document.querySelector('.option-anony>label>input').click()
       }
       let allDropEl = document.querySelectorAll('.dragthing-drop')
@@ -620,7 +620,7 @@ export default {
         allDropEl[index].childNodes[1].childNodes[0].value =
           element.q_explanation
         // 필수 응답인지 아닌지 체크해줘
-        if (!element.is_required) {
+        if (!element.required) {
           allDropEl[
             index
           ].childNodes[1].childNodes[4].childNodes[1].childNodes[0].click()

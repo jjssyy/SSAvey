@@ -13,7 +13,7 @@ function singleMake(question) {
         element['o_explanation']
       }"/><i class="fas fa-times" style="display: none;"></i></div>`
     } else {
-      if (element['is_short']) {
+      if (element['short_answer']) {
         result += `<div class="q-option-item"><div class="q-option-item-center"><input type="radio" name="SINGLE" value="${index +
           1}" /></div><input type="text" placeholder="기타" disabled="true"/><i class="fas fa-times" style="display: none;"></i></div>`
       } else {
@@ -41,7 +41,7 @@ function multipleMake(question) {
         element['o_explanation']
       }"/><i class="fas fa-times" style="display: none;"></i></div>`
     } else {
-      if (element['is_short']) {
+      if (element['short_answer']) {
         result += `<div class="q-option-item"><div class="q-option-item-center"><input type="checkbox" name="MULTIPLE" value="${index +
           1}" /></div><input type="text" placeholder="기타" disabled="true"/><i class="fas fa-times" style="display: none;"></i></div>`
       } else {
