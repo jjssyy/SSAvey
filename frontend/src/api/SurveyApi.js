@@ -34,14 +34,14 @@ const makeSurvey = (payload, callback, errorCallback) => {
 }
 
 const SurveyApi = {
-  getCertainStateSurveys: (state, uid, callback, errorCallback) =>
-    getCertainStateSurveys(state, uid, callback, errorCallback),
+  getCertainStateSurveys: (state, uid, pageNumber, callback, errorCallback) =>
+    getCertainStateSurveys(state, uid, pageNumber, callback, errorCallback),
   getSurvey: (surveyId, callback, errorCallback) =>
     getSurvey(surveyId, callback, errorCallback),
   makeSurvey: (payload, callback, errorCallback) =>
     makeSurvey(payload, callback, errorCallback),
-  getMysurvey: (payload, callback, errorCallback) =>
-    getMysurvey(payload, callback, errorCallback),
+  getMysurvey: (state, uid, pageNumber, callback, errorCallback) =>
+    getMysurvey(state, uid, pageNumber, callback, errorCallback),
 }
 
 export default SurveyApi
