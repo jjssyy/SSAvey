@@ -25,9 +25,9 @@ public class AnswerQuestion {
 	
 	private Type q_type;
 	
-	private String answer;
+	private List<String> answer;
 	
-	private boolean is_required;
+	private boolean required;
 	
 	private List<AnswerOption>  q_option;
 }

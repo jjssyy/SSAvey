@@ -26,7 +26,7 @@ public class Question {
 	
 	private List<Option> q_option;
 	
-	private boolean is_required;
+	private boolean required;
 	
 	
 

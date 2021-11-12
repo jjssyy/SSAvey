@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -39,6 +40,7 @@ public class TemplateService {
             list.add(template);
         }
 
+        Collections.reverse(list);
         return list;
     }
 

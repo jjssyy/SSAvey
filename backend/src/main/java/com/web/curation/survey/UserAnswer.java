@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
@@ -31,7 +33,7 @@ public class UserAnswer {
     
     private String alias;
     
-    private String answer;
+    private List<String> answer;
 	
 
 }

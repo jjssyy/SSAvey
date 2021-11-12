@@ -26,7 +26,7 @@ public class Survey {
 
 	private String explain;
 
-	private boolean is_anony;
+	private boolean anony;
 
 	private String writer;
 
