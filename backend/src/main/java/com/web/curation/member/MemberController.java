@@ -156,4 +156,14 @@ public class MemberController {
         }
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
+
+    @GetMapping("/image")
+    public ResponseEntity<Map<String, Object>> getUserImage(@RequestParam String uid){
+        Map<String, Object> resultMap = new HashMap<>();
+
+        memberService.getUserImage(uid);
+
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
 }

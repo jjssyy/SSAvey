@@ -24,5 +24,5 @@ public class Option {
 	 
 	private String o_explanation;
 	
-	private boolean is_short;	
+	private boolean short_answer;
 }

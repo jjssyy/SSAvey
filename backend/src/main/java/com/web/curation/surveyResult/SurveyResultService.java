@@ -40,7 +40,7 @@ public class SurveyResultService {
 		result.setSid(tmp_survey.getSid());
 		result.setTitle(tmp_survey.getTitle());
 		result.setExplain(tmp_survey.getExplain());
-		result.set_anony(tmp_survey.is_anony());
+		result.set_anony(tmp_survey.isAnony());
 		result.setWriter(tmp_survey.getWriter());
 		result.setStart_date(tmp_survey.getStart_date());
 		result.setEnd_date(tmp_survey.getEnd_date());

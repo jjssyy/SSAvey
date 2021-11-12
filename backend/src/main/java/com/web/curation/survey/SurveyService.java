@@ -29,7 +29,7 @@ public class SurveyService {
 	
 	public void createSurvey(Survey survey) {
 		survey = surveyDao.save(survey);
-		alarmService.setAlarmSchdule(survey.getSid(), survey.getStart_date());
+		alarmService.setAlarmSchdule(survey.getSid(), survey.getStart_date(), survey.getEnd_date());
 		//할당된 설문,만든 설문 분배하는 작업
 		List<String> target=survey.getTarget();
 		List<String> share=survey.getShare();

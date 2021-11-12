@@ -16,7 +16,7 @@ public class MySurveyDto {
     private String title;
     private String explain;
     private String writer;
-    private boolean is_anony;
+    private boolean anony;
     private LocalDateTime start_date;
     private LocalDateTime end_date;
     private State state;

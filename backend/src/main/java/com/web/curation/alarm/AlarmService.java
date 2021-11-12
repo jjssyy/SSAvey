@@ -19,10 +19,7 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @AllArgsConstructor
@@ -31,37 +28,37 @@ public class AlarmService{
     private final String TOKEN = "uieydcqsspf87n6d7xo3kugp7r";
 
     private SurveyDao surveyDao;
-    private ArrayList<ThreadPoolTaskScheduler> schedulerArr = new ArrayList<>();
+    private HashMap<String, ThreadPoolTaskScheduler> schedulerHashMap;
 
-    public void setAlarmSchdule(String sid, LocalDateTime localDateTime){
+
+    public void setAlarmSchdule(String sid, LocalDateTime startDateTime, LocalDateTime endDateTime){
         ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
         threadPoolTaskScheduler.initialize();
-        threadPoolTaskScheduler.setThreadNamePrefix(sid + "-");
 
-        Date date = Timestamp.valueOf(localDateTime);
-        threadPoolTaskScheduler.schedule(getRunnable(), date);
+        Date startDate = Timestamp.valueOf(startDateTime);
+        Date endDate = Timestamp.valueOf(endDateTime);
 
-        schedulerArr.add(threadPoolTaskScheduler);
+        threadPoolTaskScheduler.schedule(startSurvey(), startDate);
+        threadPoolTaskScheduler.schedule(closeSurvey(), endDate);
+
+        schedulerHashMap.put(sid, threadPoolTaskScheduler);
     }
 
-    public void editAlarmSchedule(String sid, LocalDateTime localDateTime){
+    public void editAlarmSchedule(String sid, LocalDateTime startDateTime, LocalDateTime endDateTime){
         ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
         threadPoolTaskScheduler.initialize();
-        threadPoolTaskScheduler.setThreadNamePrefix(sid);
 
-        Date date = Timestamp.valueOf(localDateTime);
-        threadPoolTaskScheduler.schedule(getRunnable(), date);
+        Date startDate = Timestamp.valueOf(startDateTime);
+        Date endDate = Timestamp.valueOf(endDateTime);
 
-        for(int i = 0; i < schedulerArr.size(); i++){
-            if(sid.equals(schedulerArr.get(i).getThreadNamePrefix())){
-                schedulerArr.get(i).shutdown();
-                schedulerArr.set(i, threadPoolTaskScheduler);
-                break;
-            }
-        }
+        threadPoolTaskScheduler.schedule(startSurvey(), startDate);
+        threadPoolTaskScheduler.schedule(closeSurvey(), endDate);
+
+        schedulerHashMap.get(sid).shutdown();
+        schedulerHashMap.put(sid, threadPoolTaskScheduler);
     }
 
-    private Runnable getRunnable() {
+    private Runnable startSurvey() {
         return () -> {
             String fullName = Thread.currentThread().getName();
             String prefixName = fullName.substring(0, fullName.indexOf("-"));
@@ -73,13 +70,35 @@ public class AlarmService{
 
             surveyDao.save(survey.get());
 
-            for(int i = 0; i < schedulerArr.size(); i++){
-                if(Thread.currentThread().getName().contains(schedulerArr.get(i).getThreadNamePrefix())){
-                    schedulerArr.get(i).shutdown();
-                    schedulerArr.remove(i);
-                    break;
-                }
-            }
+//            for(int i = 0; i < schedulerArr.size(); i++){
+//                if(Thread.currentThread().getName().contains(schedulerArr.get(i).getThreadNamePrefix())){
+//                    schedulerArr.get(i).shutdown();
+//                    schedulerArr.remove(i);
+//                    break;
+//                }
+//            }
+        };
+    }
+
+    private Runnable closeSurvey() {
+        return () -> {
+            String fullName = Thread.currentThread().getName();
+            String prefixName = fullName.substring(0, fullName.indexOf("-"));
+            System.out.println(prefixName);
+
+            Optional<Survey> survey = surveyDao.findById(prefixName);
+            survey.get().setState(State.PROCEEDING);
+            mattermostAlarm(survey.get().getTitle(), survey.get().getEnd_date(), survey.get().getTarget());
+
+            surveyDao.save(survey.get());
+
+//            for(int i = 0; i < schedulerArr.size(); i++){
+//                if(Thread.currentThread().getName().contains(schedulerArr.get(i).getThreadNamePrefix())){
+//                    schedulerArr.get(i).shutdown();
+//                    schedulerArr.remove(i);
+//                    break;
+//                }
+//            }
         };
     }
 
