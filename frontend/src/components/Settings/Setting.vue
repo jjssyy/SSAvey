@@ -120,12 +120,14 @@
 </template>
 <script>
 import UserApi from '@/api/UserApi'
+
 export default {
   data() {
     return {
       user: {},
       is_modify: true,
       offset: true,
+      dialog: false,
     }
   },
   methods: {
