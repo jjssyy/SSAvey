@@ -56,7 +56,6 @@ public class SurveyController {
     	int end=start+10;
     
     	if(end>maxSize)end=maxSize;
-    	System.out.println(start+" "+end);
     	result=new ArrayList<Survey>(result.subList(start, end));
     	resultmap.put("status", HttpStatus.OK);
     	resultmap.put("data", result);

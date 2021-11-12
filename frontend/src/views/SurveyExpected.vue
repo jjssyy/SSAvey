@@ -9,21 +9,21 @@
         </v-btn>
       </v-toolbar>
 
-      <v-list three-line v-if="surveys.length != 0">
+      <v-list three-line v-if="surveys.length >= 2">
         <template v-for="(item, index) in surveys">
           <v-subheader
             v-if="item.header"
-            :key="item.header"
+            :key="index"
             v-text="item.header"
           ></v-subheader>
 
           <v-divider
             v-else-if="item.divider"
-            :key="index"
+            :key="index + 1"
             :inset="item.inset"
           ></v-divider>
 
-          <v-list-item v-else :key="item.title">
+          <v-list-item v-else :key="index + 2">
             <v-list-item-content>
               <v-list-item-title v-html="item.title"></v-list-item-title>
               <v-list-item-subtitle
