@@ -269,6 +269,7 @@ export default {
             isClkUpdate: false,
             surveySet: {},
           }
+          this.$store.commit('resetSurveyDragThing', [])
           this.$store.commit('setSurveySet', payload)
         },
         err => {
