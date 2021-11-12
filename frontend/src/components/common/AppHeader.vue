@@ -158,7 +158,7 @@ export default {
       this.$router.push('/survey')
     },
     moveSetting() {
-      this.$router.push('/setting')
+      this.$router.push('/profile')
     },
     moveExpected() {
       this.$router.push('/survey/state/expected')
