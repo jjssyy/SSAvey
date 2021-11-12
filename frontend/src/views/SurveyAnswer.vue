@@ -3,7 +3,7 @@
     <v-card width="1000" class="mx-auto">
       <v-toolbar color="#4E7AF5" dark>
         <v-toolbar-title
-          >{{ this.items[0].title }} {{ result }}</v-toolbar-title
+          >{{ this.items[0].title }} {{ resultCompute }}</v-toolbar-title
         >
         <v-spacer></v-spacer>
       </v-toolbar>
@@ -19,16 +19,13 @@
               <v-list-item-title>
                 {{ ques.q_number }}. {{ ques.q_explanation }}
               </v-list-item-title>
-              <v-radio-group
-                v-model="result[index + 1 + '번']"
-                v-if="ques.q_type == 'SINGLE'"
-                class="mx-5"
-              >
+              <v-radio-group v-if="ques.q_type == 'SINGLE'" class="mx-5">
                 <v-radio
                   v-for="(answer, r_index) in ques.q_option"
                   :key="r_index + 2"
                   :label="`${answer.o_explanation}`"
                   :value="`${answer.o_number}`"
+                  @click="checkSingle(index + 1, `${answer.o_number}`)"
                 >
                 </v-radio>
               </v-radio-group>
@@ -36,10 +33,10 @@
                 <v-checkbox
                   v-for="(answer, c_index) in ques.q_option"
                   :key="c_index + 3"
-                  v-model="result[index + 1 + '번']"
                   class="mt-0 pt-0"
                   :label="`${answer.o_explanation}`"
                   :value="`${answer.o_number}`"
+                  @click="checkMultiple(index + 1, `${answer.o_number}`)"
                 >
                 </v-checkbox>
               </v-container>
@@ -49,10 +46,11 @@
                   counter
                   :rules="shortrules"
                   :value="shortvalue"
-                  v-model="result[index + 1 + '번']"
+                  v-model="short[index + 1 + '번']"
                   background-color="grey lighten-4"
                   color="cyan"
                   label="답변을 입력해주세요."
+                  @focusout="checkShort(index + 1)"
                 ></v-textarea>
               </v-container>
             </v-list-item-content>
@@ -60,7 +58,7 @@
         </template>
       </v-list>
       <v-card-actions style="float: right;">
-        <v-btn text color="primary accent-4">
+        <v-btn @click="showresult" text color="primary accent-4">
           SUBMIT
         </v-btn>
       </v-card-actions>
@@ -71,7 +69,12 @@
 <script>
 export default {
   data: () => ({
-    shortrules: [v => v.length <= 20 || '최대 20자까지만 입력해주세요.'],
+    shortrules: [
+      v =>
+        v ? (v.length <= 20 ? true : '최대 20자까지만 입력해주세요.') : false,
+    ],
+    // shortrules: null,
+    short: {},
     shortvalue: '',
     result: {},
     items: [
@@ -137,6 +140,13 @@ export default {
             is_required: true,
             q_option: [],
           },
+          {
+            q_number: '6',
+            q_explanation: '6번 문항 주관식 제목입니다.',
+            q_type: 'SHORT',
+            is_required: true,
+            q_option: [],
+          },
         ],
         state: 'EXPECTED',
         share: [],
@@ -149,5 +159,58 @@ export default {
       },
     ],
   }),
+  // mounted() {
+  //   this.shortrules = [v => v.length <= 20 || '최대 20자까지만 입력해주세요.']
+  // },
+  computed: {
+    resultCompute() {
+      return this.result
+    },
+  },
+  methods: {
+    showresult() {
+      console.log(this.result)
+    },
+    checkMultiple(index, key) {
+      if (this.result.hasOwnProperty(`${index}번`)) {
+        if (this.result[`${index}번`].includes(key)) {
+          this.result[`${index}번`].splice(
+            this.result[`${index}번`].indexOf(key),
+            1,
+          )
+        } else {
+          this.result[`${index}번`].push(key)
+        }
+      } else {
+        this.result[`${index}번`] = []
+        this.result[`${index}번`].push(key)
+      }
+      console.log(this.result)
+    },
+    checkSingle(index, key) {
+      if (this.result.hasOwnProperty(`${index}번`)) {
+        if (this.result[`${index}번`].length != 0) {
+          this.result[`${index}번`].pop()
+          this.result[`${index}번`].push(key)
+        } else {
+          this.result[`${index}번`].push(key)
+        }
+      } else {
+        this.result[`${index}번`] = []
+        this.result[`${index}번`].push(key)
+      }
+      console.log(this.result)
+    },
+    checkShort(index) {
+      if (this.result.hasOwnProperty(`${index}번`)) {
+        this.result[`${index}번`].pop()
+        this.result[`${index}번`].push(this.short[`${index}번`])
+      } else {
+        this.result[`${index}번`] = []
+        this.result[`${index}번`].push(this.short[`${index}번`])
+      }
+      console.log(this.result)
+    },
+  },
 }
 </script>

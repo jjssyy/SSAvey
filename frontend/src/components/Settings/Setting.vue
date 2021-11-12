@@ -1,72 +1,123 @@
 <template>
-  <div class="myinfo">
-    <div class="profile-img">
-      <div id="header-img">
-        <div>
-          <img
-            src="@/assets/profileDefault.jpg"
-            alt=""
-            width="10%"
-            height="10%"
-            style="border-radius: 50%;"
-          />
+  <v-app>
+    <v-card class="mx-auto mt-5" color="#3396f4" dark width="600">
+      <v-card-title>
+        <v-list-item class="grow">
+          <v-list-item-avatar color="grey darken-3">
+            <v-img
+              class="elevation-6"
+              alt=""
+              src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+            ></v-img>
+          </v-list-item-avatar>
+          <v-list-item-content>
+            <v-list-item-title>
+              <h2>{{ user.name }} 님</h2>
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-card-title>
+      <hr />
+      <v-card-text class="text-h5 font-weight-bold">
+        <div class="myinfo-contents">
+          <div class="userinfo">
+            <div class="content">
+              <h4>이메일</h4>
+              <input v-model="user.email" :disabled="true" />
+            </div>
+            <div class="content">
+              <h4>직책</h4>
+              <input v-model="user.position" :disabled="is_modify" />
+            </div>
+            <div class="content">
+              <h4>기수</h4>
+              <input v-model="user.generation" :disabled="is_modify" />
+            </div>
+            <div class="content">
+              <h4>지역</h4>
+              <input v-model="user.area" :disabled="is_modify" />
+            </div>
+            <div class="content">
+              <h4>반</h4>
+              <input v-model="user.group" :disabled="is_modify" />
+            </div>
+            <div class="content">
+              <h4>팀</h4>
+              <input v-model="user.team" :disabled="is_modify" />
+            </div>
+            <div class="content">
+              <h4>팀 내 역할</h4>
+              <input v-model="user.team_roll" :disabled="is_modify" />
+            </div>
+          </div>
         </div>
-      </div>
-      <h2 class="nickname">
-        {{ user.name }} 님
-        <span @click="Update">
-          <i class="fas fa-pen fa-sm"></i>
-        </span>
-      </h2>
-    </div>
-    <div class="myinfo-contents">
-      <div class="userinfo">
-        <div class="content">
-          <h1>이메일</h1>
-          <input v-model="user.email" :disabled="true" />
-        </div>
-        <div class="content">
-          <h1>직책</h1>
-          <input v-model="user.position" :disabled="is_modify" />
-        </div>
-        <div class="content">
-          <h1>기수</h1>
-          <input v-model="user.generation" :disabled="is_modify" />
-        </div>
-        <div class="content">
-          <h1>지역</h1>
-          <input v-model="user.area" :disabled="is_modify" />
-        </div>
-        <div class="content">
-          <h1>반</h1>
-          <input v-model="user.group" :disabled="is_modify" />
-        </div>
-        <div class="content">
-          <h1>팀</h1>
-          <input v-model="user.team" :disabled="is_modify" />
-        </div>
-        <div class="content">
-          <h1>팀 내 역할</h1>
-          <input v-model="user.team_roll" :disabled="is_modify" />
-        </div>
-        <div>
-          <p>
-            <span>
-              회원 탈퇴
-            </span>
-          </p>
-        </div>
-        <div class="button" v-if="!is_modify">
-          <button>취소</button>
-          <button @click="modify" :disabled="!isValid">
-            완료
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
+      </v-card-text>
+      <v-card-actions>
+        <v-row align="center" justify="space-between">
+          <v-btn
+            v-if="is_modify"
+            @click="Update"
+            light
+            class="mx-5 my-5"
+            color="white"
+          >
+            <i class="fas fa-edit fa-sm"></i>수정
+          </v-btn>
+          <v-btn
+            v-if="!is_modify"
+            @click="modify"
+            light
+            class="mx-5 my-5"
+            color="white"
+            ><i class="fas fa-pen fa-sm"></i>완료</v-btn
+          >
+          <v-btn
+            v-if="!is_modify"
+            @click="back"
+            light
+            class="mx-5 my-5"
+            color="warning"
+            ><i class="fas fa-window-close fa-sm"></i>취소</v-btn
+          >
+          <v-btn light class="mx-5 my-5" color="error">
+            <i class="fas fa-times-circle"></i>회원탈퇴
+          </v-btn>
+          <!-- <v-menu bottom :offset-x="offset">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                <i class="fas fa-ellipsis-v"></i>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item>
+                <v-list-item-title
+                  >결과보기
+                  <i class="fas fa-file-alt fa-sm" style="float: right;"></i
+                ></v-list-item-title>
+              </v-list-item>
+              <v-divider></v-divider>
+              <v-list-item>
+                <v-list-item-title
+                  >공유
+                  <i class="fas fa-share-alt fa-sm" style="float: right;"></i
+                ></v-list-item-title>
+              </v-list-item>
+              <v-divider></v-divider>
+              <v-list-item>
+                <v-list-item-title
+                  >삭제<i
+                    class="fas fa-trash-alt fa-sm"
+                    style="float: right;"
+                  ></i
+                ></v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu> -->
+        </v-row>
+      </v-card-actions>
+    </v-card>
+  </v-app>
 </template>
-
 <script>
 import UserApi from '@/api/UserApi'
 export default {
@@ -74,11 +125,15 @@ export default {
     return {
       user: {},
       is_modify: true,
+      offset: true,
     }
   },
   methods: {
     Update() {
       this.is_modify = false
+    },
+    back() {
+      this.is_modify = !this.is_modify
     },
     modify() {
       UserApi.updateUser(
@@ -97,8 +152,9 @@ export default {
           survey: this.user.survey,
         },
         res => {
-          this.is_modify = !this.is_modify
           alert(res.data.message)
+          this.$store.commit('setUser', this.user)
+          this.is_modify = !this.is_modify
         },
       )
     },
@@ -120,4 +176,9 @@ export default {
 }
 </script>
 
-<style scoped src="./../../css/setting/profile.css"></style>
+<style scoped>
+.content {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+</style>
