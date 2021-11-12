@@ -59,7 +59,7 @@ public class SurveyController {
     	result=new ArrayList<Survey>(result.subList(start, end));
     	resultmap.put("status", HttpStatus.OK);
     	resultmap.put("data", result);
-    	resultmap.put("Pagecount", maxSize/10+1);
+    	resultmap.put("Pagecount", (maxSize-1)/10+1);
     	if(result.size()==0) {
     		resultmap.put("message","설문 목록이 없습니다.");
     	}

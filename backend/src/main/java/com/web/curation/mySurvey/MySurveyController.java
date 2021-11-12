@@ -45,7 +45,7 @@ public class MySurveyController {
 		mySurveyList=new ArrayList<MySurveyDto>(mySurveyList.subList(start, end));
 		resultMap.put("status", HttpStatus.OK);
 		resultMap.put("data", mySurveyList);
-		resultMap.put("Pagecount", maxSize/10+1);
+		resultMap.put("Pagecount", (maxSize-1)/10+1);
 		if(mySurveyList.size()==0){
 			resultMap.put("message","설문 목록이 없습니다.");
 		}

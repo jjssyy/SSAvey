@@ -48,7 +48,7 @@
                 </template>
                 <v-list>
                   <v-list-item>
-                    <v-list-item-title v-if="this.user.id == this.survey.writer"
+                    <v-list-item-title v-if="uid == item.writer"
                       >수정하기
                       <i class="fas fa-pencil fa-sm" style="float: right;"></i
                     ></v-list-item-title>
@@ -96,6 +96,7 @@ export default {
     surveys: [],
     rows: 20,
     currentPage: 1,
+    uid: '',
   }),
   methods: {},
   watch: {
@@ -108,7 +109,6 @@ export default {
           console.log(res.data.data)
           this.rows = res.data.Pagecount * 20
           this.surveys = res.data.data
-
           this.surveys.push({ divider: true, inset: true })
         },
         () => {},
@@ -124,7 +124,7 @@ export default {
         console.log(res.data.data)
         this.rows = res.data.Pagecount * 20
         this.surveys = res.data.data
-
+        this.uid = this.$store.state.uid
         this.surveys.push({ divider: true, inset: true })
       },
       () => {},
