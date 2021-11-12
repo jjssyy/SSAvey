@@ -79,6 +79,7 @@
             탬플릿
           </button>
         </div>
+        <!-- 양식 -->
         <div v-show="isClkFormMenu">
           <div class="sub-title">
             <p class="sub-title-text">드래그해서</p>
@@ -210,7 +211,40 @@
             </div>
           </div>
         </div>
-        <div v-show="isClkTemplateMenu"><p>g2</p></div>
+        <!-- 탬플릿 -->
+        <div v-show="isClkTemplateMenu" style="width: 100%;">
+          <div class="sub-title">
+            <p class="sub-title-text">탬플릿을 불러와서</p>
+            <p class="sub-title-text">설문지를 작성할 수 있습니다.</p>
+          </div>
+          <div class="template-container">
+            <div class="template">
+              <div v-if="templates.length != 0">
+                <div
+                  class="template-item"
+                  v-for="(element, index) in templates"
+                  :key="index"
+                >
+                  <div class="item-text">
+                    <p class="text-title">
+                      {{ element.t_title }}
+                    </p>
+                    <p class="explanation">{{ element.t_explain }}</p>
+                  </div>
+                  <button class="load" @click="loadTemplate(index)">
+                    <i class="fas fa-file-import fa-lg"></i>
+                  </button>
+                  <button class="garbage" @click="deleteTemplate(index)">
+                    <i class="fas fa-trash-alt fa-lg"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="empty-template" v-else>
+                <p>생성된 탬플릿이 없습니다.</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -220,7 +254,7 @@
 import TemplateApi from '@/api/TemplateApi'
 import dragula from 'dragula'
 import autoScroll from 'dom-autoscroller'
-// import { singleEl, multipleEl, shortEl } from '@/assets/questionForm'
+import { singleMake, multipleMake, shortMake } from '@/assets/questionForm'
 export default {
   data() {
     return {
@@ -255,23 +289,159 @@ export default {
       //   o_explanation: null,
       //   is_short: null, // 객관식의 o_number 선택지가 '기타'냐?
       // },
+      templates: [],
+      useTemplateIndex: null,
+      tempSurveyOption: null,
     }
   },
   methods: {
+    loadTemplate(index) {
+      this.$swal({
+        title: '작성중인 설문지가 존재합니다.',
+        icon: 'info',
+        target: '.drag-section',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '덮어쓰기',
+        cancelButtonText: '취소',
+      }).then(result => {
+        if (result.isConfirmed) {
+          console.log(this.templates[index])
+          // 뿌려주기 위해
+          // 해당 title과 explain 리셋시키고
+          this.survey.title = this.templates[index].t_title
+          this.survey.explain = this.templates[index].t_explain
+          // section-survey-option 리셋만 시킴 is_anony는 탬플릿에 없음
+          document.querySelector('.section-survey-option').remove()
+          document
+            .querySelector('.section-containers')
+            .insertBefore(
+              this.tempSurveyOption,
+              document.querySelector('.drop-parent'),
+            )
+          // drag-parent의 childNodes 다 삭제하고,
+          let temp2 = document.querySelector('.drop-parent')
+          while (temp2.firstChild) {
+            temp2.removeChild(temp2.firstChild)
+          }
+          this.templates[index]['question'].forEach(function(element, index) {
+            if (element.q_type == 'SINGLE') {
+              // SINGLE일 경우 뿌려주고 그냥 저장된 문자열로 뿌려주고
+              // 해당 DOM에 접근해서 데이터 넣어주기
+              document
+                .querySelector('.drop-parent')
+                .insertAdjacentHTML('beforeend', singleMake(element))
+            } else if (element.q_type == 'MULTIPLE') {
+              // MULTIPLE일 경우 뿌려주고 그냥 저장된 문자열로 뿌려주고
+              // 해당 DOM에 접근해서 데이터 넣어주기
+              document
+                .querySelector('.drop-parent')
+                .insertAdjacentHTML('beforeend', multipleMake(element))
+            } else {
+              // SHORT일 경우 뿌려주고 그냥 저장된 문자열로 뿌려주고
+              // 해당 DOM에 접근해서 데이터 넣어주기
+              document
+                .querySelector('.drop-parent')
+                .insertAdjacentHTML('beforeend', shortMake(element))
+            }
+            // 해당 문항에 대한 값은 다 들어갔다 이제 DOM접근해서 garbage버튼이랑, x버튼이랑, 필수응답 버튼 여부를 활성화 시켜주자.
+            let temp = document.querySelector('.drop-parent').childNodes[index]
+            temp.childNodes[1].childNodes[1].childNodes[0].addEventListener(
+              'click',
+              function() {
+                temp.remove()
+              },
+            )
+            if (temp.id != 'SHORT') {
+              temp.childNodes[1].childNodes[2].childNodes.forEach(function(
+                element,
+                index,
+              ) {
+                if (
+                  index != 0 &&
+                  index !=
+                    temp.childNodes[1].childNodes[2].childNodes.length - 1
+                ) {
+                  element.childNodes[2].addEventListener('click', function() {
+                    element.remove()
+                  })
+                } else if (
+                  index ==
+                  temp.childNodes[1].childNodes[2].childNodes.length - 1
+                ) {
+                  element.childNodes[0].addEventListener('click', function() {
+                    let cloneChild = temp.childNodes[1].childNodes[2].childNodes[0].cloneNode(
+                      true,
+                    )
+                    cloneChild.value = ''
+                    temp.childNodes[1].childNodes[2].insertBefore(
+                      cloneChild,
+                      element,
+                    )
+                  })
+                  element.childNodes[2].addEventListener('click', function() {
+                    let cloneChild = temp.childNodes[1].childNodes[2].childNodes[0].cloneNode(
+                      true,
+                    )
+                    cloneChild.childNodes[1].setAttribute('placeholder', '기타')
+                    cloneChild.childNodes[1].setAttribute('disabled', 'true')
+                    console.log('?')
+                    temp.childNodes[1].childNodes[2].insertBefore(
+                      cloneChild,
+                      element,
+                    )
+                  })
+                }
+              })
+            }
+            if (!element['is_required']) {
+              temp.childNodes[1].childNodes[3].childNodes[1].childNodes[0].click()
+            }
+          })
+          // this.survey.template에 tid 넣기
+          this.survey.template = this.templates[index].tid
+          // use_template에 true 넣기
+          this.survey.use_template = true
+        }
+      })
+    },
+    deleteTemplate(index) {
+      this.$swal({
+        title: '탬플릿 삭제를 하시겠습니까?',
+        icon: 'warning',
+        target: '.drag-section',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '네',
+        cancelButtonText: '취소',
+      }).then(result => {
+        if (result.isConfirmed) {
+          TemplateApi.deleteTemplate(
+            this.templates[index]['tid'],
+            () => {
+              this.templates.splice(index, 1)
+            },
+            () => {},
+          )
+        }
+      })
+    },
+    createTemplate() {
+      TemplateApi.getTemplates(
+        this.$store.state.uid,
+        res => {
+          this.templates = res.data.data
+          console.log(this.templates)
+        },
+        () => {},
+      )
+    },
     isAnony() {
       this.survey.is_anony = !this.survey.is_anony
     },
     createSurvey() {
-      // 사용자에게 설문작성에 무엇이 잘못되었는지 알려주기.
-      // if (!this.survey.title) {
-      //   console.log('설문지 제목을 입력해 주세요.')
-      //   if (!this.survey.explain) {
-      //     console.log('설문지 설명을 입력해 주세요.')
-      //     if (document.querySelector('.drop-parent').childNodes.length == 0) {
-      //       console.log('설문 문항을 작성해 주세요.')
-      //     }
-      //   }
-      // }
       document
         .querySelector('.drop-parent')
         .childNodes.forEach((element1, index1) => {
@@ -321,6 +491,12 @@ export default {
         })
       if (this.surveyOrTemplate == 'survey') {
         console.log(this.survey)
+        // this.survey.use_template이 true이면 다음과 같이
+        // true가 아니면 불러온 적이 없으므로  use_template을 false로 해주기
+        // this.survey와 해당 탬플릿들중 useTemplateIndex인 템플릿과
+        // title, explain, 실명여부비교
+        // q_option들은 문자열로 비교(JSON으로)
+        // ||로 비교해주고 같지 않으면 use_template을 false로 해준다.
         let payload = {
           isWriting: true,
           isClkUpdate: false,
@@ -350,14 +526,27 @@ export default {
         console.log(tempSurvey)
         TemplateApi.makeTemplate(
           tempSurvey,
-          res => {
-            console.log(res)
+          () => {
             let payload = {
               isWriting: false,
               isClkUpdate: false,
               survey: {},
             }
             this.$store.commit('setSurveySet', payload)
+            this.templates.unshift(tempSurvey)
+            document.querySelector('.sub-button-t').click()
+            let temp2 = document.querySelector('.drop-parent')
+            while (temp2.firstChild) {
+              temp2.removeChild(temp2.firstChild)
+            }
+            document.querySelector('.section-survey-option').remove()
+            document
+              .querySelector('.section-containers')
+              .insertBefore(
+                this.tempSurveyOption,
+                document.querySelector('.drop-parent'),
+              )
+            this.surveyOrTemplate = null
           },
           err => {
             console.log(err)
@@ -375,6 +564,9 @@ export default {
     },
   },
   mounted() {
+    this.tempSurveyOption = document
+      .querySelector('.section-survey-option')
+      .cloneNode(true)
     if (
       this.$store.getters.getSurveySet.isWriting == true &&
       this.$store.state.surveySet.isClkUpdate == false
@@ -613,6 +805,9 @@ export default {
         return this.down && drake.dragging
       },
     })
+  },
+  created() {
+    this.createTemplate()
   },
   destroyed() {
     this.$store.commit('setIsClkUpdate', false)
