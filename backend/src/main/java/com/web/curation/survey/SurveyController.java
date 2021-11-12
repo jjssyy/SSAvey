@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,10 +54,12 @@ public class SurveyController {
     	int maxSize=result.size();
     	int start=pageNumber*10;
     	int end=start+10;
+    
     	if(end>maxSize)end=maxSize;
+    	result=new ArrayList<Survey>(result.subList(start, end));
     	resultmap.put("status", HttpStatus.OK);
     	resultmap.put("data", result);
-    	resultmap.put("Pagecount", maxSize/10+1);
+    	resultmap.put("Pagecount", (maxSize-1)/10+1);
     	if(result.size()==0) {
     		resultmap.put("message","설문 목록이 없습니다.");
     	}

@@ -1,5 +1,5 @@
 <template>
-  <v-app style="display: flex; justify-content: center;">
+  <v-app style="display: flex; justify-content: center">
     <section class="section-container">
       <v-row class="signin">
         <v-col cols="12" sm="8" class="left">
@@ -17,68 +17,61 @@
               dense
               solo
             ></v-select>
-            {{ generation }}
-            <v-select
-              v-if="position == '교육생'"
-              v-model="generation"
-              :items="generations"
-              label="기수"
-              dense
-              solo
-            ></v-select>
-            {{ role }}
-            <v-select
-              v-if="position == '교육생'"
-              v-model="role"
-              :items="roles"
-              label="역할"
-              dense
-              solo
-            ></v-select>
-            {{ region }}
-            <v-select
-              v-if="position == '교육생' && generation == '5기'"
-              v-model="region"
-              :items="regions"
-              label="지역"
-              dense
-              solo
-            ></v-select>
-            {{ cls }}
-            <v-select
-              v-if="position == '교육생'"
-              v-model="cls"
-              :items="clss"
-              label="반"
-              dense
-              solo
-            ></v-select>
-            {{ team }}
-            <v-select
-              v-if="position == '교육생'"
-              v-model="team"
-              :items="teams"
-              label="팀"
-              dense
-              solo
-            ></v-select>
-            <v-select
-              v-if="position == '교육생' && generation == '6기'"
-              v-model="region"
-              :items="regions2"
-              label="지역"
-              dense
-              solo
-            ></v-select>
-            {{ role }}
-            <v-select
-              v-if="position == '교육생'"
-              v-model="role"
-              :items="roles"
-              label="역할"
-              dense
-              solo
-            ></v-select>
+            <div v-if="position == '교육생'">
+              {{ generation }}
+              <v-select
+                v-if="position == '교육생'"
+                v-model="generation"
+                :items="generations"
+                label="기수"
+                dense
+                solo
+              ></v-select>
+              {{ region }}
+              <v-select
+                v-if="position == '교육생' && generation == '5기'"
+                v-model="region"
+                :items="regions"
+                label="지역"
+                dense
+                solo
+              ></v-select>
+              {{ cls }}
+              <v-select
+                v-if="position == '교육생'"
+                v-model="cls"
+                :items="clss"
+                label="반"
+                dense
+                solo
+              ></v-select>
+              {{ team }}
+              <v-select
+                v-if="position == '교육생'"
+                v-model="team"
+                :items="teams"
+                label="팀"
+                dense
+                solo
+              ></v-select>
+              <v-select
+                v-if="position == '교육생' && generation == '6기'"
+                v-model="region"
+                :items="regions2"
+                label="지역"
+                dense
+                solo
+              ></v-select>
+              {{ role }}
+              <v-select
+                v-if="position == '교육생'"
+                v-model="role"
+                :items="roles"
+                label="역할"
+                dense
+                solo
+              ></v-select>
+            </div>
             {{ name }}
             <v-text-field
               v-model="name"
@@ -179,12 +172,13 @@ export default {
             position: this.position,
             generation: this.generation.charAt(0, 1) * 1,
             area: this.region,
-            group: '',
-            team: '',
+            group: this.cls,
+            team: this.team,
             team_roll: this.role,
             template: [],
             mySurvey: [],
             survey: [],
+            answer_survey: [],
           },
           // eslint-disable-next-line no-unused-vars
           res => {

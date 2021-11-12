@@ -20,7 +20,7 @@ public class Template {
 	@Id
 	private String tid;
 	
-	private boolean is_deleted;
+	private boolean deleted;
 	
 	private String t_title;
 	

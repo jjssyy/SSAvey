@@ -42,7 +42,7 @@ public class MySurveyService {
                 dto.setTitle(survey.getTitle());
                 dto.setExplain(survey.getExplain());
                 dto.setWriter(survey.getWriter());
-                dto.set_anony(survey.is_anony());
+                dto.setAnony(survey.isAnony());
                 dto.setStart_date(survey.getStart_date());
                 dto.setEnd_date(survey.getEnd_date());
                 dto.setState(survey.getState());

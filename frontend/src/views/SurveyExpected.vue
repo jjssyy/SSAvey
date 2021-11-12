@@ -9,21 +9,21 @@
         </v-btn>
       </v-toolbar>
 
-      <v-list three-line v-if="surveys.length != 0">
+      <v-list three-line v-if="surveys.length >= 2">
         <template v-for="(item, index) in surveys">
           <v-subheader
             v-if="item.header"
-            :key="item.header"
+            :key="index"
             v-text="item.header"
           ></v-subheader>
 
           <v-divider
             v-else-if="item.divider"
-            :key="index"
+            :key="index + 1"
             :inset="item.inset"
           ></v-divider>
 
-          <v-list-item v-else :key="item.title">
+          <v-list-item v-else :key="index + 2">
             <v-list-item-content>
               <v-list-item-title v-html="item.title"></v-list-item-title>
               <v-list-item-subtitle
@@ -52,6 +52,7 @@
           <v-subheader v-text="'예정된 설문이 없습니다.'"></v-subheader>
         </template>
       </v-list>
+      <b-pagination v-model="currentPage" :total-rows="rows"></b-pagination>
     </v-card>
   </v-app>
 </template>
@@ -62,16 +63,36 @@ import SurveyApi from '@/api/SurveyApi'
 export default {
   data: () => ({
     surveys: [],
+    rows: 20,
+    currentPage: 1,
   }),
   methods: {},
+  watch: {
+    currentPage() {
+      SurveyApi.getCertainStateSurveys(
+        'EXPECTED',
+        this.$store.state.uid,
+        this.currentPage - 1,
+        res => {
+          console.log(res.data.data)
+          console.log(res.data.Pagecount)
+          this.rows = res.data.Pagecount * 20
+          this.surveys = res.data.data
+          this.surveys.push({ divider: true, inset: true })
+        },
+        () => {},
+      )
+    },
+  },
   created() {
     SurveyApi.getCertainStateSurveys(
       'EXPECTED',
       this.$store.state.uid,
+      this.currentPage - 1,
       res => {
         console.log(res.data.data)
         this.surveys = res.data.data
-
+        this.rows = res.data.Pagecount * 20
         this.surveys.push({ divider: true, inset: true })
       },
       () => {},

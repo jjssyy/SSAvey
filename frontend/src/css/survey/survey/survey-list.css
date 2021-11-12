@@ -426,6 +426,7 @@
   border-radius: 10px;
   background-color: white;
   padding: 16px 10px;
+  position: relative;
 }
 
 .dragula-container .drag-section .section-containers {
@@ -439,7 +440,7 @@
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  width: 38%;
+  width: 100px;
   height: 2.3rem;
   background-color: #F2F2F2;
   border-radius: 4px;
@@ -465,8 +466,99 @@
 }
 
 .dragula-container .drag-section .section-containers .sub-title .sub-title-text {
+  width: 100%;
   font-size: 1.4rem;
   font-weight: 500;
+}
+
+.dragula-container .drag-section .section-containers .template-container {
+  width: 100%;
+  height: 700px;
+  overflow-y: scroll;
+}
+
+.dragula-container .drag-section .section-containers .template-container .template {
+  width: 100%;
+}
+
+.dragula-container .drag-section .section-containers .template-container .template .template-item {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  background-color: #e6ecf3;
+  box-shadow: 2px 2px 2px 1px rgba(143, 142, 142, 0.3);
+  padding: 12px 8px;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  margin-right: 4px;
+  position: relative;
+}
+
+.dragula-container .drag-section .section-containers .template-container .template .template-item .item-text {
+  width: 83%;
+}
+
+.dragula-container .drag-section .section-containers .template-container .template .template-item .item-text .text-title {
+  width: 100%;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dragula-container .drag-section .section-containers .template-container .template .template-item .item-text .explanation {
+  width: 100%;
+  font-size: 0.9rem;
+  margin-left: 1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dragula-container .drag-section .section-containers .template-container .template .template-item .load {
+  position: absolute;
+  top: 34%;
+  right: 10%;
+  transition: all ease-out 0.2s;
+}
+
+.dragula-container .drag-section .section-containers .template-container .template .template-item .load:hover {
+  transform: scale(1.1);
+}
+
+.dragula-container .drag-section .section-containers .template-container .template .template-item .garbage {
+  position: absolute;
+  top: 34%;
+  right: 3%;
+  transition: all ease-out 0.2s;
+}
+
+.dragula-container .drag-section .section-containers .template-container .template .template-item .garbage:hover {
+  transform: scale(1.1);
+}
+
+.dragula-container .drag-section .section-containers .template-container .template .empty-template {
+  padding: 10px 10px;
+  background-color: #F2F2F2;
+  border-radius: 5px;
+  color: #f03939;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.dragula-container .drag-section .section-containers .template-container::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 5px;
+  margin: 10px;
+  background-color: #d4c9c9;
+}
+
+.dragula-container .drag-section .section-containers .template-container::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #737272;
 }
 
 .dragula-container .drag-section .section-containers .drag-parent {

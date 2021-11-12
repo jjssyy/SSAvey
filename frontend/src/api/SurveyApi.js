@@ -1,8 +1,20 @@
 import { instance } from '@/api/index'
 
-const getCertainStateSurveys = (state, uid, callback, errorCallback) => {
+const getCertainStateSurveys = (
+  state,
+  uid,
+  pageNumber,
+  callback,
+  errorCallback,
+) => {
   instance
-    .get('/survey/state/' + state + '?uid=' + uid)
+    .get('/survey/state/' + state + '?uid=' + uid + '&pageNumber=' + pageNumber)
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
+}
+const getMysurvey = (state, uid, pageNumber, callback, errorCallback) => {
+  instance
+    .get('/my-survey/' + uid + '/state/' + state + '/' + pageNumber)
     .then(res => callback(res))
     .catch(err => errorCallback(err))
 }
@@ -22,12 +34,14 @@ const makeSurvey = (payload, callback, errorCallback) => {
 }
 
 const SurveyApi = {
-  getCertainStateSurveys: (state, uid, callback, errorCallback) =>
-    getCertainStateSurveys(state, uid, callback, errorCallback),
+  getCertainStateSurveys: (state, uid, pageNumber, callback, errorCallback) =>
+    getCertainStateSurveys(state, uid, pageNumber, callback, errorCallback),
   getSurvey: (surveyId, callback, errorCallback) =>
     getSurvey(surveyId, callback, errorCallback),
   makeSurvey: (payload, callback, errorCallback) =>
     makeSurvey(payload, callback, errorCallback),
+  getMysurvey: (state, uid, pageNumber, callback, errorCallback) =>
+    getMysurvey(state, uid, pageNumber, callback, errorCallback),
 }
 
 export default SurveyApi

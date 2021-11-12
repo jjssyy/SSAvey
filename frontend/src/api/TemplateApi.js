@@ -13,11 +13,19 @@ const makeTemplate = (payload, callback, errorCallback) => {
     .catch(err => errorCallback(err))
 }
 
+const deleteTemplate = (payload, callback, errorCallback) => {
+  instance
+    .delete(`/template/${payload}`)
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
+}
 const TemplateApi = {
   getTemplates: (payload, callback, errorCallback) =>
     getTemplates(payload, callback, errorCallback),
   makeTemplate: (payload, callback, errorCallback) =>
     makeTemplate(payload, callback, errorCallback),
+  deleteTemplate: (payload, callback, errorCallback) =>
+    deleteTemplate(payload, callback, errorCallback),
 }
 
 export default TemplateApi
