@@ -52,7 +52,7 @@
           <v-subheader v-text="'완료된 설문이 없습니다.'"></v-subheader>
         </template>
       </v-list>
-      <b-pagination v-model="currentPage" :total-rows="rows"></b-pagination>
+      <v-pagination v-model="page" :length="rows"></v-pagination>
     </v-card>
   </v-app>
 </template>
@@ -63,18 +63,18 @@ import SurveyApi from '@/api/SurveyApi'
 export default {
   data: () => ({
     surveys: [],
-    rows: 20,
-    currentPage: 1,
+    rows: 2,
+    page: 1,
   }),
   methods: {},
   watch: {
-    currentPage() {
+    page() {
       SurveyApi.getCertainStateSurveys(
         'COMPLETED',
         this.$store.state.uid,
-        this.currentPage - 1,
+        this.page - 1,
         res => {
-          this.rows = res.data.Pagecount * 20
+          this.rows = res.data.Pagecount
           this.surveys = res.data.data
           this.surveys.push({ divider: true, inset: true })
         },
@@ -86,9 +86,9 @@ export default {
     SurveyApi.getCertainStateSurveys(
       'COMPLETED',
       this.$store.state.uid,
-      this.currentPage - 1,
+      this.page - 1,
       res => {
-        this.rows = res.data.Pagecount * 20
+        this.rows = res.data.Pagecount
         this.surveys = res.data.data
         this.surveys.push({ divider: true, inset: true })
       },
