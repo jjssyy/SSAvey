@@ -15,6 +15,8 @@ import SurveyAnswer from '@/views/SurveyAnswer.vue'
 import SettingPage from '@/views/SettingPage.vue'
 import Profile from '@/views/Profile.vue'
 import Template from '@/components/SurveyEdit/Template.vue'
+import Testcomponent from '@/components/SurveyResult/MySurveyAnswer.vue'
+import Test from '@/views/Test.vue'
 Vue.use(VueRouter)
 
 export default new VueRouter({
@@ -107,6 +109,18 @@ export default new VueRouter({
       path: '/templete',
       name: 'Templete',
       component: Template,
+      meta: { auth: true },
+    },
+    {
+      path: '/testcomponent',
+      name: 'Testcomponent',
+      component: Testcomponent,
+      meta: { auth: true },
+    },
+    {
+      path: '/test',
+      name: 'Test',
+      component: Test,
       meta: { auth: true },
     },
   ],
