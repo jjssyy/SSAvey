@@ -4,14 +4,25 @@
       <v-row class="">
         <v-col cols="12" sm="12">
           <v-select
-            :items="items"
-            v-model="selectedItem"
-            label="비교할 설문을 선택해주세요."
+            v-if="surveys.length != 0"
+            :items="surveys"
+            v-model="selectedSurvey"
+            label="완료된 설문중 비교할 설문을 선택해주세요."
             dense
             solo
           >
           </v-select>
-          {{ selectedItem }}
+          <v-select
+            v-if="surveys.length == 0"
+            :items="surveys"
+            v-model="selectedSurvey"
+            label="완료된 설문이 없습니다."
+            dense
+            solo
+            disabled
+          >
+          </v-select>
+          <!-- {{ this.totaldata }} -->
         </v-col>
         <v-col class="d-flex justify-center" cols="12" sm="6">
           <v-card class="">
@@ -132,23 +143,51 @@
         </v-col>
       </v-row>
     </v-container>
-    <v-btn color="warning" @click="compare">비교하기</v-btn>
+    <div class="d-flex justify-center">
+      <v-btn color="warning" style="width: 50%;" @click="compare"
+        >비교하기</v-btn
+      >
+    </div>
   </v-app>
 </template>
 <script>
+import SurveyApi from '@/api/SurveyApi'
 export default {
   data() {
     return {
-      items: ['1번설문', '2번설문', '3번설문'],
-      selectedItem: '',
+      totaldata: [],
+      surveys: [],
       dates: [],
-      selectedSurvey: [],
+      selectedSurvey: '',
+      rows: '',
+      page: 1,
     }
   },
   methods: {
     compare() {
       console.log('비교하기')
     },
+  },
+  created() {
+    SurveyApi.getCertainStateSurveys(
+      'COMPLETED',
+      this.$store.state.uid,
+      this.page - 1,
+      res => {
+        console.log(res)
+        this.totaldata = res.data.data
+        this.rows = res.data.Pagecount
+        for (const item of res.data.data) {
+          if (item.title !== null) {
+            this.surveys.push(
+              // item.title + '[' + item.start_date + item.end_date + ']',
+              item.title,
+            )
+          }
+        }
+      },
+      () => {},
+    )
   },
   computed: {
     dateRangeText() {
