@@ -307,11 +307,14 @@ export default {
         cancelButtonText: '취소',
       }).then(result => {
         if (result.isConfirmed) {
+          this.useTemplateIndex = index
           console.log(this.templates[index])
           // 뿌려주기 위해
           // 해당 title과 explain 리셋시키고
-          this.survey.title = this.templates[index].t_title
-          this.survey.explain = this.templates[index].t_explain
+          console.log(this.templates[index])
+          console.log('??', this.survey)
+          this.survey.title = this.templates[index]['t_title']
+          this.survey.explain = this.templates[index]['t_explain']
           // section-survey-option 리셋만 시킴 anony는 탬플릿에 없음
           document.querySelector('.section-survey-option').remove()
           document
@@ -374,7 +377,14 @@ export default {
                     let cloneChild = temp.childNodes[1].childNodes[2].childNodes[0].cloneNode(
                       true,
                     )
-                    cloneChild.value = ''
+                    cloneChild.childNodes[1].value = ''
+                    cloneChild.childNodes[2].style.display = 'block'
+                    cloneChild.childNodes[2].addEventListener(
+                      'click',
+                      function() {
+                        cloneChild.remove()
+                      },
+                    )
                     temp.childNodes[1].childNodes[2].insertBefore(
                       cloneChild,
                       element,
@@ -386,7 +396,14 @@ export default {
                     )
                     cloneChild.childNodes[1].setAttribute('placeholder', '기타')
                     cloneChild.childNodes[1].setAttribute('disabled', 'true')
-                    console.log('?')
+                    cloneChild.childNodes[1].value = ''
+                    cloneChild.childNodes[2].style.display = 'block'
+                    cloneChild.childNodes[2].addEventListener(
+                      'click',
+                      function() {
+                        cloneChild.remove()
+                      },
+                    )
                     temp.childNodes[1].childNodes[2].insertBefore(
                       cloneChild,
                       element,
@@ -397,12 +414,42 @@ export default {
             }
             if (!element['required']) {
               temp.childNodes[1].childNodes[3].childNodes[1].childNodes[0].click()
+              temp.childNodes[1].childNodes[3].childNodes[1].childNodes[0].classList.add(
+                'not-required',
+              )
+              temp.childNodes[1].childNodes[3].childNodes[1].childNodes[1].classList.add(
+                'not-required',
+              )
             }
           })
+          // toggle 활성화
+          // toggle
+          document
+            .querySelectorAll('.toggle-control')
+            .forEach(function(element) {
+              element.addEventListener('click', function(e) {
+                if (e.target.classList.contains('not-required')) {
+                  e.target.classList.remove('not-required')
+                } else {
+                  e.target.classList.add('not-required')
+                }
+              })
+            })
           // this.survey.template에 tid 넣기
           this.survey.template = this.templates[index].tid
           // use_template에 true 넣기
           this.survey.use_template = true
+          document
+            .querySelector('.option-s-center > input')
+            .addEventListener('click', () => {
+              this.surveyOrTemplate = 'survey'
+              console.log(this.surveyOrTemplate)
+            })
+          document
+            .querySelector('.option-t-center > input')
+            .addEventListener('click', function() {
+              this.surveyOrTemplate = 'template'
+            })
         }
       })
     },
@@ -442,6 +489,7 @@ export default {
       this.survey.anony = !this.survey.anony
     },
     createSurvey() {
+      console.log(this.surveyOrTemplate)
       document
         .querySelector('.drop-parent')
         .childNodes.forEach((element1, index1) => {
@@ -452,20 +500,30 @@ export default {
             required: true,
             q_option: [], // q_type이 SHORT 경우 q_option은 빈 배열
           }
+          console.log('?')
           question.q_number = `${index1 + 1}`
+          console.log('?')
           question.q_explanation = `${element1.childNodes[1].childNodes[0].value}`
+          console.log('?')
           question.q_type = `${element1.id}`
+          console.log('?')
+          console.log(element1.childNodes[1].childNodes)
+          let minusTemp = 0
+          if (element1.childNodes[1].childNodes.length == 4) {
+            minusTemp = 1
+          }
+          console.log(minusTemp)
           if (
-            element1.childNodes[1].childNodes[4].childNodes[1].childNodes[0].classList.contains(
-              'not-required',
-            )
+            element1.childNodes[1].childNodes[
+              4 - minusTemp
+            ].childNodes[1].childNodes[0].classList.contains('not-required')
           ) {
             question.required = false
           } else {
             question.required = true
           }
           if (question.q_type != 'SHORT') {
-            element1.childNodes[1].childNodes[3].childNodes.forEach(
+            element1.childNodes[1].childNodes[3 - minusTemp].childNodes.forEach(
               (element2, index2) => {
                 let q_option = {
                   o_number: null, // 문항의의 선택지 번호
@@ -491,8 +549,22 @@ export default {
         })
       if (this.surveyOrTemplate == 'survey') {
         console.log(this.survey)
+        console.log(this.templates[this.useTemplateIndex])
         // this.survey.use_template이 true이면 다음과 같이
         // true가 아니면 불러온 적이 없으므로  use_template을 false로 해주기
+        if (
+          this.survey.use_template ||
+          this.$store.state.surveySet.survey.use_template
+        ) {
+          if (
+            this.survey.question.length !=
+            this.templates[this.useTemplateIndex]['question'].length
+          ) {
+            this.survey.use_template = false
+          }
+        } else {
+          this.survey.use_template = false
+        }
         // this.survey와 해당 탬플릿들중 useTemplateIndex인 템플릿과
         // title, explain, 실명여부비교
         // q_option들은 문자열로 비교(JSON으로)
@@ -509,7 +581,9 @@ export default {
         this.$store.commit('setSurveySet', payload)
         this.$router.push('/surveyset')
       } else if (this.surveyOrTemplate == 'template') {
-        let tempSurvey = this.survey
+        let tempSurvey = JSON.stringify(this.survey)
+        tempSurvey = JSON.parse(tempSurvey)
+        console.log(tempSurvey)
         tempSurvey['t_title'] = tempSurvey.title
         tempSurvey['t_explain'] = tempSurvey.explain
         delete tempSurvey.title
@@ -547,6 +621,8 @@ export default {
                 document.querySelector('.drop-parent'),
               )
             this.surveyOrTemplate = null
+            this.survey.title = null
+            this.survey.explain = null
           },
           err => {
             console.log(err)
@@ -612,31 +688,35 @@ export default {
         document.querySelector('.option-anony>label>input').click()
       }
       let allDropEl = document.querySelectorAll('.dragthing-drop')
+      let minusTemp = 0
+      if (allDropEl[0].childNodes[1].childNodes.length == 4) {
+        minusTemp = 1
+      }
       this.$store.state.surveySet.survey.question.forEach(function(
         element,
         index,
       ) {
         // 질문제목 넣어줘
+        console.log('!!!', allDropEl[index].childNodes[1].childNodes)
+        console.log(allDropEl[index])
         allDropEl[index].childNodes[1].childNodes[0].value =
           element.q_explanation
         // 필수 응답인지 아닌지 체크해줘
         if (!element.required) {
-          allDropEl[
-            index
-          ].childNodes[1].childNodes[4].childNodes[1].childNodes[0].click()
+          allDropEl[index].childNodes[1].childNodes[
+            4 - minusTemp
+          ].childNodes[1].childNodes[0].click()
         }
         // garbage-btn 활성화
-        allDropEl[
-          index
-        ].childNodes[1].childNodes[2].childNodes[0].addEventListener(
-          'click',
-          function() {
-            allDropEl[index].remove()
-          },
-        )
+        allDropEl[index].childNodes[1].childNodes[
+          2 - minusTemp
+        ].childNodes[0].addEventListener('click', function() {
+          allDropEl[index].remove()
+        })
         // 객관식 또는 주관식 추가하는거 버튼 활성화시켜줘
         if (element.q_type != 'SHORT') {
-          let question = allDropEl[index].childNodes[1].childNodes[3]
+          let question =
+            allDropEl[index].childNodes[1].childNodes[3 - minusTemp]
           let temp = question.childNodes
           // 기존 태그 삭제 활성화, 기존 input값 넣기
           temp.forEach(function(element2, index) {

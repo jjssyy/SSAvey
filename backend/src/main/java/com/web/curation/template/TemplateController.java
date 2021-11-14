@@ -56,4 +56,18 @@ public class TemplateController {
 
         return new ResponseEntity<>(resultmap,HttpStatus.OK);
     }
+
+    @DeleteMapping("/{tid}")
+    public ResponseEntity<Map<String, Object>> deleteTemplate(@PathVariable String tid, @RequestParam String uid){
+        Map<String, Object> resultmap=new HashMap<String, Object>();
+
+        log.info("tid : " + tid);
+        log.info("uid : " + uid);
+        templateService.deleteTemplate(tid, uid);
+
+        resultmap.put("status", HttpStatus.OK);
+        resultmap.put("message", "success");
+
+        return new ResponseEntity<>(resultmap,HttpStatus.OK);
+    }
 }
