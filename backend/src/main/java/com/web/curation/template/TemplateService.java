@@ -45,7 +45,24 @@ public class TemplateService {
     }
 
     public Template getTemplate(String tid){
-        return templateDao.findById(tid)
+        Template template = templateDao.findById(tid)
                 .orElseThrow(() -> new CustomException(ErrorCode.TEMPLATE_NOT_FOUND));
+        if(template.isDeleted()) throw new CustomException(ErrorCode.TEMPLATE_NOT_FOUND);
+
+        return template;
     }
+
+    public void deleteTemplate(String tid, String uid){
+        User user  = userDao.findById(uid)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
+        user.getTemplate().remove(tid);
+        userDao.save(user);
+
+        Template template = templateDao.findById(tid)
+                .orElseThrow(() -> new CustomException(ErrorCode.TEMPLATE_NOT_FOUND));
+
+        template.setDeleted(true);
+        templateDao.save(template);
+}
 }
