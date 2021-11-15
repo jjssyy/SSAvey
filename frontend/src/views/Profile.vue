@@ -216,6 +216,7 @@ export default {
           template: this.user.template,
           mySurvey: this.user.mySurvey,
           survey: this.user.survey,
+          answer_survey: this.user.answer_survey,
         },
         res => {
           alert(res.data.message)
