@@ -107,6 +107,7 @@ export default {
   methods: {
     saveresult() {
       console.log(this.result)
+      this.result.answer_question = this.result.question
       let tmp = {
         id: this.$store.state.uid,
         result: this.result,
