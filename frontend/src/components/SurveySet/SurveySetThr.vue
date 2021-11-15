@@ -115,7 +115,9 @@ export default {
     document.querySelector('.v-application').style.height = '350px'
     // v-application--wrap
     // document.querySelector('.v-application--wrap').style.display = 'block'
-    document.querySelector('.v-application--wrap').style.minHeight = 0
+    document.querySelector(
+      '.container-set .v-application--wrap',
+    ).style.minHeight = 0
     // count header 지우기
     document.querySelector('.v-picker__title').style.display = 'none'
     // header 100%
@@ -241,8 +243,6 @@ export default {
         }` + ':00'
       this.$store.state.surveySet.survey.start_date = startResult
       this.$store.state.surveySet.survey.end_date = endResult
-      // (중요!!!)탬플릿 생성할 때 구현해야함
-      this.$store.state.surveySet.survey.use_template = false
       // 최종 target과 incomplete 수정
       let tempTarget = new Set()
       for (let targetItem of this.$store.state.surveySet.survey.target) {
@@ -271,6 +271,7 @@ export default {
           }
           this.$store.commit('resetSurveyDragThing', [])
           this.$store.commit('setSurveySet', payload)
+          this.$router.push('/main')
         },
         err => {
           console.log(err)

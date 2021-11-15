@@ -465,8 +465,12 @@ export default {
         cancelButtonText: '취소',
       }).then(result => {
         if (result.isConfirmed) {
+          const payload = {
+            tid: this.templates[index]['tid'],
+            uid: this.$store.state.uid,
+          }
           TemplateApi.deleteTemplate(
-            this.templates[index]['tid'],
+            payload,
             () => {
               this.templates.splice(index, 1)
             },
