@@ -17,6 +17,7 @@ import Profile from '@/views/Profile.vue'
 import Template from '@/components/SurveyEdit/Template.vue'
 import Testcomponent from '@/components/SurveyResult/MySurveyAnswer.vue'
 import ResultComparison from '@/views/ResultComparison.vue'
+import SurveyResult from '@/views/SurveyResultPage.vue'
 import Test from '@/views/Test.vue'
 Vue.use(VueRouter)
 
@@ -128,6 +129,12 @@ export default new VueRouter({
       path: '/test',
       name: 'Test',
       component: Test,
+      meta: { auth: true },
+    },
+    {
+      path: '/survey-result',
+      name: 'SurveyResult',
+      component: SurveyResult,
       meta: { auth: true },
     },
   ],

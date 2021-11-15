@@ -1,0 +1,129 @@
+.user-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.user-container .user-item {
+  width: 100%;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.user-container .user-item .percent-item {
+  position: absolute;
+  top: 40%;
+  left: 46%;
+  font-weight: 500;
+  font-size: 1.4rem;
+}
+
+.user-container .user-item .item-title {
+  width: 100%;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.user-container .user-item .item-title-two {
+  width: 100%;
+  font-size: 1.3rem;
+  font-weight: bold;
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.user-container .user-item .item-title-two .center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1rem;
+  transition: all ease 0.2s;
+}
+
+.user-container .user-item .item-title-two .center:hover {
+  transform: scale(1.1);
+  color: #5d82e9;
+}
+
+.user-container .user-item .item-alarm {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.user-container .user-item .item-alarm .item-alarm-button {
+  font-size: 1rem;
+  color: #737272;
+  display: flex;
+}
+
+.user-container .user-item .item-alarm .item-alarm-button p {
+  color: #737272;
+}
+
+.user-container .user-item .item-alarm .item-alarm-button i {
+  transition: all ease 0.2s;
+  margin-left: 0.5rem;
+}
+
+.user-container .user-item .item-alarm .item-alarm-button i:hover {
+  transform: scale(1.15);
+  color: #5d82e9;
+}
+
+.user-container .user-item .item-list {
+  width: 100%;
+  height: 400px;
+  padding-top: 10px;
+  overflow-y: scroll;
+}
+
+.user-container .user-item .item-list .item-list-user {
+  display: flex;
+  padding: 8px;
+  background-color: #F2F2F2;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  justify-content: space-between;
+}
+
+.user-container .user-item .item-list .item-list-user .user-info {
+  display: flex;
+}
+
+.user-container .user-item .item-list .item-list-user .user-info .user-info-name {
+  margin-right: 1rem;
+}
+
+.user-container .user-item .item-list .item-list-user .user-alarm {
+  transition: all ease 0.2s;
+}
+
+.user-container .user-item .item-list .item-list-user .user-alarm:hover {
+  transform: scale(1.15);
+}
+
+.user-container .user-item .item-list .item-list-user:hover {
+  background-color: #688ae6;
+}
+
+.user-container .user-item .item-list::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 5px;
+  margin: 10px;
+  background-color: #d4c9c9;
+}
+
+.user-container .user-item .item-list::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #737272;
+}
+/*# sourceMappingURL=survey-user.css.map */

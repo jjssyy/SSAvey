@@ -1,0 +1,108 @@
+.user-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  .user-item {
+    width: 100%;
+    margin-bottom: 1rem;
+    position: relative;
+    .percent-item {
+      position: absolute;
+      top: 40%;
+      left: 46%;
+      font-weight: 500;
+      font-size: 1.4rem;
+    }
+    .item-title {
+      width: 100%;
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: center;
+    }
+    .item-title-two {
+      width: 100%;
+      font-size: 1.3rem;
+      font-weight: bold;
+      display: flex;
+      margin-bottom: 1rem;
+      .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 1rem;
+        transition: all ease 0.2s;
+      }
+      .center:hover {
+        transform: scale(1.1);
+        color: #5d82e9;
+      }
+    }
+    .item-alarm {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.1rem;
+      font-weight: 500;
+      .item-alarm-button {
+        font-size: 1rem;
+        color: #737272;
+        display: flex;
+        p {
+          color: #737272;
+        }
+        i {
+          transition: all ease 0.2s;
+          margin-left: 0.5rem;
+        }
+        i:hover {
+          transform: scale(1.15);
+          color: #5d82e9;
+        }
+      }
+    }
+    .item-list {
+      width: 100%;
+      height: 400px;
+      padding-top: 10px;
+      overflow-y: scroll;
+      .item-list-user {
+        display: flex;
+        padding: 8px;
+        background-color: #F2F2F2;
+        border-radius: 4px;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        justify-content: space-between;
+        .user-info {
+          display: flex;
+          .user-info-name {
+            margin-right: 1rem;
+          }
+        }
+        .user-alarm {
+          transition: all ease 0.2s;
+        }
+        .user-alarm:hover {
+          transform: scale(1.15);
+        }
+      }
+      .item-list-user:hover {
+        background-color: #688ae6;
+      }
+    }
+    .item-list::-webkit-scrollbar {
+      width: 10px;
+      border-radius: 5px;
+      margin: 10px;
+      background-color: #d4c9c9;
+    }
+    .item-list::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+      background-color: #737272;
+    }
+  }
+}

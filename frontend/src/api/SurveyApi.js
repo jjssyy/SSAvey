@@ -33,6 +33,19 @@ const makeSurvey = (payload, callback, errorCallback) => {
     .catch(err => errorCallback(err))
 }
 
+const loadSurveyResult = (payload, callback, errorCallback) => {
+  instance
+    .get(`/survey-result/${payload}`)
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
+}
+const alarmSurveyResult = (payload, callback, errorCallback) => {
+  instance
+    .post('/survey-result/alarm', payload)
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
+}
+
 const SurveyApi = {
   getCertainStateSurveys: (state, uid, pageNumber, callback, errorCallback) =>
     getCertainStateSurveys(state, uid, pageNumber, callback, errorCallback),
@@ -42,6 +55,10 @@ const SurveyApi = {
     makeSurvey(payload, callback, errorCallback),
   getMysurvey: (state, uid, pageNumber, callback, errorCallback) =>
     getMysurvey(state, uid, pageNumber, callback, errorCallback),
+  loadSurveyResult: (payload, callback, errorCallback) =>
+    loadSurveyResult(payload, callback, errorCallback),
+  alarmSurveyResult: (payload, callback, errorCallback) =>
+    alarmSurveyResult(payload, callback, errorCallback),
 }
 
 export default SurveyApi

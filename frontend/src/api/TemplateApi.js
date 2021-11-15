@@ -15,7 +15,7 @@ const makeTemplate = (payload, callback, errorCallback) => {
 
 const deleteTemplate = (payload, callback, errorCallback) => {
   instance
-    .delete(`/template/${payload}`)
+    .delete(`/template/${payload.tid}?uid=${payload.uid}`)
     .then(res => callback(res))
     .catch(err => errorCallback(err))
 }
