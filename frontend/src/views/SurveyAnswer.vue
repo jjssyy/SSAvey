@@ -2,9 +2,7 @@
   <v-app>
     <v-card width="1000" class="mx-auto">
       <v-toolbar color="#4E7AF5" dark>
-        <v-toolbar-title
-          >{{ this.items[0].title }} {{ resultCompute }}</v-toolbar-title
-        >
+        <v-toolbar-title>{{ this.items.data.title }}</v-toolbar-title>
         <v-spacer></v-spacer>
       </v-toolbar>
       <v-list>
@@ -58,15 +56,19 @@
         </template>
       </v-list>
       <v-card-actions style="float: right;">
-        <v-btn @click="showresult" text color="primary accent-4">
+        <v-btn @click="saveresult" text color="primary accent-4">
           SUBMIT
         </v-btn>
       </v-card-actions>
     </v-card>
+    {{ this.result }}
   </v-app>
 </template>
 
 <script>
+import SurveyApi from '@/api/SurveyApi'
+import AnswerApi from '@/api/AnswerApi'
+
 export default {
   data: () => ({
     shortrules: [
@@ -75,149 +77,49 @@ export default {
     ],
     // shortrules: null,
     short: {},
+    sid: '',
     shortvalue: '',
     result: {},
-    items: [
-      {
-        title: '설문지 제목입니다.',
-        explain: '설문지 설명입니다. 테스트용 설문이며 응답은 안하셔도 됩니다.',
-        anony: false,
-        start_date: '2021.11.19.09:00',
-        end_date: '2021.11.19.18:00',
-        question: [
-          {
-            q_number: '1',
-            q_explanation: '1번 문항 객관식 단일 선택 제목입니다.',
-            q_type: 'SINGLE',
-            required: true,
-            q_option: [
-              {
-                o_number: '1',
-                o_explanation: '1번선택지',
-                short_answer: false,
-              },
-              {
-                o_number: '2',
-                o_explanation: '2번선택지',
-                short_answer: false,
-              },
-              {
-                o_number: '3',
-                o_explanation: '3번선택지',
-                short_answer: false,
-              },
-              { o_number: '4', o_explanation: '기타', short_answer: true },
-            ],
-          },
-          {
-            q_number: '2',
-            q_explanation: '2번 문항 객관식 단일 선택 제목입니다.',
-            q_type: 'SINGLE',
-            required: true,
-            q_option: [
-              {
-                o_number: '1',
-                o_explanation: '1번선택지',
-                short_answer: false,
-              },
-              {
-                o_number: '2',
-                o_explanation: '2번선택지',
-                short_answer: false,
-              },
-              {
-                o_number: '3',
-                o_explanation: '3번선택지',
-                short_answer: false,
-              },
-              { o_number: '4', o_explanation: '기타', short_answer: true },
-            ],
-          },
-          {
-            q_number: '3',
-            q_explanation: '3번 문항 객관식 복수 선택 제목입니다.',
-            q_type: 'MULTIPLE',
-            required: false,
-            q_option: [
-              {
-                o_number: '1',
-                o_explanation: '1번 선택지',
-                short_answer: false,
-              },
-              {
-                o_number: '2',
-                o_explanation: '2번 선택지',
-                short_answer: false,
-              },
-              {
-                o_number: '3',
-                o_explanation: '3번 선택지',
-                short_answer: false,
-              },
-              { o_number: '4', o_explanation: '기타', short_answer: true },
-            ],
-          },
-          {
-            q_number: '4',
-            q_explanation: '4번 문항 객관식 복수 선택 제목입니다.',
-            q_type: 'MULTIPLE',
-            required: false,
-            q_option: [
-              {
-                o_number: '1',
-                o_explanation: '1번 선택지',
-                short_answer: false,
-              },
-              {
-                o_number: '2',
-                o_explanation: '2번 선택지',
-                short_answer: false,
-              },
-              {
-                o_number: '3',
-                o_explanation: '3번 선택지',
-                short_answer: false,
-              },
-              { o_number: '4', o_explanation: '기타', short_answer: true },
-            ],
-          },
-          {
-            q_number: '5',
-            q_explanation: '5번 문항 주관식 제목입니다.',
-            q_type: 'SHORT',
-            required: true,
-            q_option: [],
-          },
-          {
-            q_number: '6',
-            q_explanation: '6번 문항 주관식 제목입니다.',
-            q_type: 'SHORT',
-            required: true,
-            q_option: [],
-          },
-        ],
-        state: 'EXPECTED',
-        share: [],
-        target: [],
-        complete: [],
-        incomplete: [],
-        use_template: null,
-        template: null,
-        writer: 'eg41qb97a7bfpfrrc5qga7e46c',
-      },
-    ],
+    items: [],
   }),
   // mounted() {
   //   this.shortrules = [v => v.length <= 20 || '최대 20자까지만 입력해주세요.']
   // },
+  created() {
+    console.log(this.$route.params.sid)
+    SurveyApi.getSurvey(
+      this.$route.params.sid,
+      res => {
+        console.log(res)
+        this.items = res.data
+        this.result = res.data.data
+      },
+      err => {
+        console.log(err)
+      },
+    )
+  },
   computed: {
     resultCompute() {
       return this.result
     },
   },
   methods: {
-    showresult() {
+    saveresult() {
       console.log(this.result)
+      let tmp = {
+        id: this.$store.state.uid,
+        result: this.result,
+      }
+      AnswerApi.saveSurveyResponse(
+        tmp,
+        res => {
+          console.log(res)
+        },
+        err => {
+          console.log(err)
+        },
+      )
     },
     checkMultiple(index, key) {
       if (this.result.hasOwnProperty(`${index}번`)) {
@@ -236,18 +138,18 @@ export default {
       console.log(this.result)
     },
     checkSingle(index, key) {
-      if (this.result.hasOwnProperty(`${index}번`)) {
-        if (this.result[`${index}번`].length != 0) {
-          this.result[`${index}번`].pop()
-          this.result[`${index}번`].push(key)
+      if (this.result.question[index - 1].hasOwnProperty('answer')) {
+        if (this.result.question[index - 1].answer.length != 0) {
+          this.result.question[index - 1].answer.pop()
+          this.result.question[index - 1].answer.push(key)
         } else {
-          this.result[`${index}번`].push(key)
+          this.result.question[index - 1].answer.push(key)
         }
       } else {
-        this.result[`${index}번`] = []
-        this.result[`${index}번`].push(key)
+        this.result.question[index - 1].answer = []
+        this.result.question[index - 1].answer.push(key)
       }
-      console.log(this.result)
+      console.log(this.result.question[index - 1])
     },
     checkShort(index) {
       if (this.result.hasOwnProperty(`${index}번`)) {

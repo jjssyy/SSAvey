@@ -39,7 +39,14 @@
             </v-list-item-content>
             <v-list-item-action>
               설문 종류
-              <v-btn icon>
+              <v-btn
+                v-if="answersurvey != null && answersurvey.includes(item.sid)"
+                @click="gotothissurvey(item.sid)"
+                icon
+              >
+                <v-icon>mdi-check</v-icon>
+              </v-btn>
+              <v-btn v-else @click="gotothissurvey(item.sid)" icon>
                 <v-icon>mdi-arrow-right</v-icon>
               </v-btn>
             </v-list-item-action>
@@ -62,10 +69,16 @@ import SurveyApi from '@/api/SurveyApi'
 export default {
   data: () => ({
     surveys: [],
+    answersurvey: [],
     rows: 2,
     page: 1,
   }),
-  methods: {},
+  methods: {
+    gotothissurvey(sid) {
+      console.log(sid)
+      this.$router.push(`/answer/survey/${sid}`)
+    },
+  },
   watch: {
     page() {
       SurveyApi.getCertainStateSurveys(
@@ -82,6 +95,7 @@ export default {
     },
   },
   created() {
+    // this.answersurvey = this.$store.state.user.answer_survey
     SurveyApi.getCertainStateSurveys(
       'PROCEEDING',
       this.$store.state.uid,

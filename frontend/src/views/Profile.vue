@@ -82,6 +82,27 @@
         </v-row>
       </v-card-actions>
     </v-card>
+    <v-carousel
+      cycle
+      height="400"
+      hide-delimiter-background
+      show-arrows-on-hover
+    >
+      <v-carousel-item v-for="(image, i) in images" :key="i">
+        <!-- <v-sheet :color="colors[i]" height="100%">
+          <v-row class="fill-height" align="center" justify="center">
+            <div class="text-h2">{{ slide }} Slide</div>
+          </v-row>
+        </v-sheet> -->
+
+        <img
+          :src="image.url"
+          style="height: 100%; object-fit: contain;"
+          :alt="image.alt"
+          margin:auto
+        />
+      </v-carousel-item>
+    </v-carousel>
   </v-app>
 </template>
 <script>
@@ -92,6 +113,10 @@ export default {
       user: {},
       is_modify: true,
       offset: true,
+      images: [
+        { url: require('@/assets/설문조사이미지.jpg'), alt: 'carousel1' },
+        { url: require('@/assets/bigLogo.png'), alt: 'carousel1' },
+      ],
     }
   },
   methods: {
