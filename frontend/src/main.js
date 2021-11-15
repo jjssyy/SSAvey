@@ -16,7 +16,6 @@ new Vue({
   vuetify,
   router,
   store,
-  mode: 'history',
   // vueDragAndDropList,
 }).$mount('#app')
 
