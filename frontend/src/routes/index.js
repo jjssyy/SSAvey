@@ -22,6 +22,7 @@ import Test from '@/views/Test.vue'
 Vue.use(VueRouter)
 
 export default new VueRouter({
+  mode: 'history',
   routes: [
     {
       path: '/login',
@@ -132,7 +133,7 @@ export default new VueRouter({
       meta: { auth: true },
     },
     {
-      path: '/survey-result',
+      path: '/survey-result/:sid',
       name: 'SurveyResult',
       component: SurveyResult,
       meta: { auth: true },

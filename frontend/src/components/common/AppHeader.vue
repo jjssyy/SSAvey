@@ -5,7 +5,7 @@
         <i id="top-menu" class="menu-icon fas fa-bars"></i>
       </div>
       <div class="big-logo-box">
-        <img src="@/assets/bigLogo.png" alt="" />
+        <img src="@/assets/bigLogo.png" alt="" @click="moveMain" />
       </div>
     </div>
     <div
@@ -16,7 +16,7 @@
       @mouseleave="openMenu"
     >
       <div class="items big-logo-box">
-        <img class="logo" src="@/assets/bigLogo.png" alt="" />
+        <img class="logo" src="@/assets/bigLogo.png" alt="" @click="moveMain" />
       </div>
       <div class="items profile">
         <img src="@/assets/profileDefault.jpg" alt="" />

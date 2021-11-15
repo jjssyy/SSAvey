@@ -8,18 +8,13 @@
       show-arrows-on-hover
     >
       <v-carousel-item v-for="(image, i) in images" :key="i">
-        <!-- <v-sheet :color="colors[i]" height="100%">
-          <v-row class="fill-height" align="center" justify="center">
-            <div class="text-h2">{{ slide }} Slide</div>
-          </v-row>
-        </v-sheet> -->
-
-        <img
-          :src="image.url"
-          style="height: 100%; object-fit: contain;"
-          :alt="image.des"
-          margin:auto
-        />
+        <v-row class="fill-height" align="center" justify="center">
+          <img
+            :src="image.url"
+            style="height: 100%; object-fit: contain;"
+            :alt="image.des"
+          />
+        </v-row>
       </v-carousel-item>
     </v-carousel>
     <v-container class="lighten-5" style="min-width: 100%">
@@ -192,16 +187,8 @@ export default {
     return {
       images: [
         { url: require('@/assets/carousel1.jpg'), alt: 'carousel1' },
-        { url: require('@/assets/carousel1.jpg'), alt: 'carousel1' },
+        { url: require('@/assets/carousel2.jpg'), alt: 'carousel2' },
       ],
-      colors: [
-        'indigo',
-        'warning',
-        'pink darken-2',
-        'red lighten-1',
-        'deep-purple accent-4',
-      ],
-      slides: ['First', 'Second', 'Third', 'Fourth', 'Fifth'],
       expectedSurvey: [],
       proceedingSurvey: [
         // {
