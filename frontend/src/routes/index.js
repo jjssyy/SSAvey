@@ -22,6 +22,7 @@ import Test from '@/views/Test.vue'
 Vue.use(VueRouter)
 
 export default new VueRouter({
+  mode: 'history',
   routes: [
     {
       path: '/login',
