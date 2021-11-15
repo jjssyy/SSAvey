@@ -27,27 +27,96 @@
             </div>
             <div class="content">
               <h4>직책</h4>
-              <input v-model="user.position" :disabled="is_modify" />
+              <v-select
+                v-model="user.position"
+                :items="positions"
+                :label="user.position"
+                required
+                solo
+                :disabled="is_modify"
+              ></v-select>
+              <!-- <input v-model="user.position" :disabled="is_modify" /> -->
             </div>
             <div class="content">
               <h4>기수</h4>
-              <input v-model="user.generation" :disabled="is_modify" />
+              <v-select
+                v-if="user.position == '교육생'"
+                v-model="user.generation"
+                :items="generations"
+                :label="user.generation"
+                dense
+                solo
+                :disabled="is_modify"
+              ></v-select>
+              <!-- <input v-model="user.generation" :disabled="is_modify" /> -->
             </div>
             <div class="content">
               <h4>지역</h4>
-              <input v-model="user.area" :disabled="is_modify" />
+              <v-select
+                v-if="
+                  user.position == '교육생' &&
+                    (user.generation == '5' || user.generation == '5기')
+                "
+                v-model="user.area"
+                :items="regions"
+                :label="user.area"
+                기
+                dense
+                solo
+                :disabled="is_modify"
+              ></v-select>
+              <v-select
+                v-if="
+                  user.position == '교육생' &&
+                    (user.generation == '6' || user.generation == '6기')
+                "
+                v-model="user.area"
+                :items="regions2"
+                :label="user.area"
+                dense
+                solo
+                :disabled="is_modify"
+              ></v-select>
+              <!-- <input v-model="user.area" :disabled="is_modify" /> -->
             </div>
             <div class="content">
               <h4>반</h4>
-              <input v-model="user.group" :disabled="is_modify" />
+              <v-select
+                v-if="user.position == '교육생'"
+                v-model="user.group"
+                :items="clss"
+                :label="user.group"
+                dense
+                solo
+                :disabled="is_modify"
+              ></v-select>
+              <!-- <input v-model="user.group" :disabled="is_modify" /> -->
             </div>
             <div class="content">
               <h4>팀</h4>
-              <input v-model="user.team" :disabled="is_modify" />
+              <v-select
+                v-if="user.position == '교육생'"
+                v-model="user.team"
+                :items="teams"
+                :label="user.team"
+                dense
+                solo
+                :disabled="is_modify"
+              ></v-select>
+              <!-- <input v-model="user.team" :disabled="is_modify" /> -->
             </div>
             <div class="content">
               <h4>팀 내 역할</h4>
-              <input v-model="user.team_roll" :disabled="is_modify" />
+              <v-select
+                v-if="user.position == '교육생'"
+                v-model="user.team_role"
+                :items="roles"
+                :label="user.team_roll"
+                dense
+                solo
+                :disabled="is_modify"
+              ></v-select>
+              <!-- <input v-model="user.team_roll" :disabled="is_modify" /> -->
             </div>
           </div>
         </div>
@@ -92,6 +161,37 @@ export default {
       user: {},
       is_modify: true,
       offset: true,
+      positions: ['교육생', '컨설턴트', '교육프로', '교육코치'],
+      generations: ['5기', '6기'],
+      roles: ['없음', '팀장', '팀원'],
+      regions: ['서울', '대전', '광주', '구미'],
+      regions2: ['서울', '대전', '광주', '구미', '부울경'],
+      clss: [
+        '1반',
+        '2반',
+        '3반',
+        '4반',
+        '5반',
+        '6반',
+        '7반',
+        '8반',
+        '9반',
+        '10반',
+        '기업연계',
+      ],
+      teams: [
+        '없음',
+        '1팀',
+        '2팀',
+        '3팀',
+        '4팀',
+        '5팀',
+        '6팀',
+        '7팀',
+        '8팀',
+        '9팀',
+        '10팀',
+      ],
     }
   },
   methods: {
@@ -108,7 +208,7 @@ export default {
           email: this.user.email,
           name: this.user.name,
           position: this.user.position,
-          generation: this.user.generation,
+          generation: this.user.generation.charAt(0, 1) * 1,
           area: this.user.area,
           group: this.user.group,
           team: this.user.team,
