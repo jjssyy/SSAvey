@@ -1,5 +1,6 @@
 <template>
   <v-app style="background-color: #eef2f7">
+    {{ this.$store.state.user }}
     <v-carousel
       cycle
       height="400"

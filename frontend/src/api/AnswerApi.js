@@ -9,7 +9,7 @@ const checkAssignedSurveyUser = (data, callback, errorCallback) => {
 
 const saveSurveyResponse = (payload, callback, errorCallback) => {
   instance
-    .post(`/answer/${payload.id}/${payload.sid}`, payload)
+    .post(`/answer/${payload.id}/${payload.result.sid}`, payload.result)
     .then(res => callback(res))
     .catch(err => errorCallback(err))
 }

@@ -91,7 +91,7 @@ export default new VueRouter({
       meta: { auth: true },
     },
     {
-      path: '/answer/survey',
+      path: '/answer/survey/:sid',
       name: 'SurveyAnswer',
       component: SurveyAnswer,
       meta: { auth: true },
