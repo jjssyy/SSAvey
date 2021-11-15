@@ -260,6 +260,7 @@ export default {
       this.$store.state.surveySet.survey.target = Array.from(tempTarget)
       this.$store.state.surveySet.survey.incomplete = Array.from(tempTarget)
       this.$store.state.surveySet.survey.share = Array.from(tempShare)
+      this.$store.state.surveySet.survey.share.push(this.$store.state.uid)
       SurveyApi.makeSurvey(
         this.$store.state.surveySet.survey,
         res => {
