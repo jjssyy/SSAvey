@@ -1,0 +1,117 @@
+.analysis-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  // flex-wrap: wrap;
+  .analysis-item {
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    .analysis-title {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      .main-title {
+        font-size: 1.6rem;
+        font-weight: bold;
+      }
+      .sub-title {
+        width: 25%;
+        display: flex;
+        justify-content: end;
+        button {
+          display: flex;
+          color: #737272;
+          p {
+            margin-right: 0.5rem;
+          }
+        }
+        button:hover {
+          color: #688ae6;
+        }
+      }
+    }
+    .analysis-explain {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      .main-explain {
+        font-size: 1rem;
+        font-weight: 500;
+      }
+      .sub-explain {
+        display: flex;
+        width: 25%;
+        justify-content: end;
+        color: #737272;
+        align-items: center;
+        p {
+          margin-right: 0.3rem;
+        }
+        .center {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+      .sub-explain:hover {
+        color: #688ae6;
+      }
+    }
+  }
+  .temp {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    .analysis-item-two {
+      width: 100%;
+      background-color: white;
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      .item-container {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        .question-title {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 0.5rem;
+          .title-item {
+            font-size: 1.2rem;
+            font-weight: 500;
+          }
+          .sub-item {
+            color: #737272;
+            .subtitle-item {
+              margin-right: 0.3rem;
+            }
+            display: flex;
+          }
+        }
+        .item-one {
+          width: 50%;
+        }
+        .itemp-two {
+          width: 50%;
+        }
+      }
+    }
+  }
+  .temp::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 5px;
+    margin: 10px;
+    background-color: #d4c9c9;
+  }
+  .temp::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #737272;
+  }
+}
