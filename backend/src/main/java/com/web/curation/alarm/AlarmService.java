@@ -38,8 +38,11 @@ public class AlarmService{
         threadPoolTaskScheduler.initialize();
         threadPoolTaskScheduler.setThreadNamePrefix(sid + "-");
 
+
         Date startDate = Timestamp.valueOf(startDateTime);
         Date endDate = Timestamp.valueOf(endDateTime);
+        log.info("startDate : " + startDate);
+        log.info("endDate : " + endDate);
 
         threadPoolTaskScheduler.schedule(startSurvey(), startDate);
         threadPoolTaskScheduler.schedule(closeSurvey(), endDate);
@@ -54,6 +57,8 @@ public class AlarmService{
 
         Date startDate = Timestamp.valueOf(startDateTime);
         Date endDate = Timestamp.valueOf(endDateTime);
+        log.info("startDate : " + startDate);
+        log.info("endDate : " + endDate);
 
         threadPoolTaskScheduler.schedule(startSurvey(), startDate);
         threadPoolTaskScheduler.schedule(closeSurvey(), endDate);
@@ -66,7 +71,7 @@ public class AlarmService{
         return () -> {
             String fullName = Thread.currentThread().getName();
             String prefixName = fullName.substring(0, fullName.indexOf("-"));
-            log.info(fullName + " 스레드 동작");
+            log.info("Survey Start, threadName : " + fullName);
 
             Survey survey = surveyDao.findById(prefixName).get();
             survey.setState(State.PROCEEDING);
@@ -84,7 +89,7 @@ public class AlarmService{
         return () -> {
             String fullName = Thread.currentThread().getName();
             String prefixName = fullName.substring(0, fullName.indexOf("-"));
-            log.info(fullName + " 스레드 동작");
+            log.info("Survey End, threadName : " + fullName);
 
             Survey survey = surveyDao.findById(prefixName).get();
             survey.setState(State.COMPLETED);
