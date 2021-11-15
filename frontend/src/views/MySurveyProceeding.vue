@@ -42,7 +42,13 @@
               설문 종류
               <v-menu bottom :offset-x="offset">
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                  <v-btn
+                    color="primary"
+                    dark
+                    v-bind="attrs"
+                    v-on="on"
+                    @click="moveResult(item.sid)"
+                  >
                     <i class="fas fa-ellipsis-v"></i>
                   </v-btn>
                 </template>
@@ -90,7 +96,12 @@ export default {
     rows: 2,
     page: 1,
   }),
-  methods: {},
+  methods: {
+    moveResult(sid) {
+      console.log(sid)
+      this.$router.push(`/survey-result/${sid}`)
+    },
+  },
   watch: {
     page() {
       SurveyApi.getMysurvey(

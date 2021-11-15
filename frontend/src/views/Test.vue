@@ -10,8 +10,7 @@
     </v-dialog>
     <vue-word-cloud
       style="
-          height: 550px;
-          width: 450px;
+          width: 50%;
           margin-left: 30px;
           cursor: pointer;
         "
@@ -139,7 +138,7 @@ export default {
       ['test', 1],
       ['test', 1],
     ],
-    Ratio: 5,
+    Ratio: 3,
     colorItems: [
       [
         '#FEDE00',
