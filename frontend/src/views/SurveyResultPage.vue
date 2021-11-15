@@ -14,7 +14,7 @@
 <script>
 import SurveyAnalysis from '@/components/SurveyResult/SurveyAnalysis.vue'
 import SurveyUser from '@/components/SurveyResult/SurveyUser.vue'
-// import SurveyApi from '@/api/SurveyApi'
+import SurveyApi from '@/api/SurveyApi'
 export default {
   components: {
     SurveyAnalysis,
@@ -26,22 +26,22 @@ export default {
     }
   },
   methods: {
-    // loadData() {
-    //   let payload = this.$route.params.surveyId
-    //   SurveyApi.loadSurveyResult(
-    //     payload,
-    //     res => {
-    //       console.log(res)
-    //       this.survey = res.data
-    //     },
-    //     err => {
-    //       console.log(err)
-    //     },
-    //   )
-    // },
+    loadData() {
+      let payload = this.$route.params.sid
+      SurveyApi.loadSurveyResult(
+        payload,
+        res => {
+          console.log(res)
+          this.survey = res.data
+        },
+        err => {
+          console.log(err)
+        },
+      )
+    },
   },
   created() {
-    // this.loadData()
+    this.loadData()
   },
 }
 </script>
