@@ -16,10 +16,6 @@
       </main>
     </div>
     <div v-else>
-      <nav>
-        <router-link to="/login">login</router-link> |
-        <router-link to="/select">select</router-link>
-      </nav>
       <v-app>
         <router-view></router-view>
       </v-app>
