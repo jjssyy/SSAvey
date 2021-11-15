@@ -49,7 +49,7 @@
               type="pie"
               width="100%"
               :options="chartOptions[index]"
-              :series="serie"
+              :series="surveyLabelSerie[index][1]"
             ></apexchart>
           </div>
           <!-- 단일, 복수에서 기타가 있을 경우 워드클라우드-->
@@ -83,9 +83,11 @@ export default {
   // },
   data() {
     return {
+      isQueOfShort: [],
+      surveyLabelSerie: null,
       // surveyLabelSerie: [[['유튜브', '싸피', '블로그'],[30, 20, 10]],[[],[]]]
-      serie: [44, 55, 13, 43, 22],
-      chartOptions: {
+      chartOptions: [],
+      tempChartOption: {
         chart: {
           width: '100%',
           type: 'pie',
@@ -93,12 +95,60 @@ export default {
         legend: {
           position: 'bottom',
         },
-        labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+        labels: null,
       },
     }
   },
-  methods: {},
-  created() {},
+  methods: {
+    // 해당 문항에 기타가 포함되어 있는지 확인.
+    findShortOfQue() {
+      this.survey.question.forEach(element => {
+        for (let i = 0; i < element.q_option.length; i++) {
+          if (element.q_option[i].short_answer) {
+            this.isQueOfShort.push(true)
+            break
+          }
+        }
+      })
+    },
+    initLS() {
+      // 배열 만들기
+      this.surveyLabelSerie = Array.from(
+        { length: this.survey.question.length },
+        () => [[]],
+      )
+      // labels.length 만큼 1번째 index에 0 push 하기
+      this.survey.question.forEach((q, index) => {
+        this.surveyLabelSerie[index].push(
+          Array.from({ length: q.q_option.length }, () => 0),
+        )
+      })
+      // label 데이터 넣기
+      this.survey.question.forEach((q, qIndex) => {
+        q.q_option.forEach(o => {
+          this.surveyLabelSerie[qIndex][0].push(o.o_explanation)
+        })
+      })
+      // label에 해당하는 숫자 sum
+      this.survey.survey_answer.forEach(a => {
+        a.answers.forEach(b => {
+          b.answer.forEach(c => {
+            this.surveyLabelSerie[parseInt(a.number) - 1][1][parseInt(c) - 1]++
+          })
+        })
+      })
+      //chartOptions 세팅
+      for (let i = 0; i < this.surveyLabelSerie.length; i++) {
+        let temp = this.tempChartOption
+        temp.labels = this.surveyLabelSerie[i][0]
+        this.chartOptions.push(temp)
+      }
+    },
+  },
+  created() {
+    this.findShortOfQue()
+    this.initLS()
+  },
 }
 </script>
 <style scoped src="./../../css/survey/survey/survey-analysis.css"></style>

@@ -6,6 +6,7 @@
     </div>
     <div class="component-2">
       <survey-user></survey-user>
+      <!-- <survey-user :survey="survey" @reset="loadData"></survey-user> -->
     </div>
   </div>
 </template>
