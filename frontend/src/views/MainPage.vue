@@ -23,7 +23,12 @@
     </v-carousel>
     <v-container class="lighten-5" style="min-width: 100%">
       <v-row>
-        <v-col style="min-height: 300px" cols="12" sm="6">
+        <v-col
+          style="min-height: 300px"
+          cols="12"
+          sm="6"
+          class="container-item"
+        >
           <div style="border-bottom: 2px solid">
             <h2>
               진행 중인 설문 <i @click="gotoProceeding" class="fas fa-plus"></i>
@@ -55,14 +60,30 @@
               </v-col>
               <v-col cols="12" sm="6">
                 <h5>
-                  {{ survey.start_date }} ~
-                  {{ survey.end_date }}
+                  {{
+                    survey.start_date.substring(0, 10) +
+                      ' ' +
+                      survey.start_date.substring(11, 16)
+                  }}
+                </h5>
+                <h5>
+                  ~
+                  {{
+                    survey.end_date.substring(0, 10) +
+                      ' ' +
+                      survey.end_date.substring(11, 16)
+                  }}
                 </h5>
               </v-col>
             </v-row>
           </div>
         </v-col>
-        <v-col style="min-height: 300px" cols="12" sm="6">
+        <v-col
+          style="min-height: 300px"
+          cols="12"
+          sm="6"
+          class="container-item"
+        >
           <div style="border-bottom: 2px solid">
             <h2>
               진행 예정 설문 <i @click="gotoExpected" class="fas fa-plus"></i>
@@ -94,14 +115,30 @@
               </v-col>
               <v-col cols="12" sm="6">
                 <h5>
-                  {{ survey.start_date }} ~
-                  {{ survey.end_date }}
+                  {{
+                    survey.start_date.substring(0, 10) +
+                      ' ' +
+                      survey.start_date.substring(11, 16)
+                  }}
+                </h5>
+                <h5>
+                  ~
+                  {{
+                    survey.end_date.substring(0, 10) +
+                      ' ' +
+                      survey.end_date.substring(11, 16)
+                  }}
                 </h5>
               </v-col>
             </v-row>
           </div>
         </v-col>
-        <v-col style="min-height: 300px" cols="12" sm="6">
+        <v-col
+          style="min-height: 300px"
+          cols="12"
+          sm="6"
+          class="container-item"
+        >
           <div style="border-bottom: 2px solid">
             <h2>
               완료된 설문 <i @click="gotoCompleted" class="fas fa-plus"></i>
@@ -270,6 +307,7 @@ export default {
 }
 </script>
 
+<style scoped src="./../css/view/main.css"></style>
 <style scoped>
 /* .circle {
   border-radius: 50%;
