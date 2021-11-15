@@ -69,6 +69,14 @@ public class SurveyService {
 			}
 			Collections.sort(result,(a,b)-> b.getEnd_date().compareTo(a.getEnd_date()));
 		}
+		if(state.equals("COMPLETED")&&answer_survey!=null) {
+			for(int i=0;i<temp.size();i++) {
+				Survey tmp_survey=surveyDao.findById(answer_survey.get(i))
+						.orElseThrow(()-> new CustomException(ErrorCode.SURVEY_NOT_FOUND));
+				result.add(tmp_survey);
+			}
+			Collections.sort(result,(a,b)-> b.getEnd_date().compareTo(a.getEnd_date()));
+		}
 		if(temp!=null&&state.equals("PROCEEDING")) {
 			for(int i=0;i<temp.size();i++) {
 				Survey tmp_survey=surveyDao.findById(temp.get(i))
