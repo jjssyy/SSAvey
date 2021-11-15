@@ -28,6 +28,7 @@ public class AnswerService {
 	
 	
 	public SurveyAnswer GetSurveyAnswer(String sid,String uid) {
+		log.info(uid + " 유저의 완료된 " + sid + " 설문 탐색");
 		List<Survey>  tmp=surveyService.getSurvey("COMPLETED", uid);
 		for(int i=0;i<tmp.size();i++) {
 			Survey temp_Survey=tmp.get(i);
@@ -42,6 +43,7 @@ public class AnswerService {
 		return null;
 	}  
 	public void CreateSurveyAnswer(SurveyAnswer surveyAnswer,String sid,String uid) {
+		log.info(uid + " 유저의 " + sid + " 설문 답변 기록");
 		surveyAnswer.setAid(sid+uid);
 		surveyAnswerDao.save(surveyAnswer);
 		Survey survey=surveyDao.findById(sid)

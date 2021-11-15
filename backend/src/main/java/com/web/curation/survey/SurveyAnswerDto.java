@@ -21,4 +21,6 @@ public class SurveyAnswerDto {
 	
 	private List<UserAnswer> answers;
 
+	private List<String> slicedWords;
+
 }
