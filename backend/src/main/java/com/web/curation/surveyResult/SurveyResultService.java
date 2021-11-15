@@ -1,11 +1,22 @@
 package com.web.curation.surveyResult;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.web.curation.answer.SurveyAnswer;
@@ -19,7 +30,6 @@ import com.web.curation.survey.Survey;
 import com.web.curation.survey.SurveyAnswerDto;
 import com.web.curation.survey.SurveyDao;
 import com.web.curation.survey.SurveyDto;
-import com.web.curation.survey.SurveyService;
 import com.web.curation.survey.UserAnswer;
 
 @Slf4j
@@ -109,12 +119,84 @@ public class SurveyResultService {
 			
 		}
 		result.setAnswers(tmp_SurveyAnswerDtos);
-		
-		
+
+
+		for(SurveyAnswerDto surveyAnswer : result.getAnswers()){
+			StringBuilder totalAnswerEachQuestions = new StringBuilder();
+
+			for(UserAnswer answers : surveyAnswer.getAnswers()){
+				for(String answer : answers.getAnswer()){
+					if(!answer.matches("-?\\d+")){
+						totalAnswerEachQuestions.append(answer);
+					}
+				}
+			}
+
+			List<String> slicedWords = sliceWords(totalAnswerEachQuestions.toString());
+			surveyAnswer.setSlicedWords(slicedWords);
+		}
 		
 		return result;
 	}
-	
+
+	private List<String> sliceWords(String totalAnswerEachQuestions) {
+		log.info("GCP 단어 slicing : " + totalAnswerEachQuestions);
+		List<String> slicedWords = new ArrayList<>();
+
+		JSONObject data=new JSONObject();
+		JSONObject document=new JSONObject();
+		document.put("type", "PLAIN_TEXT");
+		document.put("language", "ko");
+		document.put("content", totalAnswerEachQuestions);
+		data.put("document", document);
+		data.put("encodingType", "UTF8");
+
+		HttpURLConnection conn=null;
+		String reqURL= "https://language.googleapis.com/v1/documents:analyzeEntities?key=AIzaSyD1h3QKUFWEx1A2lQsVouHZ7cq44r8-gMU";
+		try {
+			URL url = new URL(reqURL);
+			conn=(HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Content-Type", "application/json");
+			conn.setDoOutput(true);
+			conn.connect();
+
+			//Post방식으로 스트링을통한 JSON전송
+			BufferedWriter bw= new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+			bw.write(data.toString());
+			bw.flush();
+			bw.close();
+
+			//서버에서 보낸 응답 데이터 수신 받기
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+			String line = "";
+			StringBuilder result = new StringBuilder();
+
+			while ((line = br.readLine()) != null) {
+				result.append(line);
+			}
+
+			JsonParser parser = new JsonParser();
+			JsonElement element = parser.parse(result.toString());
+
+			JsonArray entities = element.getAsJsonObject().get("entities").getAsJsonArray();
+
+			for(JsonElement el : entities){
+				JsonArray mentions = el.getAsJsonObject().get("mentions").getAsJsonArray();
+
+				for(JsonElement mention : mentions){
+					String content = mention.getAsJsonObject().get("text").getAsJsonObject().get("content").getAsString();
+					slicedWords.add(content);
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		return slicedWords;
+	}
+
 	public ConvertUid convertUid(String uid) {
 		ConvertUid result=new ConvertUid();
 		User tmp_user=userDao.findById(uid)
