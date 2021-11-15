@@ -6,12 +6,19 @@
       hide-delimiter-background
       show-arrows-on-hover
     >
-      <v-carousel-item v-for="(slide, i) in slides" :key="i">
-        <v-sheet :color="colors[i]" height="100%">
+      <v-carousel-item v-for="(image, i) in images" :key="i">
+        <!-- <v-sheet :color="colors[i]" height="100%">
           <v-row class="fill-height" align="center" justify="center">
             <div class="text-h2">{{ slide }} Slide</div>
           </v-row>
-        </v-sheet>
+        </v-sheet> -->
+
+        <img
+          :src="image.url"
+          style="height: 100%; object-fit: contain;"
+          :alt="image.des"
+          margin:auto
+        />
       </v-carousel-item>
     </v-carousel>
     <v-container class="lighten-5" style="min-width: 100%">
@@ -145,6 +152,10 @@ import axios from 'axios'
 export default {
   data() {
     return {
+      images: [
+        { url: require('@/assets/carousel1.jpg'), alt: 'carousel1' },
+        { url: require('@/assets/carousel1.jpg'), alt: 'carousel1' },
+      ],
       colors: [
         'indigo',
         'warning',

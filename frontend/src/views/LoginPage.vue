@@ -3,7 +3,7 @@
     <section class="section-container">
       <v-row class="signin">
         <v-col cols="12" sm="8" class="left">
-          <img src="@/assets/bigLogo.png" alt="" />
+          <img src="@/assets/Wiggle.png" alt="" />
         </v-col>
         <v-col cols="12" sm="4" class="right">
           <h2>LOGIN</h2>
