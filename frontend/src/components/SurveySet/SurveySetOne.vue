@@ -343,7 +343,24 @@ export default {
           },
         )
       } else {
-        console.log('검색창에 이름 입력해줄래?')
+        let payload = ''
+        UserApi.searchMember(
+          payload,
+          res => {
+            console.log(res)
+            if (res.data['검색 결과'].length == 0) {
+              console.log('검색결과가 없습니다.')
+              this.searchUsers = null
+              this.isNoneUser = true
+            } else {
+              this.searchUsers = res.data['검색 결과']
+              this.isNoneUser = false
+            }
+          },
+          err => {
+            console.log(err)
+          },
+        )
       }
     },
     plusSearchTarget(idx) {
