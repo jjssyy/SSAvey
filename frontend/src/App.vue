@@ -38,7 +38,7 @@ export default {
   },
   computed: {
     isLoginTwo() {
-      return this.$store.state.uid
+      return this.$store.state.uid && this.$store.state.isSignUp
     },
   },
   methods: {
