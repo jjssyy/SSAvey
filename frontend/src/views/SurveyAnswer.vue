@@ -74,16 +74,12 @@ export default {
       v =>
         v ? (v.length <= 20 ? true : '최대 20자까지만 입력해주세요.') : false,
     ],
-    // shortrules: null,
     short: {},
     sid: '',
     shortvalue: '',
     result: {},
     items: [],
   }),
-  // mounted() {
-  //   this.shortrules = [v => v.length <= 20 || '최대 20자까지만 입력해주세요.']
-  // },
   created() {
     console.log(this.$route.params.sid)
     SurveyApi.getSurvey(
