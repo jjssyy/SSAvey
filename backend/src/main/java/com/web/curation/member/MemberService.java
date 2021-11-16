@@ -54,8 +54,9 @@ public class MemberService {
     }
 
     public void updateUser(User user){
-        userDao.findById(user.getUid())
+        User dbUser = userDao.findById(user.getUid())
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        user.setToken(dbUser.getToken());
         userDao.save(user);
     }
 

@@ -24,12 +24,13 @@ public class MainService {
 	private UserDao userDao;
 	private SurveyDao surveyDao;
 	
-	
-	
 	public List<Survey> getSurvey(String state,String uid){
+		log.info(uid + " 회원의 " + state + " 상태 설문지 리스트");
+
 		List<Survey> result=new ArrayList<Survey>();
 		User user=userDao.findById(uid)
 	             .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
 		//자신에게 할당된 설문조사중 state와 똑같은 설문지 찾기
 		List<String> temp=user.getSurvey();
 		List<String> answer_survey=user.getAnswer_survey();
