@@ -28,8 +28,6 @@ public class SurveyService {
 	
 	
 	public void createSurvey(Survey survey) {
-		alarmService.setAlarmSchdule(survey.getSid(), survey.getStart_date(), survey.getEnd_date());
-		
 		//할당된 설문,만든 설문 분배하는 작업
 		List<String> target=survey.getTarget();
 		List<String> share=survey.getShare();
@@ -44,8 +42,8 @@ public class SurveyService {
 			target.remove(survey.getWriter());
 			survey.setIncomplete(incomplete);
 		}
-		
 		survey = surveyDao.save(survey);
+		alarmService.setAlarmSchdule(survey.getSid(), survey.getStart_date(), survey.getEnd_date());
 		//할당된 설문 분배하는작업
 		for(int i=0;i<target.size();i++) {
 			String temp=target.get(i);
