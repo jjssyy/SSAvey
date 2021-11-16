@@ -24,6 +24,7 @@ public class MySurveyService {
     private SurveyDao surveyDao;
 
     public List<MySurveyDto> getMySurveysByState (String uid, State state){
+        log.info(uid + " 회원이 배포한 설문 중 " + state + " 상태의 설문지 리스트");
         User user = userDao.findById(uid)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
