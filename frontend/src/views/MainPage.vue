@@ -1,5 +1,5 @@
 <template>
-  <v-app style="background-color: #eef2f7">
+  <v-app class="notosanskr">
     <v-carousel
       cycle
       height="400"
@@ -16,7 +16,7 @@
         </v-row>
       </v-carousel-item>
     </v-carousel>
-    <v-container class="lighten-5" style="min-width: 100%">
+    <v-container class="lighten-5" style="min-width: 100% ">
       <v-row>
         <v-col
           style="min-height: 300px"
@@ -25,9 +25,7 @@
           class="container-item"
         >
           <div style="border-bottom: 2px solid">
-            <h2>
-              진행 중인 설문 <i @click="gotoProceeding" class="fas fa-plus"></i>
-            </h2>
+            <h2>진행 중인 설문 <button @click="gotoProceeding">+</button></h2>
           </div>
           <div
             class="d-flex justify-space-between"
@@ -41,19 +39,27 @@
             v-for="(survey, index) in proceedingSurvey"
             :key="index"
             style="
-              padding: 5px;
+              padding: 5px 0px 5px 5px;
               margin: 3px 5px;
               align-items: center;
-              border: 1px solid;
-              border-radius: 10px;
+              color:#565656;
+              border-bottom:1px solid #F6F6F6;
             "
           >
-            <v-btn fab small class="mx-2" style="font-weight: bold">진행</v-btn>
+            <v-btn
+              depressed
+              fab
+              small
+              class="mx-2"
+              style="font-weight: bold"
+              id="noHover"
+              >진행</v-btn
+            >
             <v-row class="d-flex" style="align-items: center">
-              <v-col cols="12" sm="6">
-                <h4>{{ survey.title }}</h4>
+              <v-col cols="12" sm="8">
+                <h4>&nbsp; {{ survey.title }}</h4>
               </v-col>
-              <v-col cols="12" sm="6">
+              <v-col cols="12" sm="4">
                 <h5>
                   {{
                     survey.start_date.substring(0, 10) +
@@ -80,9 +86,7 @@
           class="container-item"
         >
           <div style="border-bottom: 2px solid">
-            <h2>
-              진행 예정 설문 <i @click="gotoExpected" class="fas fa-plus"></i>
-            </h2>
+            <h2>진행 예정 설문 <button @click="gotoExpected">+</button></h2>
           </div>
           <div
             class="d-flex justify-space-between"
@@ -99,16 +103,24 @@
             padding: 5px; 
             margin: 3px 5px; 
             align-items: center; 
-            border: 1px solid; 
-            border-radius: 10px;
+            color:#D4D4D4;
+            border-bottom:1px solid #F6F6F6;
             "
           >
-            <v-btn fab small class="mx-2" style="font-weight: bold">예정</v-btn>
+            <v-btn
+              depressed
+              fab
+              small
+              class="mx-2"
+              style="font-weight: bold"
+              id="noHover"
+              >예정</v-btn
+            >
             <v-row class="d-flex" style="align-items: center">
-              <v-col cols="12" sm="6">
-                <h4>{{ survey.title }}</h4>
+              <v-col cols="12" sm="8">
+                <h4>&nbsp; {{ survey.title }}</h4>
               </v-col>
-              <v-col cols="12" sm="6">
+              <v-col cols="12" sm="4">
                 <h5>
                   {{
                     survey.start_date.substring(0, 10) +
@@ -135,9 +147,7 @@
           class="container-item"
         >
           <div style="border-bottom: 2px solid">
-            <h2>
-              완료된 설문 <i @click="gotoCompleted" class="fas fa-plus"></i>
-            </h2>
+            <h2>완료된 설문 <button @click="gotoCompleted">+</button></h2>
           </div>
           <div
             class="d-flex justify-space-between"
@@ -154,19 +164,38 @@
             padding: 5px; 
             margin: 3px 5px; 
             align-items: center; 
-            border: 1px solid; 
-            border-radius: 10px;
+            color:#D4D4D4;
+            border-bottom:1px solid #F6F6F6;
             "
           >
-            <v-btn fab small class="mx-2" style="font-weight: bold">완료</v-btn>
+            <v-btn
+              depressed
+              fab
+              small
+              class="mx-2"
+              style="font-weight: bold"
+              id="noHover"
+              >완료</v-btn
+            >
             <v-row class="d-flex" style="align-items: center">
-              <v-col cols="12" sm="6">
-                <h4>{{ survey.title }}</h4>
+              <v-col cols="12" sm="8">
+                <h4>&nbsp; {{ survey.title }}</h4>
               </v-col>
-              <v-col cols="12" sm="6">
+              <v-col cols="12" sm="4">
                 <h5>
-                  {{ survey.start_date }} ~
-                  {{ survey.end_date }}
+                  {{
+                    survey.start_date.substring(0, 10) +
+                      ' ' +
+                      survey.start_date.substring(11, 16)
+                  }}
+                </h5>
+                <h5>
+                  ~
+                  {{
+                    survey.end_date.substring(0, 10) +
+                      ' ' +
+                      survey.end_date.substring(11, 16)
+                  }}
                 </h5>
               </v-col>
             </v-row>
@@ -189,23 +218,7 @@ export default {
         { url: require('@/assets/carousel2.jpg'), alt: 'carousel2' },
       ],
       expectedSurvey: [],
-      proceedingSurvey: [
-        // {
-        //   title: '첫번째 설문',
-        //   start_date: '2021.11.01 18:00',
-        //   end_date: '2021.11.02.09:00',
-        // },
-        // {
-        //   title: '첫번째 설문',
-        //   start_date: '2021.11.01 18:00',
-        //   end_date: '2021.11.02.09:00',
-        // },
-        // {
-        //   title: '첫번째 설문',
-        //   start_date: '2021.11.01 18:00',
-        //   end_date: '2021.11.02.09:00',
-        // },
-      ],
+      proceedingSurvey: [],
       completedSurvey: [],
     }
   },
@@ -302,4 +315,12 @@ export default {
   overflow: hidden;
   padding: 3px;
 } */
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.notosanskr * {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+#noHover {
+  pointer-events: none;
+}
 </style>
