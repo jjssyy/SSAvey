@@ -61,7 +61,6 @@
         </v-btn>
       </v-card-actions>
     </v-card>
-    {{ this.result }}
   </v-app>
 </template>
 
@@ -123,18 +122,18 @@ export default {
       )
     },
     checkMultiple(index, key) {
-      if (this.result.hasOwnProperty(`${index}번`)) {
-        if (this.result[`${index}번`].includes(key)) {
-          this.result[`${index}번`].splice(
-            this.result[`${index}번`].indexOf(key),
+      if (this.result.question[index - 1].hasOwnProperty('answer')) {
+        if (this.result.question[index - 1].answer.includes(key)) {
+          this.result.question[index - 1].answer.splice(
+            this.result.question[index - 1].answer.indexOf(key),
             1,
           )
         } else {
-          this.result[`${index}번`].push(key)
+          this.result.question[index - 1].answer.push(key)
         }
       } else {
-        this.result[`${index}번`] = []
-        this.result[`${index}번`].push(key)
+        this.result.question[index - 1].answer = []
+        this.result.question[index - 1].answer.push(key)
       }
       console.log(this.result)
     },
@@ -150,15 +149,15 @@ export default {
         this.result.question[index - 1].answer = []
         this.result.question[index - 1].answer.push(key)
       }
-      console.log(this.result.question[index - 1])
+      console.log(this.result)
     },
     checkShort(index) {
-      if (this.result.hasOwnProperty(`${index}번`)) {
-        this.result[`${index}번`].pop()
-        this.result[`${index}번`].push(this.short[`${index}번`])
+      if (this.result.question[index - 1].hasOwnProperty('answer')) {
+        this.result.question[index - 1].answer.pop()
+        this.result.question[index - 1].answer.push(this.short[`${index}번`])
       } else {
-        this.result[`${index}번`] = []
-        this.result[`${index}번`].push(this.short[`${index}번`])
+        this.result.question[index - 1].answer = []
+        this.result.question[index - 1].answer.push(this.short[`${index}번`])
       }
       console.log(this.result)
     },
