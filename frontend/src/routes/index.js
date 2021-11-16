@@ -115,7 +115,7 @@ export default new VueRouter({
       meta: { auth: true },
     },
     {
-      path: '/compare',
+      path: '/compare/:sid',
       name: 'ResultComparison',
       component: ResultComparison,
       meta: { auth: true },

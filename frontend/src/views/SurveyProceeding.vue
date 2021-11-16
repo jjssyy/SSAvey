@@ -38,15 +38,7 @@
               </v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
-              설문 종류
-              <v-btn
-                v-if="answersurvey != null && answersurvey.includes(item.sid)"
-                @click="gotothissurvey(item.sid)"
-                icon
-              >
-                <v-icon>mdi-check</v-icon>
-              </v-btn>
-              <v-btn v-else @click="gotothissurvey(item.sid)" icon>
+              <v-btn @click="gotothissurvey(item.sid)" icon>
                 <v-icon>mdi-arrow-right</v-icon>
               </v-btn>
             </v-list-item-action>
@@ -65,6 +57,7 @@
 
 <script>
 import SurveyApi from '@/api/SurveyApi'
+import AnswerApi from '@/api/AnswerApi'
 
 export default {
   data: () => ({
@@ -75,8 +68,26 @@ export default {
   }),
   methods: {
     gotothissurvey(sid) {
-      console.log(sid)
-      this.$router.push(`/answer/survey/${sid}`)
+      let temp = {
+        id: this.$store.state.uid,
+        sid: sid,
+      }
+
+      let isassigned = {}
+
+      AnswerApi.checkAssignedSurveyUser(
+        temp,
+        res => {
+          console.log(res.data.data)
+          isassigned = res.data.data
+        },
+        err => {
+          console.log(err)
+        },
+      )
+      if (isassigned) {
+        this.$router.push(`/answer/survey/${sid}`)
+      }
     },
   },
   watch: {

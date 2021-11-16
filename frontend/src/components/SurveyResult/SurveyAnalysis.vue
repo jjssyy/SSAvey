@@ -17,10 +17,12 @@
           {{ survey.explain }}
         </p>
         <div class="sub-explain">
-          <p>지난 설문과 비교</p>
-          <span class="center">
-            <i class="fas fa-angle-double-right"></i>
-          </span>
+          <button @click="gotoCompare(survey.sid)">
+            <span class="center">
+              <p>지난 설문과 비교</p>
+              <i class="fas fa-angle-double-right"></i>
+            </span>
+          </button>
         </div>
       </div>
     </section>
@@ -100,6 +102,9 @@ export default {
     }
   },
   methods: {
+    gotoCompare(sid) {
+      this.$router.push('/compare/' + sid)
+    },
     // 해당 문항에 기타가 포함되어 있는지 확인.
     findShortOfQue() {
       console.log('findShortOfQue')
