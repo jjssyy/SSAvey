@@ -123,17 +123,19 @@ public class SurveyResultService {
 
 
 		for(SurveyAnswerDto surveyAnswer : result.getAnswers()){
-			StringBuilder totalAnswerEachQuestions = new StringBuilder();
+//			StringBuilder totalAnswerEachQuestions = new StringBuilder();
+			List<String> slicedWords = new ArrayList<>();
 
 			for(UserAnswer answers : surveyAnswer.getAnswers()){
 				for(String answer : answers.getAnswer()){
 					if(!answer.matches("-?\\d+")){
-						totalAnswerEachQuestions.append(answer);
+//						totalAnswerEachQuestions.append(answer);
+						slicedWords.add(answer);
 					}
 				}
 			}
 
-			List<String> slicedWords = sliceWords(totalAnswerEachQuestions.toString());
+//			List<String> slicedWords = sliceWords(totalAnswerEachQuestions.toString());
 			surveyAnswer.setSlicedWords(slicedWords);
 		}
 		
