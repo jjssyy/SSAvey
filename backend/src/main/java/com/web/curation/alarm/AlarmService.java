@@ -107,6 +107,7 @@ public class AlarmService{
         String token = user.getToken();
 
         log.info("postAlarm " + sendMember + " -> " + Arrays.toString(targetMembers.toArray()));
+        log.info("postAlarm message : " + message);
 
         for(String targetMember : targetMembers){
             String channelId = getDirectChannelId(token, sendMember, targetMember);

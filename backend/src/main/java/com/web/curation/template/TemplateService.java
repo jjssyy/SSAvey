@@ -20,6 +20,7 @@ public class TemplateService {
     private UserDao userDao;
 
     public void createTemplate(Template template){
+        log.info(template.getT_title() + " 템플릿 생성");
         template = templateDao.save(template);
 
         User user  = userDao.findById(template.getWriter())
@@ -30,6 +31,8 @@ public class TemplateService {
     }
 
     public List<Template> getUserTemplates(String uid){
+        log.info(uid + " 회원의 템플릿 리스트 호출");
+
         List<Template> list = new ArrayList<>();
         User user  = userDao.findById(uid)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
@@ -45,6 +48,8 @@ public class TemplateService {
     }
 
     public Template getTemplate(String tid){
+        log.info(tid + " 템플릿 호출");
+
         Template template = templateDao.findById(tid)
                 .orElseThrow(() -> new CustomException(ErrorCode.TEMPLATE_NOT_FOUND));
         if(template.isDeleted()) throw new CustomException(ErrorCode.TEMPLATE_NOT_FOUND);
@@ -53,6 +58,7 @@ public class TemplateService {
     }
 
     public void deleteTemplate(String tid, String uid){
+        log.info(uid + " 회원의 " + tid + " 템플릿 삭제");
         User user  = userDao.findById(uid)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 

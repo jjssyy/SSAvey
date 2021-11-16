@@ -70,6 +70,7 @@ public class AnswerService {
 	}
 	
 	public boolean CheckSurveyAnswer(String sid,String uid) {
+		log.info(uid + " 유저가 " + sid + " 설문에 접근가능한지 확인");
 		User user  = userDao.findById(uid)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 		for(int i=0;i<user.getSurvey().size();i++) {

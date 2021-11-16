@@ -23,6 +23,9 @@ public class CompareService {
     private SurveyDao surveyDao;
 
     public List<CompareSurvey> getCertainPeriodSurveys(String tid, LocalDate startDate, LocalDate endDate){
+        log.info("특정 기간 " + tid + " 템플릿을 이용한 설문 리스트");
+        log.info(startDate + " - " + endDate);
+
         List<CompareSurvey> list = new ArrayList<>();
         Template template = templateDao.findById(tid)
                 .orElseThrow(() -> new CustomException(ErrorCode.TEMPLATE_NOT_FOUND));
