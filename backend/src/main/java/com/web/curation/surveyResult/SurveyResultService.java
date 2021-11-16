@@ -2,7 +2,6 @@ package com.web.curation.surveyResult;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +12,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class SurveyResultService {
 		result.setSid(tmp_survey.getSid());
 		result.setTitle(tmp_survey.getTitle());
 		result.setExplain(tmp_survey.getExplain());
-		result.set_anony(tmp_survey.isAnony());
+		result.setAnony(tmp_survey.isAnony());
 		result.setWriter(tmp_survey.getWriter());
 		result.setStart_date(tmp_survey.getStart_date());
 		result.setEnd_date(tmp_survey.getEnd_date());
@@ -219,5 +220,13 @@ public class SurveyResultService {
 		return result;
 	}
 	
-	
+	public String createRestTimeMessage(String sid){
+		Survey survey = surveyDao.findById(sid)
+				.orElseThrow(() -> new CustomException(ErrorCode.SURVEY_NOT_FOUND));
+
+		Duration remainDuration = Duration.between(LocalDateTime.now(), survey.getEnd_date());
+		return "#### " + survey.getTitle() + " 설문\n남은 기간: " +
+				remainDuration.toDays() + "일 " + (remainDuration.toHours()  - remainDuration.toDays() * 24) + "시 "
+				+ (remainDuration.toMinutes() - remainDuration.toHours() * 60) + "분\n:running_man: 서둘러주세요";
+	}
 }

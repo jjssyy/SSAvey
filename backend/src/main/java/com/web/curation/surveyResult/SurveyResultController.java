@@ -1,20 +1,18 @@
 package com.web.curation.surveyResult;
 
+import com.web.curation.alarm.AlarmService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.web.curation.survey.SurveyAnswerDto;
 import com.web.curation.survey.SurveyDto;
 
 @Slf4j
@@ -25,19 +23,33 @@ import com.web.curation.survey.SurveyDto;
 public class SurveyResultController {
 
     private SurveyResultService surveyResultService;
-    
-    
-    @GetMapping("/{survey_id}")
-   public ResponseEntity<Map<String, Object>> getSurveyResult(
-		   @PathVariable String survey_id
-		   ){
-    	
-    	Map<String, Object> resultmap=new HashMap<String, Object>();
-    	SurveyDto result= surveyResultService.getSurveyResult(survey_id);
-    	
-    	resultmap.put("status", HttpStatus.OK);
-    	resultmap.put("data", result);
-    	return new ResponseEntity<>(resultmap,HttpStatus.OK); 
-    }
-    
+    private AlarmService alarmService;
+
+	@GetMapping("/{survey_id}")
+	public ResponseEntity<Map<String, Object>> getSurveyResult(
+			   @PathVariable String survey_id
+			   ){
+
+		Map<String, Object> resultmap=new HashMap<String, Object>();
+		SurveyDto result= surveyResultService.getSurveyResult(survey_id);
+
+		resultmap.put("status", HttpStatus.OK);
+		resultmap.put("data", result);
+		return new ResponseEntity<>(resultmap,HttpStatus.OK);
+	}
+
+	@PostMapping("/{sid}/alarm/{uid}")
+	public ResponseEntity<Map<String, Object>> postAlarm(@PathVariable String sid, @PathVariable String uid, @RequestBody List<String> target){
+		Map<String, Object> resultmap=new HashMap<String, Object>();
+
+		log.info("postAlarm " + uid + " -> " + Arrays.toString(target.toArray()));
+
+		String message = surveyResultService.createRestTimeMessage(sid);
+		alarmService.mattermostAlarm(uid, target, message);
+
+		resultmap.put("status", HttpStatus.OK);
+		resultmap.put("message", "알람 전송");
+		return new ResponseEntity<>(resultmap,HttpStatus.OK);
+	}
+
 }
