@@ -39,6 +39,7 @@ const loadSurveyResult = (payload, callback, errorCallback) => {
     .then(res => callback(res))
     .catch(err => errorCallback(err))
 }
+
 const alarmSurveyResult = (payload, callback, errorCallback) => {
   instance
     .post('/survey-result/alarm', payload)

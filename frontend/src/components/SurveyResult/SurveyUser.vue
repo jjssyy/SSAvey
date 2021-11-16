@@ -60,12 +60,12 @@ export default {
   components: {
     apexchart: VueApexCharts,
   },
-  // props: {
-  //   survey: {
-  //     type: Object,
-  //     required: true,
-  //   },
-  // },
+  props: {
+    survey: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       series: [0, 0],
@@ -155,6 +155,7 @@ export default {
     },
   },
   created() {
+    console.log('??')
     this.initCount()
   },
 }
