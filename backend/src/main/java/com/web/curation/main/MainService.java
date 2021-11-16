@@ -34,12 +34,20 @@ public class MainService {
 		//자신에게 할당된 설문조사중 state와 똑같은 설문지 찾기
 		List<String> temp=user.getSurvey();
 		List<String> answer_survey=user.getAnswer_survey();
+		if(state.equals("COMPLETED")&&answer_survey!=null) {
+			for(int i=0;i<answer_survey.size();i++) {
+				Survey tmp_survey=surveyDao.findById(answer_survey.get(i))
+						.orElseThrow(()-> new CustomException(ErrorCode.SURVEY_NOT_FOUND));
+				result.add(tmp_survey);
+			}
+			Collections.sort(result,(a,b)-> b.getEnd_date().compareTo(a.getEnd_date()));
+		}
 		if(state.equals("COMPLETED")&&temp!=null) {
 			for(int i=0;i<temp.size();i++) {
 				Survey tmp_survey=surveyDao.findById(temp.get(i))
 						.orElseThrow(()-> new CustomException(ErrorCode.SURVEY_NOT_FOUND));
 				if(tmp_survey.getState().toString().equals(state)) {
-					result.add(tmp_survey);
+					result.add(tmp_survey);					
 				}
 			}
 			Collections.sort(result,(a,b)-> b.getEnd_date().compareTo(a.getEnd_date()));
