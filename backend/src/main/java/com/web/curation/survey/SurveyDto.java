@@ -25,7 +25,7 @@ public class SurveyDto {
 
 	private String explain;
 
-	private boolean is_anony;
+	private boolean anony;
 
 	private String writer;
 

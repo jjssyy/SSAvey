@@ -9,7 +9,6 @@ import com.web.curation.survey.SurveyDao;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +17,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Timestamp;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -95,17 +93,12 @@ public class AlarmService{
             survey.setState(State.COMPLETED);
             surveyDao.save(survey);
 
-//            Duration remainDuration = Duration.between(LocalDateTime.now(), survey.getEnd_date());
-//            String message = "#### " + survey.getTitle() + " 설문\n남은 기간: " +
-//                    remainDuration.toDays() + "일 " + (remainDuration.toHours()  - remainDuration.toDays() * 24) + "시 "
-//                    + (remainDuration.toMinutes() - remainDuration.toHours() * 60) + "분\n:running_man: 서둘러주세요";
-
             schedulerHashMap.get(prefixName).shutdown();
             schedulerHashMap.remove(prefixName);
         };
     }
 
-    private void mattermostAlarm(String sendMember, List<String> targetMembers, String message){
+    public void mattermostAlarm(String sendMember, List<String> targetMembers, String message){
         for(String targetMember : targetMembers){
             String channelId = getDirectChannelId(sendMember, targetMember);
             sendPosts(channelId, message);

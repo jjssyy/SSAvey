@@ -40,17 +40,17 @@ public class AnswerController {
     }
     
     @PostMapping("/{uid}/{survey_id}")
-    public ResponseEntity<Map<String, Object>> CreateSurveyAnswer(
-    		@PathVariable String uid,
-    		@PathVariable String survey_id,
-    		@RequestBody SurveyAnswer surveyAnswer
-    		){
-    	Map<String, Object> resultmap=new HashMap<String, Object>();
-    	answerService.CreateSurveyAnswer(surveyAnswer, survey_id, uid);
-    	resultmap.put("status", HttpStatus.OK);
-    	resultmap.put("data", "success");
-    	return new ResponseEntity<>(resultmap,HttpStatus.OK); 
-    }
+	public ResponseEntity<Map<String, Object>> CreateSurveyAnswer(
+			@PathVariable String uid,
+			@PathVariable String survey_id,
+			@RequestBody SurveyAnswer surveyAnswer
+	){
+		Map<String, Object> resultmap=new HashMap<String, Object>();
+		answerService.CreateSurveyAnswer(surveyAnswer, survey_id, uid);
+		resultmap.put("status", HttpStatus.OK);
+		resultmap.put("data", "success");
+		return new ResponseEntity<>(resultmap,HttpStatus.OK);
+	}
     
     @GetMapping("/check/{uid}/{survey_id}")
     public ResponseEntity<Map<String, Object>> checkSurveyAnswer(
