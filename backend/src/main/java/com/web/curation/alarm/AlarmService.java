@@ -3,6 +3,10 @@ package com.web.curation.alarm;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.web.curation.error.CustomException;
+import com.web.curation.error.ErrorCode;
+import com.web.curation.member.User;
+import com.web.curation.member.UserDao;
 import com.web.curation.survey.State;
 import com.web.curation.survey.Survey;
 import com.web.curation.survey.SurveyDao;
@@ -25,9 +29,8 @@ import java.util.*;
 @AllArgsConstructor
 @Service
 public class AlarmService{
-    private final String TOKEN = "uieydcqsspf87n6d7xo3kugp7r";
-
     private SurveyDao surveyDao;
+    private UserDao userDao;
     private HashMap<String, ThreadPoolTaskScheduler> schedulerHashMap;
 
 
@@ -99,13 +102,19 @@ public class AlarmService{
     }
 
     public void mattermostAlarm(String sendMember, List<String> targetMembers, String message){
+        User user = userDao.findById(sendMember)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        String token = user.getToken();
+
+        log.info("postAlarm " + sendMember + " -> " + Arrays.toString(targetMembers.toArray()));
+
         for(String targetMember : targetMembers){
-            String channelId = getDirectChannelId(sendMember, targetMember);
-            sendPosts(channelId, message);
+            String channelId = getDirectChannelId(token, sendMember, targetMember);
+            sendPosts(token, channelId, message);
         }
     }
 
-    private String getDirectChannelId(String sendMember, String targetMember) {
+    private String getDirectChannelId(String token, String sendMember, String targetMember) {
         String channelId = null;
         HttpURLConnection conn = null;
 
@@ -115,7 +124,7 @@ public class AlarmService{
             conn.setRequestMethod("POST");
             conn.setDoOutput(true);
             conn.setRequestProperty("Content-type", "application/json");
-            conn.setRequestProperty("Authorization", "Bearer " + TOKEN);
+            conn.setRequestProperty("Authorization", "Bearer " + token);
 
             JsonArray data = new JsonArray();
             data.add(sendMember);
@@ -156,7 +165,7 @@ public class AlarmService{
         return channelId;
     }
 
-    private void sendPosts(String channelId, String message) {
+    private void sendPosts(String token, String channelId, String message) {
         HttpURLConnection conn = null;
 
         try {
@@ -165,7 +174,7 @@ public class AlarmService{
             conn.setRequestMethod("POST");
             conn.setDoOutput(true);
             conn.setRequestProperty("Content-type", "application/json");
-            conn.setRequestProperty("Authorization", "Bearer " + TOKEN);
+            conn.setRequestProperty("Authorization", "Bearer " + token);
 
             JSONObject data = new JSONObject();
             data.put("message", message);

@@ -42,8 +42,6 @@ public class SurveyResultController {
 	public ResponseEntity<Map<String, Object>> postAlarm(@PathVariable String sid, @PathVariable String uid, @RequestBody List<String> target){
 		Map<String, Object> resultmap=new HashMap<String, Object>();
 
-		log.info("postAlarm " + uid + " -> " + Arrays.toString(target.toArray()));
-
 		String message = surveyResultService.createRestTimeMessage(sid);
 		alarmService.mattermostAlarm(uid, target, message);
 

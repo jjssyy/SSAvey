@@ -36,10 +36,12 @@ public class MemberService {
     public void joinUser(Map<String, String> map){
         String uid = map.get("uid");
         String email = map.get("email");
+        String token = map.get("token");
 
         User user = User.builder()
                 .uid(uid)
                 .email(email)
+                .token(token)
                 .build();
 
         userDao.save(user);
