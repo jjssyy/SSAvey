@@ -2,6 +2,7 @@
   width: 100%;
   height: 100%;
   display: flex;
+  position: relative;
 }
 
 .component-1 {
@@ -16,5 +17,6 @@
   width: 35%;
   overflow-y: hidden;
   padding: 1rem;
+  position: relative;
 }
 /*# sourceMappingURL=survey-result-page.css.map */

@@ -56,6 +56,8 @@ import SurveyApi from '@/api/SurveyApi'
 export default {
   data() {
     return {
+      test: null,
+      test_list: [1, 2, 3],
       dates: [],
       dateNext: null,
       datePrev: null,
