@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -32,23 +33,68 @@ public class MySurveyService {
         if(sidList == null){
             return result;
         }
-        for(int i=0; i<sidList.size(); i++){
-            String sid = sidList.get(i);
-            Survey survey = surveyDao.findById(sid)
-                    .orElseThrow(() -> new CustomException(ErrorCode.SURVEY_NOT_FOUND));
-            if(survey.getState().equals(state)){
-                MySurveyDto dto = new MySurveyDto();
-                dto.setSid(sid);
-                dto.setTitle(survey.getTitle());
-                dto.setExplain(survey.getExplain());
-                dto.setWriter(survey.getWriter());
-                dto.setAnony(survey.isAnony());
-                dto.setStart_date(survey.getStart_date());
-                dto.setEnd_date(survey.getEnd_date());
-                dto.setState(survey.getState());
+        if(state.toString().equals("COMPLETED")) {
+        	 for(int i=0; i<sidList.size(); i++){
+                 String sid = sidList.get(i);
+                 Survey survey = surveyDao.findById(sid)
+                         .orElseThrow(() -> new CustomException(ErrorCode.SURVEY_NOT_FOUND));
+                 if(survey.getState().equals(state)){
+                     MySurveyDto dto = new MySurveyDto();
+                     dto.setSid(sid);
+                     dto.setTitle(survey.getTitle());
+                     dto.setExplain(survey.getExplain());
+                     dto.setWriter(survey.getWriter());
+                     dto.setAnony(survey.isAnony());
+                     dto.setStart_date(survey.getStart_date());
+                     dto.setEnd_date(survey.getEnd_date());
+                     dto.setState(survey.getState());
 
-                result.add(dto);
+                     result.add(dto);
+                 }
+             }
+        	 Collections.sort(result,(a,b)-> b.getEnd_date().compareTo(a.getEnd_date()));
+        }
+        if(state.toString().equals("PROCEEDING")) {
+        	for(int i=0; i<sidList.size(); i++){
+                String sid = sidList.get(i);
+                Survey survey = surveyDao.findById(sid)
+                        .orElseThrow(() -> new CustomException(ErrorCode.SURVEY_NOT_FOUND));
+                if(survey.getState().equals(state)){
+                    MySurveyDto dto = new MySurveyDto();
+                    dto.setSid(sid);
+                    dto.setTitle(survey.getTitle());
+                    dto.setExplain(survey.getExplain());
+                    dto.setWriter(survey.getWriter());
+                    dto.setAnony(survey.isAnony());
+                    dto.setStart_date(survey.getStart_date());
+                    dto.setEnd_date(survey.getEnd_date());
+                    dto.setState(survey.getState());
+
+                    result.add(dto);
+                }
             }
+        	Collections.sort(result,(a,b)-> a.getEnd_date().compareTo(b.getEnd_date()));
+        }
+        if(state.toString().equals("EXPECTED")) {
+        	for(int i=0; i<sidList.size(); i++){
+                String sid = sidList.get(i);
+                Survey survey = surveyDao.findById(sid)
+                        .orElseThrow(() -> new CustomException(ErrorCode.SURVEY_NOT_FOUND));
+                if(survey.getState().equals(state)){
+                    MySurveyDto dto = new MySurveyDto();
+                    dto.setSid(sid);
+                    dto.setTitle(survey.getTitle());
+                    dto.setExplain(survey.getExplain());
+                    dto.setWriter(survey.getWriter());
+                    dto.setAnony(survey.isAnony());
+                    dto.setStart_date(survey.getStart_date());
+                    dto.setEnd_date(survey.getEnd_date());
+                    dto.setState(survey.getState());
+
+                    result.add(dto);
+                }
+            }
+        	Collections.sort(result,(a,b)-> a.getStart_date().compareTo(b.getStart_date()));
         }
         return result;
     }
