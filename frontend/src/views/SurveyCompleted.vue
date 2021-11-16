@@ -46,10 +46,14 @@
                     @click="loadmyresult(item.sid)"
                     v-bind="attrs"
                     v-on="on"
+                    dark
+                    color="primary"
                   >
                     <v-icon>mdi-text-box-search</v-icon>
                   </v-btn>
-                  <v-btn v-else disabled>설문기간종료</v-btn>
+                  <v-btn v-else @click="alertinfo" color="error">
+                    <v-icon>mdi-alarm</v-icon>
+                  </v-btn>
                 </template>
                 <v-card width="1000" class="mx-auto">
                   <v-toolbar color="#4E7AF5" dark>
@@ -112,7 +116,6 @@
                               counter
                               background-color="grey lighten-4"
                               color="cyan"
-                              :value="shortvalue"
                               label="답변을 입력해주세요."
                               v-model="ques.answer"
                               disabled
@@ -152,9 +155,11 @@ export default {
     answer_surveys: [],
   }),
   methods: {
+    alertinfo() {
+      console.log('경고창 만들거임')
+      alert('응답하지 못한 설문입니다.')
+    },
     loadmyresult(sid) {
-      console.log(sid)
-      console.log('내 응답 불러오기')
       let temp = {
         id: this.$store.state.uid,
         sid: sid,
@@ -162,7 +167,6 @@ export default {
       AnswerApi.loadSurveyResponse(
         temp,
         res => {
-          console.log(res)
           this.myresult = res.data.data
         },
         err => {

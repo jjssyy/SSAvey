@@ -37,7 +37,6 @@
                       <v-list-item-subtitle
                         >설문에 대한 간략한 설명 및 기간</v-list-item-subtitle
                       >
-                      {{ sid }}
                     </v-list-item-content>
                   </v-list-item>
                 </template>
@@ -55,7 +54,7 @@
   </v-app>
 </template>
 <script>
-// import SurveyApi from '@/api/SurveyApi'
+import SurveyApi from '@/api/SurveyApi'
 export default {
   data() {
     return {
@@ -74,7 +73,16 @@ export default {
     },
   },
   created() {
-    // SurveyApi.loadSurveyResult(sid)
+    console.log(this.sid)
+    SurveyApi.loadSurveyResult(
+      this.sid,
+      res => {
+        console.log(res)
+      },
+      err => {
+        console.log(err)
+      },
+    )
     // SurveyApi.getCertainStateSurveys(
     //   'COMPLETED',
     //   this.$store.state.uid,

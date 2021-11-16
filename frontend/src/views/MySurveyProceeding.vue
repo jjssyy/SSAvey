@@ -39,7 +39,6 @@
               </v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
-              설문 종류
               <v-menu bottom :offset-x="offset">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
