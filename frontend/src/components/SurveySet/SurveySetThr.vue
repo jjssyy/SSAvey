@@ -172,7 +172,7 @@ export default {
         Number(this.dates[temp1].substring(8, 10)),
       )
       // 시간과 분 설정
-      tempDateOne.setHours(Number(this.startTime[0]) + 9)
+      tempDateOne.setHours(Number(this.startTime[0]))
       tempDateOne.setMinutes(Number(this.startTime[1]))
       //년, 월, 일 설정(end)
       tempDateTwo.setFullYear(
@@ -181,7 +181,7 @@ export default {
         Number(this.dates[temp2].substring(8, 10)),
       )
       // 시간과 분 설정
-      tempDateTwo.setHours(Number(this.endTime[0]) + 9)
+      tempDateTwo.setHours(Number(this.endTime[0]))
       tempDateTwo.setMinutes(Number(this.endTime[1]))
       console.log(tempDateOne)
       console.log(tempDateTwo)
