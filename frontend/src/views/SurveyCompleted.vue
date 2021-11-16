@@ -39,7 +39,6 @@
               </v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
-              설문 종류
               <v-dialog width="500">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
@@ -50,6 +49,7 @@
                   >
                     <v-icon>mdi-text-box-search</v-icon>
                   </v-btn>
+                  <v-btn v-else disabled>설문기간종료</v-btn>
                 </template>
                 <v-card width="1000" class="mx-auto">
                   <v-toolbar color="#4E7AF5" dark>
@@ -135,7 +135,6 @@
       </v-list>
       <v-pagination v-model="page" :length="rows"></v-pagination>
     </v-card>
-    {{ myresult }}
   </v-app>
 </template>
 
