@@ -35,14 +35,18 @@ public class MemberController {
         Map<String, String> map = getMattermostInfo(loginDto);
         String uid = map.get("uid");
         String email = map.get("email");
+        String token = map.get("token");
+        log.info("Mattermost login {uid: " + uid + ", email: " + email + ", token: " + token + "}");
 
         String stored_uid = memberService.getUidByEmail(email);
 
         if(stored_uid == null){
+            log.info(uid + " 유저 회원가입");
             memberService.joinUser(map);
             resultMap.put("Uid", uid);
             resultMap.put("isSignUp", false);
         }else{
+            log.info(uid + " 유저 로그인");
             resultMap.put("Uid", uid);
             resultMap.put("isSignUp", true);
         }
@@ -87,6 +91,7 @@ public class MemberController {
 
             map.put("uid", uid);
             map.put("email", email);
+            map.put("token",conn.getHeaderField("token"));
 
             br.close();
             bw.close();

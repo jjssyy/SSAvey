@@ -48,4 +48,6 @@ public class User {
     private List<String> survey;
     
     private List<String> answer_survey;
+
+    private String token;
 }
