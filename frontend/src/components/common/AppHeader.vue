@@ -29,19 +29,11 @@
           <p>메인</p>
         </div>
       </div>
-      <div class="items">
+      <div class="items" @click="moveSurvey">
         <div id="div-1" @click="openUl1">
           <i class="fas fa-marker icon-1"></i>
           <p>설문 만들기</p>
-          <i
-            class="fas fa-caret-right icon-2"
-            :class="{ 'change-degree': isOpenIcon2One }"
-          ></i>
         </div>
-        <ul id="ul-1" :class="{ 'open-list-1': isOpenUl1 }">
-          <li @click="moveSurvey">설문 만들기</li>
-          <li @click="moveTemplete">내 탬플릿 보기</li>
-        </ul>
       </div>
       <div class="items">
         <div id="div-2" @click="openUl2">
@@ -79,7 +71,7 @@
           <p>설정</p>
         </div>
       </div>
-      <div class="items">
+      <div class="items" @click="logout">
         <div>
           <i class="fas fa-sign-out-alt icon-1"></i>
           <p>로그아웃</p>
@@ -180,6 +172,10 @@ export default {
     },
     moveTemplete() {
       this.$router.push('/templete')
+    },
+    logout() {
+      this.$store.commit('logout')
+      this.$router.push('/login')
     },
   },
 

@@ -20,10 +20,10 @@ new Vue({
 }).$mount('#app')
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.auth && store.state.uid == '') {
+  if (to.meta.auth == true && !store.state.uid) {
     next('/login')
     return
-  } else if (!to.meta.auth && store.state.uid != '') {
+  } else if (to.meta.auth == false && store.state.uid) {
     router.push('/main')
   } else {
     next()

@@ -493,6 +493,14 @@ export default {
       this.survey.anony = !this.survey.anony
     },
     createSurvey() {
+      if (
+        !this.surveyOrTemplate ||
+        !this.survey.title ||
+        !this.survey.explain
+      ) {
+        console.log('hi')
+        return
+      }
       console.log(this.surveyOrTemplate)
       document
         .querySelector('.drop-parent')
@@ -553,20 +561,14 @@ export default {
         })
       if (this.surveyOrTemplate == 'survey') {
         console.log(this.survey)
+        console.log('??')
         console.log(this.templates[this.useTemplateIndex])
         // this.survey.use_template이 true이면 다음과 같이
         // true가 아니면 불러온 적이 없으므로  use_template을 false로 해주기
         if (
-          this.survey.use_template ||
-          this.$store.state.surveySet.survey.use_template
+          !this.survey.use_template &&
+          !this.$store.state.surveySet.survey.use_template
         ) {
-          if (
-            this.survey.question.length !=
-            this.templates[this.useTemplateIndex]['question'].length
-          ) {
-            this.survey.use_template = false
-          }
-        } else {
           this.survey.use_template = false
         }
         // this.survey와 해당 탬플릿들중 useTemplateIndex인 템플릿과
