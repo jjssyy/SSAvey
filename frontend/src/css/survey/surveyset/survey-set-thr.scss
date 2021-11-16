@@ -18,11 +18,11 @@
     width: 100%;
     .item {
       margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: space-around;
       .date-box {
-        margin-top: 0.5rem;
         display: flex;
         align-items: center;
-        height: 28px;
         .date-item {
           display: flex;
           color: #131212;
@@ -42,9 +42,13 @@
           .time-margin {
             margin-right: 15px;
           }
+          p {
+            display: flex;
+            align-items: center;
+          }
         }
         .item-left {
-          margin-left: 30px;
+          margin-left: 20px;
         }
       }
     }
@@ -76,7 +80,6 @@
 }
 
 .container-subtitle-two {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: bold;
-  margin-bottom: 0.5rem;
 }

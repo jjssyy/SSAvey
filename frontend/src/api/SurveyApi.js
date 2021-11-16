@@ -42,7 +42,7 @@ const loadSurveyResult = (payload, callback, errorCallback) => {
 
 const alarmSurveyResult = (payload, callback, errorCallback) => {
   instance
-    .post('/survey-result/alarm', payload)
+    .post(`/survey-result/${payload.sid}/alarm/${payload.uid}`, payload.data)
     .then(res => callback(res))
     .catch(err => errorCallback(err))
 }

@@ -30,12 +30,22 @@ export default {
   methods: {
     loadData() {
       let payload = this.$route.params.sid
+      this.$swal({
+        title: '분석중',
+        html: '잠시만 기다려 주세요.',
+        timerProgressBar: true,
+        target: '.page-component',
+        didOpen: () => {
+          this.$swal.showLoading()
+        },
+      })
       SurveyApi.loadSurveyResult(
         payload,
         res => {
           this.survey = res.data.data
           console.log('???오류나네?')
           console.log(this.survey)
+          this.$swal.close()
         },
         err => {
           console.log(err)
