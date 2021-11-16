@@ -24,13 +24,13 @@
 
 .container-set .container-items-date .item {
   margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-around;
 }
 
 .container-set .container-items-date .item .date-box {
-  margin-top: 0.5rem;
   display: flex;
   align-items: center;
-  height: 28px;
 }
 
 .container-set .container-items-date .item .date-box .date-item {
@@ -57,8 +57,13 @@
   margin-right: 15px;
 }
 
+.container-set .container-items-date .item .date-box .date-item p {
+  display: flex;
+  align-items: center;
+}
+
 .container-set .container-items-date .item .date-box .item-left {
-  margin-left: 30px;
+  margin-left: 20px;
 }
 
 .container-set .bottom-btn {
@@ -90,8 +95,7 @@
 }
 
 .container-subtitle-two {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: bold;
-  margin-bottom: 0.5rem;
 }
 /*# sourceMappingURL=survey-set-thr.css.map */

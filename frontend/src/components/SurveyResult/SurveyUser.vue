@@ -24,8 +24,12 @@
       <div class="item-alarm">
         <p>현재 {{ countInComplete }}명</p>
         <div>
-          <button class="item-alarm-button" @click="sendPeopleAlarm()">
-            <p>Mattermost로 알림</p>
+          <button
+            v-if="countInComplete != 0"
+            class="item-alarm-button"
+            @click="sendPeopleAlarm()"
+          >
+            <p>Mattermost로 전체 알림</p>
             <i class="fas fa-bell"></i>
           </button>
         </div>
@@ -60,12 +64,12 @@ export default {
   components: {
     apexchart: VueApexCharts,
   },
-  // props: {
-  //   survey: {
-  //     type: Object,
-  //     required: true,
-  //   },
-  // },
+  props: {
+    survey: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       series: [0, 0],
@@ -122,12 +126,22 @@ export default {
     },
     sendPersonAlarm(user) {
       // 알림 보내고,
-      let payload = [user.uid]
+      let payload = {
+        data: [user.uid],
+        sid: this.$route.params.sid,
+        uid: this.$store.state.uid,
+      }
       SurveyApi.alarmSurveyResult(
         payload,
         res => {
           console.log(res)
-          console.log('알람보냈습니다. 모달창 띄워주기!')
+          this.$swal({
+            icon: 'success',
+            text: `${user.name}님에게 MM 보냈습니다.`,
+            target: '.component-2',
+            showConfirmButton: false,
+            timer: 1500,
+          })
         },
         err => {
           console.log(err)
@@ -135,15 +149,26 @@ export default {
       )
     },
     sendPeopleAlarm() {
-      let payload = []
+      let temp = []
       this.survey.incomplete.forEach(user => {
-        payload.push(user.uid)
+        temp.push(user.uid)
       })
+      let payload = {
+        data: temp,
+        sid: this.$route.params.sid,
+        uid: this.$store.state.uid,
+      }
       SurveyApi.alarmSurveyResult(
         payload,
         res => {
           console.log(res)
-          console.log('알람보냈습니다. 모달창 띄워주기!')
+          this.$swal({
+            icon: 'success',
+            text: '전체에게 MM 보냈습니다.',
+            target: '.component-2',
+            showConfirmButton: false,
+            timer: 1500,
+          })
         },
         err => {
           console.log(err)
@@ -155,6 +180,7 @@ export default {
     },
   },
   created() {
+    console.log('??')
     this.initCount()
   },
 }

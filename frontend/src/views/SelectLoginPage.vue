@@ -183,6 +183,7 @@ export default {
           },
           // eslint-disable-next-line no-unused-vars
           res => {
+            this.$store.commit('setIsSignUp', true)
             this.$router.push({ name: 'MainPage' })
           },
         )

@@ -28,11 +28,22 @@ public class SurveyService {
 	
 	
 	public void createSurvey(Survey survey) {
-		survey = surveyDao.save(survey);
-		alarmService.setAlarmSchdule(survey.getSid(), survey.getStart_date(), survey.getEnd_date());
 		//할당된 설문,만든 설문 분배하는 작업
 		List<String> target=survey.getTarget();
 		List<String> share=survey.getShare();
+		List<String> incomplete=survey.getIncomplete();
+		//할당된 설문 중 작성자가 존재한다면 제거하는 작업
+		if(target.contains(survey.getWriter())) {
+			target.remove(survey.getWriter());
+			survey.setTarget(target);
+		}
+		//미할당된 사람중 작성자가 존재한다면 제거하는 작업
+		if(incomplete.contains(survey.getWriter())) {
+			target.remove(survey.getWriter());
+			survey.setIncomplete(incomplete);
+		}
+		survey = surveyDao.save(survey);
+		alarmService.setAlarmSchdule(survey.getSid(), survey.getStart_date(), survey.getEnd_date());
 		//할당된 설문 분배하는작업
 		for(int i=0;i<target.size();i++) {
 			String temp=target.get(i);

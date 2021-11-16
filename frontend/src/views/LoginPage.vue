@@ -121,10 +121,11 @@ export default {
             console.log(res.data.Uid)
             this.$store.commit('setUid', res.data.Uid)
             this.$store.commit('setEmail', this.email)
-
             if (res.data.isSignUp) {
+              this.$store.commit('setIsSignUp', true)
               this.$router.push({ name: 'MainPage' })
             } else {
+              this.$store.commit('setIsSignUp', false)
               this.$router.push({ name: 'SelectLoginPage' })
             }
           },
