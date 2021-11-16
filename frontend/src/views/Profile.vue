@@ -217,6 +217,7 @@ export default {
           mySurvey: this.user.mySurvey,
           survey: this.user.survey,
           answer_survey: this.user.answer_survey,
+          token: this.user.token,
         },
         res => {
           alert(res.data.message)
