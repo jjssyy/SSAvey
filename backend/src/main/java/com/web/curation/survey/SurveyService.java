@@ -33,6 +33,10 @@ public class SurveyService {
 		//할당된 설문,만든 설문 분배하는 작업
 		List<String> target=survey.getTarget();
 		List<String> share=survey.getShare();
+		//할당된 설문 중 작성자가 존재한다면 제거하는 작업
+		if(target.contains(survey.getWriter())) {
+			target.remove(survey.getWriter());
+		}
 		//할당된 설문 분배하는작업
 		for(int i=0;i<target.size();i++) {
 			String temp=target.get(i);
