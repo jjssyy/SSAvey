@@ -19,11 +19,11 @@
 
           <v-divider
             v-else-if="item.divider"
-            :key="index + 1"
+            :key="index"
             :inset="item.inset"
           ></v-divider>
 
-          <v-list-item v-else :key="index + 2">
+          <v-list-item v-else :key="index">
             <v-list-item-content>
               <v-list-item-title v-html="item.title"></v-list-item-title>
               <v-list-item-subtitle
@@ -40,9 +40,90 @@
             </v-list-item-content>
             <v-list-item-action>
               설문 종류
-              <v-btn icon>
-                <v-icon>mdi-arrow-right</v-icon>
-              </v-btn>
+              <v-dialog width="500">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    v-if="answer_surveys.includes(item.sid)"
+                    @click="loadmyresult(item.sid)"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    <v-icon>mdi-text-box-search</v-icon>
+                  </v-btn>
+                </template>
+                <v-card width="1000" class="mx-auto">
+                  <v-toolbar color="#4E7AF5" dark>
+                    <v-toolbar-title>내 응답결과 보기</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                  </v-toolbar>
+                  <v-list>
+                    <template>
+                      <v-subheader>
+                        <strong
+                          >설문제목: {{ myresult.title }}</strong
+                        ></v-subheader
+                      >
+                      <v-subheader
+                        >{{ myresult.explain }} <br />시작
+                        {{ myresult.start_date }} ~ 종료
+                        {{ myresult.start_date }}</v-subheader
+                      >
+
+                      <v-list-item
+                        v-for="(ques, index) in myresult.answer_question"
+                        :key="index"
+                      >
+                        <v-list-item-content>
+                          <v-list-item-title>
+                            {{ ques.q_number }}. {{ ques.q_explanation }}
+                          </v-list-item-title>
+                          <v-radio-group
+                            v-model="ques.answer[0]"
+                            v-if="ques.q_type == 'SINGLE'"
+                            class="mx-5"
+                            disabled
+                          >
+                            <v-radio
+                              v-for="(answer, r_index) in ques.q_option"
+                              :key="r_index + 2"
+                              :label="`${answer.o_explanation}`"
+                              :value="`${answer.o_number}`"
+                            >
+                            </v-radio>
+                          </v-radio-group>
+                          <v-container
+                            class="mx-2"
+                            v-if="ques.q_type == 'MULTIPLE'"
+                          >
+                            <v-checkbox
+                              v-for="(answer, c_index) in ques.q_option"
+                              :key="c_index + 3"
+                              class="mt-0 pt-0"
+                              :label="`${answer.o_explanation}`"
+                              :value="`${answer.o_number}`"
+                              v-model="ques.answer"
+                              disabled
+                            >
+                            </v-checkbox>
+                          </v-container>
+                          <v-container v-if="ques.q_type == 'SHORT'">
+                            <v-textarea
+                              auto-grow
+                              counter
+                              background-color="grey lighten-4"
+                              color="cyan"
+                              :value="shortvalue"
+                              label="답변을 입력해주세요."
+                              v-model="ques.answer"
+                              disabled
+                            ></v-textarea>
+                          </v-container>
+                        </v-list-item-content>
+                      </v-list-item>
+                    </template>
+                  </v-list>
+                </v-card>
+              </v-dialog>
             </v-list-item-action>
           </v-list-item>
         </template>
@@ -54,19 +135,43 @@
       </v-list>
       <v-pagination v-model="page" :length="rows"></v-pagination>
     </v-card>
+    {{ myresult }}
   </v-app>
 </template>
 
 <script>
 import SurveyApi from '@/api/SurveyApi'
+import AnswerApi from '@/api/AnswerApi'
 
 export default {
+  components: {},
   data: () => ({
     surveys: [],
+    myresult: [],
     rows: 2,
     page: 1,
+    answer_surveys: [],
   }),
-  methods: {},
+  methods: {
+    loadmyresult(sid) {
+      console.log(sid)
+      console.log('내 응답 불러오기')
+      let temp = {
+        id: this.$store.state.uid,
+        sid: sid,
+      }
+      AnswerApi.loadSurveyResponse(
+        temp,
+        res => {
+          console.log(res)
+          this.myresult = res.data.data
+        },
+        err => {
+          console.log(err)
+        },
+      )
+    },
+  },
   watch: {
     page() {
       SurveyApi.getCertainStateSurveys(
@@ -83,6 +188,7 @@ export default {
     },
   },
   created() {
+    this.answer_surveys = this.$store.state.user.answer_survey
     SurveyApi.getCertainStateSurveys(
       'COMPLETED',
       this.$store.state.uid,
