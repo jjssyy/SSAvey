@@ -67,6 +67,19 @@ export default new Vuex.Store({
     resetSurveyDragThing(state, payload) {
       state.surveyDragThing = payload
     },
+    logout(state) {
+      state.uid = null
+      state.isSignUp = null
+      state.email = null
+      state.user = {}
+      state.selectedTemplate = {}
+      state.surveySet = {
+        isWriting: false,
+        isClkUpdate: false,
+        survey: {},
+      }
+      state.surveyDragThing = []
+    },
   },
   actions: {},
   plugins: [createPersistedState()],
