@@ -5,12 +5,7 @@
         <p class="main-title">
           {{ survey.title }}
         </p>
-        <div class="sub-title">
-          <button>
-            <p>Excel로 반환</p>
-            <i class="fas fa-reply"></i>
-          </button>
-        </div>
+        <export-to-excel v-if="survey" :survey="survey"></export-to-excel>
       </div>
       <div class="analysis-explain">
         <p class="main-explain">
@@ -73,9 +68,11 @@
 
 <script>
 import VueApexCharts from 'vue-apexcharts'
+import ExportToExcel from '@/components/SurveyResult/exportToExcel'
 export default {
   components: {
     apexchart: VueApexCharts,
+    ExportToExcel,
   },
   props: {
     survey: {
