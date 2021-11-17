@@ -10,9 +10,6 @@
         @reset="loadData"
       ></survey-user>
     </div>
-    <input type="text" :value="items" />
-    <div>{{ items }}</div>
-    <button @click="test">change</button>
   </div>
 </template>
 
@@ -24,7 +21,6 @@ export default {
   data() {
     return {
       survey: null,
-      items: { '1': 2 },
     }
   },
   components: {
@@ -32,10 +28,6 @@ export default {
     SurveyUser,
   },
   methods: {
-    test() {
-      this.items['1'] = 4
-      console.log(this.items)
-    },
     loadData() {
       let payload = this.$route.params.sid
       this.$swal({

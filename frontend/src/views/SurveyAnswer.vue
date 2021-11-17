@@ -62,17 +62,17 @@
                         v-model="shortData[index].show"
                       />
                     </div>
-                    ======= :label="`${answer.o_explanation}`"
-                    :value="`${answer.o_number}`" >
-                    <v-radio
+                    <!-- ======= :label="`${answer.o_explanation}`"
+                    :value="`${answer.o_number}`" > -->
+                    <!-- <v-radio
                       :label="`${answer.o_explanation}`"
                       :value="`${answer.o_number}`"
                       @click="
                         checkSingle(index + 1, `${answer.o_number}`),
                           (select = `${answer.o_number}`)
                       "
-                    ></v-radio>
-                    <v-textarea
+                    ></v-radio> -->
+                    <!-- <v-textarea
                       v-if="answer.short_answer"
                       auto-grow
                       counter
@@ -85,7 +85,7 @@
                       @focusout="checkSingle(index + 1, `${answer.o_number}`)"
                     >
                     </v-textarea>
-                    >>>>>>> develop
+                    >>>>>>> develop -->
                   </div>
                 </v-radio-group>
                 <v-container class="mx-2" v-if="ques.q_type == 'MULTIPLE'">
