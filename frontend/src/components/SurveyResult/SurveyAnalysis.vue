@@ -59,14 +59,31 @@
                 isValueInQue[index]
             "
           >
-            <p>워드클라우드 넣을거임</p>
+            <vue-word-cloud
+              style="width: 50%; cursor: pointer;"
+              :words="wordsOne[index]"
+              :color="color"
+              font-family="Roboto"
+              font-weight="Bold"
+              :font-size-ratio="Ratio"
+              :rotation="rotation"
+            >
+            </vue-word-cloud>
           </div>
           <div v-if="element.q_type != 'SHORT' && !isValueInQue[index]">
             <p>(객관식)설문 대상자가 응답하지 않았습니다.</p>
           </div>
           <div v-if="element.q_type == 'SHORT' && isValueInQue[index]">
-            <p>주관식일 때 워드클라우드</p>
-            <p>{{ surveyLabelSerie[index][1][0] }}</p>
+            <vue-word-cloud
+              style="width: 50%; cursor: pointer;"
+              :words="wordsTwo[index]"
+              :color="color"
+              font-family="Roboto"
+              font-weight="Bold"
+              :font-size-ratio="Ratio"
+              :rotation="rotation"
+            >
+            </vue-word-cloud>
           </div>
           <div v-if="element.q_type == 'SHORT' && !isValueInQue[index]">
             <p>(주관식)설문 대상자가 응답하지 않았습니다.</p>
@@ -125,10 +142,10 @@
           </div>
         </div>
         <!-- 주관식일 경우 -->
-        <div class="detail-container" v-else>
+        <div class="detail-container-two" v-else>
           <!-- 반복문 -->
           <div
-            class="detail-percent"
+            class="detail-short"
             v-for="(element, index) in resultOne"
             :key="index"
           >
@@ -204,12 +221,16 @@
 
 <script>
 import VueApexCharts from 'vue-apexcharts'
-import Chance from 'chance'
+// import Chance from 'chance'
+import VueWordCloud from 'vuewordcloud'
 import ExportToExcel from '@/components/SurveyResult/exportToExcel'
+let Chance = require('chance')
+let chance = new Chance()
 export default {
   components: {
     apexchart: VueApexCharts,
     ExportToExcel,
+    VueWordCloud,
   },
   props: {
     survey: {
@@ -226,6 +247,7 @@ export default {
       isOpenModal: false,
       isValueInQue: [],
       isQueOfShort: [],
+      isShortQue: [],
       surveyLabelSerie: null,
       chartOptions: [],
       tempChartOption: {
@@ -239,9 +261,9 @@ export default {
         labels: null,
       },
       // wordCloud
-      chance: new Chance(),
       Ratio: 3,
-      words: [],
+      wordsOne: [],
+      wordsTwo: [],
       colorItems: [
         [
           '#FEDE00',
@@ -348,12 +370,25 @@ export default {
         this.chartOptions.push(temp)
       }
       console.log(this.surveyLabelSerie)
+
+      // 주관식 문항이면 true
+      this.isShortQue = Array.from(
+        { length: this.survey.question.length },
+        () => false,
+      )
+      this.survey.question.forEach((element, index) => {
+        if (element.q_type == 'SHORT') {
+          this.isShortQue[index] = true
+        }
+      })
+      console.log('여기야', this.isShortQue)
     },
     initAll() {
       this.isValueInQue = []
       this.isQueOfShort = []
       this.surveyLabelSerie = null
       this.chartOptions = []
+      this.isShortQue = []
     },
     // 상세보기 클릭시 데이터 정리
     openModal(index) {
@@ -430,18 +465,62 @@ export default {
       this.isOpenModal = !this.isOpenModal
     },
     wordForm() {
-      this.rotationItemIndex = this.chance.integer({
+      this.rotationItemIndex = chance.integer({
         min: 0,
         max: this.rotationItems.length - 1,
       })
     },
-    wordsCreate() {},
+    wordsCreate() {
+      // 초기화
+      // [[['aa', 2],['bb', 2],['cc', 1],['dd', 4]],[[],[],..],...]
+      this.wordsOne = Array.from({ length: this.isQueOfShort.length }, () => [])
+      // 기타 워드클라우드
+      this.isQueOfShort.forEach((element1, index1) => {
+        let temp = {}
+        // 기타가 있으면 temp를 이용해서 개수파악
+        if (element1) {
+          this.survey.answers[index1].slicedWords.forEach(element2 => {
+            if (temp.hasOwnProperty(element2)) {
+              temp[element2]++
+            } else {
+              temp[element2] = 1
+            }
+          })
+          // temp={'aa': 3, 'b': 4}wordsOne에 넣기
+          for (let i in temp) {
+            this.wordsOne[index1].push([`${i}`, temp[i]])
+          }
+        }
+      })
+      // 이제 해당 객관식 문항이 기타가 포함하는지 안하는지 조사하고, 그 해당 문항에 word클라우드를 보여준다.
+      // 주관식 워드클라우드 this.isShortQue
+      this.wordsTwo = Array.from({ length: this.isQueOfShort.length }, () => [])
+      this.isShortQue.forEach((element1, index1) => {
+        let temp = {}
+        if (element1) {
+          this.survey.answers[index1].slicedWords.forEach(element2 => {
+            if (temp.hasOwnProperty(element2)) {
+              temp[element2]++
+            } else {
+              temp[element2] = 1
+            }
+          })
+          // temp={'aa': 3, 'b': 4}wordsOne에 넣기
+          for (let i in temp) {
+            this.wordsTwo[index1].push([`${i}`, temp[i]])
+          }
+        }
+      })
+      console.log('hi')
+      console.log(this.wordsOne)
+      console.log(this.wordsTwo)
+    },
   },
   computed: {
     color() {
       const colors = this.colorItems[0]
       return function() {
-        return this.chance.pickone(colors)
+        return chance.pickone(colors)
       }
     },
     rotation() {
@@ -454,6 +533,7 @@ export default {
     this.findShortOfQue()
     this.initLS()
     this.wordForm()
+    this.wordsCreate()
   },
   watch: {
     survey: function() {
