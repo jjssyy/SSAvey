@@ -44,7 +44,7 @@ export default {
 
     for (let index = 0; index < this.answers[0].answers.length; index++) {
       let person = ''
-      if (!this.suvey.anony)
+      if (!this.survey.anony)
         person += '{"name":"' + this.answers[0].answers[index].name + '",'
       else person += '{"name":"' + '익명' + (index + 1) + '",'
 
