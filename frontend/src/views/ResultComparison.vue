@@ -51,15 +51,33 @@
         >비교하기</v-btn
       >
     </div>
+    <apexchart> </apexchart>
+    {{ this.dates }}
+    <!-- {{ originresult }} -->
   </v-app>
 </template>
 <script>
 import SurveyApi from '@/api/SurveyApi'
+import VueApexCharts from 'vue-apexcharts'
+
 export default {
+  components: {
+    apexchart: VueApexCharts,
+  },
   data() {
     return {
       totaldata: [],
-      originsurvey: [],
+      originresult: [],
+      targetresult: [],
+      chartOptions: [],
+      surveyLabelSeries: [],
+      // surveyLabelSerie: [
+      //   [
+      //     ['유튜브', '싸피', '블로그'],
+      //     [30, 20, 10],
+      //   ],
+      //   [[], []],
+      // ],
       dates: [],
       sid: this.$route.params.sid,
       selectedSurvey: '',
@@ -78,6 +96,7 @@ export default {
       this.sid,
       res => {
         console.log(res)
+        this.originresult = res.data.data.answers
       },
       err => {
         console.log(err)
