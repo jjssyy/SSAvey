@@ -58,6 +58,7 @@
           </div>
           <div v-if="element.q_type == 'SHORT'">
             <p>주관식일 때 워드클라우드</p>
+            <!-- {{ chartOptions }} <br /> -->
           </div>
         </div>
         <!-- 주관식일 때 워드클라우드-->
