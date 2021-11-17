@@ -55,13 +55,6 @@
                     v-bind="attrs"
                     v-on="on"
                   >
-                    <!-- <v-btn
-                    color="primary"
-                    dark
-                    v-bind="attrs"
-                    v-on="on"
-                    @click="moveResult(item.sid)"
-                  > -->
                     <v-icon>mdi-dots-vertical</v-icon>
                   </v-btn>
                 </template>
