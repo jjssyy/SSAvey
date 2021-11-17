@@ -206,12 +206,25 @@
   text-align: center;
 }
 
-.analysis-container .survey-modal .survey-container .detail-container .detail-percent .short-percent-item {
+.analysis-container .survey-modal .survey-container .detail-container-two {
+  width: 100%;
+  height: 80%;
+  overflow-y: scroll;
+}
+
+.analysis-container .survey-modal .survey-container .detail-container-two .detail-short {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+
+.analysis-container .survey-modal .survey-container .detail-container-two .detail-short .short-percent-item {
   width: 30%;
 }
 
-.analysis-container .survey-modal .survey-container .detail-container .detail-percent .short-text-box {
-  width: 70%;
+.analysis-container .survey-modal .survey-container .detail-container-two .detail-short .short-text-box {
+  width: 65%;
 }
 
 .analysis-container .survey-modal .survey-container .detail-container::-webkit-scrollbar {
@@ -222,6 +235,19 @@
 }
 
 .analysis-container .survey-modal .survey-container .detail-container::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #737272;
+}
+
+.analysis-container .survey-modal .survey-container .detail-container-two::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 5px;
+  margin: 10px;
+  background-color: #d4c9c9;
+}
+
+.analysis-container .survey-modal .survey-container .detail-container-two::-webkit-scrollbar-thumb {
   border-radius: 10px;
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #737272;
