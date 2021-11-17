@@ -571,6 +571,7 @@ export default {
         ) {
           this.survey.use_template = false
         }
+        console.log('??')
         // this.survey와 해당 탬플릿들중 useTemplateIndex인 템플릿과
         // title, explain, 실명여부비교
         // q_option들은 문자열로 비교(JSON으로)

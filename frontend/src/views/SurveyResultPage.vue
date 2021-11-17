@@ -43,7 +43,6 @@ export default {
         payload,
         res => {
           this.survey = res.data.data
-          console.log('???오류나네?')
           console.log(this.survey)
           this.$swal.close()
         },

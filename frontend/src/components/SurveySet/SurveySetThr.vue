@@ -19,10 +19,7 @@
             <p>{{ dates[0] }}</p>
           </div>
           <div class="date-item item-left">
-            <input v-model="startTime[0]" type="text" />
-            <p class="time-margin">시</p>
-            <input v-model="startTime[1]" type="text" />
-            <p class="time-margin">분</p>
+            <input type="time" v-model="startFullTime" />
           </div>
         </div>
       </div>
@@ -34,10 +31,7 @@
             <p v-if="dates.length === 1">{{ dates[0] }}</p>
           </div>
           <div class="date-item item-left">
-            <input v-model="endTime[0]" type="text" />
-            <p class="time-margin">시</p>
-            <input v-model="endTime[1]" type="text" />
-            <p class="time-margin">분</p>
+            <input type="time" v-model="endFullTime" />
           </div>
         </div>
       </div>
@@ -56,6 +50,8 @@ import SurveyApi from '@/api/SurveyApi'
 export default {
   data() {
     return {
+      startFullTime: '',
+      endFullTime: '',
       test: null,
       test_list: [1, 2, 3],
       dates: [],
@@ -94,6 +90,8 @@ export default {
     } else {
       this.endTime[1] = String(tempDate.getMinutes() + 30)
     }
+    this.startFullTime = `${this.startTime[0]}:${this.startTime[1]}`
+    this.endFullTime = `${this.endTime[0]}:${this.endTime[1]}`
     let tempMonth = ''
     let tempDay = ''
     if (String(tempDate.getMonth()).length === 1) {
@@ -174,8 +172,8 @@ export default {
         Number(this.dates[temp1].substring(8, 10)),
       )
       // 시간과 분 설정
-      tempDateOne.setHours(Number(this.startTime[0]))
-      tempDateOne.setMinutes(Number(this.startTime[1]))
+      tempDateOne.setHours(Number(this.startFullTime.substring(0, 2)))
+      tempDateOne.setMinutes(Number(this.startFullTime.substring(3, 5)))
       //년, 월, 일 설정(end)
       tempDateTwo.setFullYear(
         Number(this.dates[temp2].substring(0, 4)),
@@ -183,8 +181,8 @@ export default {
         Number(this.dates[temp2].substring(8, 10)),
       )
       // 시간과 분 설정
-      tempDateTwo.setHours(Number(this.endTime[0]))
-      tempDateTwo.setMinutes(Number(this.endTime[1]))
+      tempDateTwo.setHours(Number(this.endFullTime.substring(0, 2)))
+      tempDateTwo.setMinutes(Number(this.endFullTime.substring(3, 5)))
       console.log(tempDateOne)
       console.log(tempDateTwo)
 
@@ -270,7 +268,9 @@ export default {
           let payload = {
             isWriting: false,
             isClkUpdate: false,
-            surveySet: {},
+            survey: {
+              use_template: null,
+            },
           }
           this.$store.commit('resetSurveyDragThing', [])
           this.$store.commit('setSurveySet', payload)
