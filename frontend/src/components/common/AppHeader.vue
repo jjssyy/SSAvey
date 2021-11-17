@@ -19,7 +19,6 @@
         <img class="logo" src="@/assets/bigLogo.png" alt="" @click="moveMain" />
       </div>
       <div class="items profile">
-        <img src="@/assets/profileDefault.jpg" alt="" />
         <p class="medium-text">{{ user.name }}</p>
         <p class="small-text">미완료 설문 {{ count }}개</p>
       </div>
