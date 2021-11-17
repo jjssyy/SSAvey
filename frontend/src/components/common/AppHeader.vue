@@ -206,7 +206,18 @@ export default {
       },
       err => {
         console.log(err)
-        alert('올바르지 않은 UID입니다.')
+        this.$swal({
+          icon: 'warning',
+          title: '올바르지 않은 ID입니다.',
+          text: '다시 로그인해 주세요.',
+          // target: '.container-set',
+          position: 'center-center',
+          showConfirmButton: false,
+          timer: 1500,
+        })
+        setTimeout(() => {
+          this.$router.push({ name: 'Login' })
+        }, 1000)
       },
     )
   },

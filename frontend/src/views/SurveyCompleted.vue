@@ -144,6 +144,7 @@
 <script>
 import SurveyApi from '@/api/SurveyApi'
 import AnswerApi from '@/api/AnswerApi'
+import UserApi from '@/api/UserApi'
 
 export default {
   components: {},
@@ -156,8 +157,14 @@ export default {
   }),
   methods: {
     alertinfo() {
-      console.log('경고창 만들거임')
-      alert('응답하지 못한 설문입니다.')
+      this.$swal({
+        icon: 'warning',
+        title: '응답하지 않은 설문입니다.',
+        // target: '.container-set',
+        position: 'center-center',
+        showConfirmButton: false,
+        timer: 1500,
+      })
     },
     loadmyresult(sid) {
       let temp = {
@@ -193,18 +200,29 @@ export default {
     },
   },
   created() {
-    this.answer_surveys = this.$store.state.user.answer_survey
-    SurveyApi.getCertainStateSurveys(
-      'COMPLETED',
-      this.$store.state.uid,
-      this.page - 1,
-      res => {
-        this.rows = res.data.Pagecount
-        this.surveys = res.data.data
-        this.surveys.push({ divider: true, inset: true })
+    UserApi.userInfo(
+      {
+        uid: this.$store.state.uid,
       },
-      () => {},
-    )
+      res => {
+        this.answer_surveys = res.data.user.answer_survey
+      },
+      err => {
+        console.log(err)
+      },
+    ),
+      // this.answer_surveys = this.$store.state.user.answer_survey
+      SurveyApi.getCertainStateSurveys(
+        'COMPLETED',
+        this.$store.state.uid,
+        this.page - 1,
+        res => {
+          this.rows = res.data.Pagecount
+          this.surveys = res.data.data
+          this.surveys.push({ divider: true, inset: true })
+        },
+        () => {},
+      )
   },
 }
 </script>
