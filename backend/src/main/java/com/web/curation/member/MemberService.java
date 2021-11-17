@@ -8,6 +8,7 @@ import com.web.curation.error.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -70,6 +71,9 @@ public class MemberService {
     public void getUserImage(String uid) {
         HttpURLConnection conn = null;
 
+        MultipartFile a;
+        a.
+
         try {
             URL url = new URL("https://meeting.ssafy.com/api/v4/users/" + uid + "/image");
             conn = (HttpURLConnection) url.openConnection();
@@ -80,7 +84,25 @@ public class MemberService {
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             bw.flush();
 
-            //응답
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(conn.getInputStream());
+            OutputStream outputStream = new FileOutputStream(file);
+
+            int size;
+            int len = 0;
+            byte[] buf = new byte[1024];
+            while ((size = bufferedInputStream.read(buf)) != -1) {
+                len += size;
+                outputStream.write(buf, 0, size);
+            }
+
+            outputStream.close();
+            bufferedInputStream.close();
+
+            // Return file object
+            return file;
+
+
+
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String line = "";
 
