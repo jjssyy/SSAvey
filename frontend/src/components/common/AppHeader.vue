@@ -5,7 +5,12 @@
         <i id="top-menu" class="menu-icon fas fa-bars"></i>
       </div>
       <div class="big-logo-box">
-        <img src="@/assets/bigLogo.png" alt="" @click="moveMain" />
+        <img
+          src="@/assets/bigLogo.png"
+          alt=""
+          @click="moveMain"
+          style="cursor:pointer;"
+        />
       </div>
     </div>
     <div

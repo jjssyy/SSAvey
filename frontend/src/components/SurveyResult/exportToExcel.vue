@@ -67,4 +67,20 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.sub-title {
+  width: 25%;
+  display: flex;
+  justify-content: end;
+}
+button {
+  display: flex;
+  color: #737272;
+}
+p {
+  margin-right: 0.5rem;
+}
+button:hover {
+  color: #688ae6;
+}
+</style>
