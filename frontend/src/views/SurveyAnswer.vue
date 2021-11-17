@@ -3,7 +3,7 @@
     class=".
   component-2"
   >
-    <v-app>
+    <v-app class="notosanskr">
       <v-card width="1000" class="mx-auto">
         <v-toolbar color="#4E7AF5" dark>
           <v-toolbar-title>{{ this.items.data.title }}</v-toolbar-title>
@@ -12,9 +12,19 @@
         <v-list>
           <template v-for="(item, index) in items">
             <v-subheader v-if="item.title" :key="index"
-              >{{ item.explain }} <br />시작 {{ item.start_date }} ~ 종료
-              {{ item.start_date }}</v-subheader
-            >
+              >{{ item.explain }} <br />기간:
+              {{
+                item.start_date.substring(0, 10) +
+                  ' ' +
+                  item.start_date.substring(11, 16)
+              }}
+              ~
+              {{
+                item.end_date.substring(0, 10) +
+                  ' ' +
+                  item.end_date.substring(11, 16)
+              }}
+            </v-subheader>
 
             <v-list-item
               v-for="(ques, index) in item.question"
@@ -188,5 +198,10 @@ export default {
 <style scoped>
 .component-2 {
   position: relative;
+}
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.notosanskr * {
+  font-family: 'Noto Sans KR', sans-serif;
 }
 </style>
