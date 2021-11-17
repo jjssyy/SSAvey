@@ -1,14 +1,14 @@
 import { instance } from '@/api/index.js'
 
-function headerInfo(uid) {
-  return instance
-    .get(`/main/count/${uid}`)
-    .then(res => {
-      return res
-    })
-    .catch(() => {
-      return 'error'
-    })
+const usercount = (payload, callback, errorCallback) => {
+  instance
+    .get(`/main/count/${payload}`)
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
+}
+const headerInfo = {
+  usercount: (data, callback, errorCallback) =>
+    usercount(data, callback, errorCallback),
 }
 
-export { headerInfo }
+export default headerInfo

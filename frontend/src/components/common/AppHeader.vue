@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import { headerInfo } from '@/api/header.js'
+import headerInfo from '@/api/header.js'
 import UserApi from '@/api/UserApi'
 export default {
   data() {
@@ -95,10 +95,10 @@ export default {
       isOpenIcon2Two: false,
       isOpenIcon2Thr: false,
       windowWidth: window.innerWidth,
-      count: null,
       user: {},
     }
   },
+
   methods: {
     openMenu(e) {
       if (e.target.id == 'top-menu' && this.isOpenMenu == true) {
@@ -177,6 +177,11 @@ export default {
       this.$router.push('/')
     },
   },
+  computed: {
+    count() {
+      return this.$store.state.count
+    },
+  },
 
   watch: {
     windowWidth(newWidth) {
@@ -189,12 +194,25 @@ export default {
         this.isOpenIcon2Thr = false
       }
     },
+    count() {
+      this.count = this.$store.state.count
+    },
   },
-  async created() {
+  created() {
     window.addEventListener('resize', this.widthResize)
     const resp = this.$store.state.uid
-    const res = await headerInfo(resp)
-    this.count = res.data.data
+    // const res = await headerInfo(resp)
+    headerInfo.usercount(
+      resp,
+      res => {
+        this.$store.commit('setCount', res.data.data)
+        this.count = this.$store.state.count
+      },
+      err => {
+        console.log(err)
+      },
+    )
+
     UserApi.userInfo(
       {
         uid: resp,

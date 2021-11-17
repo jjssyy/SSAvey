@@ -16,6 +16,7 @@ export default new Vuex.Store({
       survey: {},
     },
     surveyDragThing: [],
+    count: '',
   },
   // 값 가져오기
   getters: {
@@ -36,6 +37,9 @@ export default new Vuex.Store({
     },
     getSurveyDragThing(state) {
       return state.surveyDragThing
+    },
+    getCount(state) {
+      return state.count
     },
   },
   // 값 넣기
@@ -79,6 +83,9 @@ export default new Vuex.Store({
         survey: {},
       }
       state.surveyDragThing = []
+    },
+    setCount(state, cnt) {
+      state.count = cnt
     },
   },
   actions: {},

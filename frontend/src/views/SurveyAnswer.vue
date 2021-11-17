@@ -105,7 +105,7 @@
 <script>
 import SurveyApi from '@/api/SurveyApi'
 import AnswerApi from '@/api/AnswerApi'
-
+import headerInfo from '@/api/header.js'
 export default {
   data: () => ({
     shortrules: [
@@ -162,9 +162,19 @@ export default {
                 timer: 1500,
               })
               this.isDisabled = true
-              setTimeout(() => {
-                this.$router.push({ name: 'SurveyCompleted' })
-              }, 1000)
+              headerInfo.usercount(
+                this.$store.state.uid,
+                res => {
+                  this.$store.commit('setCount', res.data.data)
+                  this.count = this.$store.state.count
+                  setTimeout(() => {
+                    this.$router.push({ name: 'SurveyCompleted' })
+                  }, 1000)
+                },
+                err => {
+                  console.log(err)
+                },
+              )
             }
           },
           err => {
