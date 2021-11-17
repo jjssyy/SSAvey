@@ -5,7 +5,12 @@
         <i id="top-menu" class="menu-icon fas fa-bars"></i>
       </div>
       <div class="big-logo-box">
-        <img src="@/assets/bigLogo.png" alt="" @click="moveMain" />
+        <img
+          src="@/assets/bigLogo.png"
+          alt=""
+          @click="moveMain"
+          style="cursor:pointer;"
+        />
       </div>
     </div>
     <div
@@ -19,7 +24,10 @@
         <img class="logo" src="@/assets/bigLogo.png" alt="" @click="moveMain" />
       </div>
       <div class="items profile">
-        <img src="@/assets/profileDefault.jpg" alt="" />
+        <img
+          src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+          alt=""
+        />
         <p class="medium-text">{{ user.name }}</p>
         <p class="small-text">미완료 설문 {{ count }}개</p>
       </div>
