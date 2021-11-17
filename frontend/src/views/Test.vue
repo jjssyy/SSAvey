@@ -23,39 +23,20 @@
     >
     </vue-word-cloud>
     <button @click="asd">버튼</button>
-    <apexchart
-      type="pie"
-      width="100%"
-      :options="tempChartOption"
-      :series="surveyLabelSerie"
-    ></apexchart>
   </v-app>
 </template>
 <script>
 import MySurveyAnswer from '@/components/SurveyResult/MySurveyAnswer.vue'
 import VueWordCloud from 'vuewordcloud'
-import VueApexCharts from 'vue-apexcharts'
 let Chance = require('chance')
 let chance = new Chance()
 export default {
   components: {
     MySurveyAnswer,
     VueWordCloud,
-    apexchart: VueApexCharts,
   },
   props: {},
   data: () => ({
-    surveyLabelSerie: [1, 2, 3, 4],
-    tempChartOption: {
-      chart: {
-        width: '100%',
-        type: 'pie',
-      },
-      legend: {
-        position: 'bottom',
-      },
-      labels: ['한글되는데?', 'b', 'c', 'd'],
-    },
     shortvalue: '',
     my_answer: {
       '1번': ['1'],

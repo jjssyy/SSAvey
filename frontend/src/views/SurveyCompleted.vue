@@ -1,12 +1,9 @@
 <template>
-  <v-app>
-    <v-card width="600" class="mx-auto">
-      <v-toolbar color="black" dark>
+  <v-app class="notosanskr">
+    <v-card width="600" class="mx-auto" elevation="1">
+      <v-toolbar color="#4E7AF5" dark elevation="1">
         <v-toolbar-title>진행완료 설문리스트</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn icon>
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
       </v-toolbar>
 
       <v-list three-line v-if="surveys.length >= 2">
@@ -17,11 +14,7 @@
             v-text="item.header"
           ></v-subheader>
 
-          <v-divider
-            v-else-if="item.divider"
-            :key="index"
-            :inset="item.inset"
-          ></v-divider>
+          <v-divider v-else-if="item.divider" :key="index + 1"></v-divider>
 
           <v-list-item v-else :key="index">
             <v-list-item-content>
@@ -35,7 +28,18 @@
                 v-html="item.explain"
               ></v-list-item-subtitle>
               <v-list-item-subtitle>
-                기간: {{ item.start_date }} ~ {{ item.end_date }}
+                기간 :
+                {{
+                  item.start_date.substring(0, 10) +
+                    ' ' +
+                    item.start_date.substring(11, 16)
+                }}
+                ~
+                {{
+                  item.end_date.substring(0, 10) +
+                    ' ' +
+                    item.end_date.substring(11, 16)
+                }}
               </v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
@@ -48,10 +52,11 @@
                     v-on="on"
                     dark
                     color="primary"
+                    elevation="0"
                   >
                     <v-icon>mdi-text-box-search</v-icon>
                   </v-btn>
-                  <v-btn v-else @click="alertinfo" color="error">
+                  <v-btn v-else @click="alertinfo" color="error" elevation="0">
                     <v-icon>mdi-alarm</v-icon>
                   </v-btn>
                 </template>
@@ -129,6 +134,7 @@
               </v-dialog>
             </v-list-item-action>
           </v-list-item>
+          <v-divider :key="index + 1"></v-divider>
         </template>
       </v-list>
       <v-list v-else three-line>
@@ -144,6 +150,7 @@
 <script>
 import SurveyApi from '@/api/SurveyApi'
 import AnswerApi from '@/api/AnswerApi'
+import UserApi from '@/api/UserApi'
 
 export default {
   components: {},
@@ -156,8 +163,14 @@ export default {
   }),
   methods: {
     alertinfo() {
-      console.log('경고창 만들거임')
-      alert('응답하지 못한 설문입니다.')
+      this.$swal({
+        icon: 'warning',
+        title: '응답하지 않은 설문입니다.',
+        // target: '.container-set',
+        position: 'center-center',
+        showConfirmButton: false,
+        timer: 1500,
+      })
     },
     loadmyresult(sid) {
       let temp = {
@@ -186,25 +199,44 @@ export default {
           this.surveys = res.data.data
           this.surveys.push({ divider: true, inset: true })
         },
-        () => {},
+        err => {
+          console.log(err)
+        },
       )
     },
   },
   created() {
-    this.answer_surveys = this.$store.state.user.answer_survey
-    SurveyApi.getCertainStateSurveys(
-      'COMPLETED',
-      this.$store.state.uid,
-      this.page - 1,
-      res => {
-        this.rows = res.data.Pagecount
-        this.surveys = res.data.data
-        this.surveys.push({ divider: true, inset: true })
+    UserApi.userInfo(
+      {
+        uid: this.$store.state.uid,
       },
-      () => {},
-    )
+      res => {
+        this.answer_surveys = res.data.user.answer_survey
+      },
+      err => {
+        console.log(err)
+      },
+    ),
+      // this.answer_surveys = this.$store.state.user.answer_survey
+      SurveyApi.getCertainStateSurveys(
+        'COMPLETED',
+        this.$store.state.uid,
+        this.page - 1,
+        res => {
+          this.rows = res.data.Pagecount
+          this.surveys = res.data.data
+          this.surveys.push({ divider: true, inset: true })
+        },
+        () => {},
+      )
   },
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.notosanskr * {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+</style>

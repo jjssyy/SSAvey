@@ -109,7 +109,7 @@ export default {
     shortvalue: '',
     result: {},
     items: [],
-    select: '',
+    isDisabled: true,
   }),
   created() {
     console.log(this.$route.params.sid)
@@ -132,21 +132,37 @@ export default {
   },
   methods: {
     saveresult() {
-      console.log(this.result)
-      this.result.answer_question = this.result.question
-      let tmp = {
-        id: this.$store.state.uid,
-        result: this.result,
+      if (this.isDisabled) {
+        this.isDisabled = false
+        console.log(this.result)
+        this.result.answer_question = this.result.question
+        let tmp = {
+          id: this.$store.state.uid,
+          result: this.result,
+        }
+        AnswerApi.saveSurveyResponse(
+          tmp,
+          res => {
+            console.log(res)
+            if (res.data.data == 'success') {
+              this.$swal({
+                icon: 'success',
+                title: '설문응답을 완료하였습니다.',
+                target: '.component-2',
+                showConfirmButton: false,
+                timer: 1500,
+              })
+              this.isDisabled = true
+              setTimeout(() => {
+                this.$router.push({ name: 'SurveyCompleted' })
+              }, 1000)
+            }
+          },
+          err => {
+            console.log(err)
+          },
+        )
       }
-      AnswerApi.saveSurveyResponse(
-        tmp,
-        res => {
-          console.log(res)
-        },
-        err => {
-          console.log(err)
-        },
-      )
     },
     checkMultiple(index, key) {
       if (this.result.question[index - 1].hasOwnProperty('answer')) {
@@ -191,3 +207,8 @@ export default {
   },
 }
 </script>
+<style scoped>
+.component-2 {
+  position: relative;
+}
+</style>

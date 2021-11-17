@@ -25,7 +25,7 @@
         <p>현재 {{ countInComplete }}명</p>
         <div>
           <button
-            v-if="countInComplete != 0"
+            v-if="countInComplete != 0 && !survey.anony"
             class="item-alarm-button"
             @click="sendPeopleAlarm()"
           >
@@ -34,7 +34,7 @@
           </button>
         </div>
       </div>
-      <div class="item-list">
+      <div class="item-list" v-if="!survey.anony">
         <!-- 반복문 -->
         <div
           class="item-list-user"

@@ -19,10 +19,7 @@
             <p>{{ dates[0] }}</p>
           </div>
           <div class="date-item item-left">
-            <input v-model="startTime[0]" type="text" />
-            <p class="time-margin">시</p>
-            <input v-model="startTime[1]" type="text" />
-            <p class="time-margin">분</p>
+            <input type="time" v-model="startFullTime" />
           </div>
         </div>
       </div>
@@ -34,10 +31,7 @@
             <p v-if="dates.length === 1">{{ dates[0] }}</p>
           </div>
           <div class="date-item item-left">
-            <input v-model="endTime[0]" type="text" />
-            <p class="time-margin">시</p>
-            <input v-model="endTime[1]" type="text" />
-            <p class="time-margin">분</p>
+            <input type="time" v-model="endFullTime" />
           </div>
         </div>
       </div>
@@ -56,6 +50,8 @@ import SurveyApi from '@/api/SurveyApi'
 export default {
   data() {
     return {
+      startFullTime: '',
+      endFullTime: '',
       test: null,
       test_list: [1, 2, 3],
       dates: [],
@@ -63,6 +59,7 @@ export default {
       datePrev: null,
       startTime: ['00', '00'],
       endTime: ['00', '00'],
+      isDisabled: true,
     }
   },
   watch: {
@@ -94,6 +91,8 @@ export default {
     } else {
       this.endTime[1] = String(tempDate.getMinutes() + 30)
     }
+    this.startFullTime = `${this.startTime[0]}:${this.startTime[1]}`
+    this.endFullTime = `${this.endTime[0]}:${this.endTime[1]}`
     let tempMonth = ''
     let tempDay = ''
     if (String(tempDate.getMonth()).length === 1) {
@@ -156,133 +155,183 @@ export default {
       this.$emit('prevSet')
     },
     submit() {
-      let temp1 = null
-      let temp2 = null
-      if (this.dates.length == 1) {
-        temp1 = 0
-        temp2 = 0
-      } else {
-        temp1 = 0
-        temp2 = 1
-      }
-      let tempDateOne = new Date()
-      let tempDateTwo = new Date()
-      //년, 월, 일 설정(start)
-      tempDateOne.setFullYear(
-        Number(this.dates[temp1].substring(0, 4)),
-        Number(this.dates[temp1].substring(5, 7)),
-        Number(this.dates[temp1].substring(8, 10)),
-      )
-      // 시간과 분 설정
-      tempDateOne.setHours(Number(this.startTime[0]))
-      tempDateOne.setMinutes(Number(this.startTime[1]))
-      //년, 월, 일 설정(end)
-      tempDateTwo.setFullYear(
-        Number(this.dates[temp2].substring(0, 4)),
-        Number(this.dates[temp2].substring(5, 7)),
-        Number(this.dates[temp2].substring(8, 10)),
-      )
-      // 시간과 분 설정
-      tempDateTwo.setHours(Number(this.endTime[0]))
-      tempDateTwo.setMinutes(Number(this.endTime[1]))
-      console.log(tempDateOne)
-      console.log(tempDateTwo)
+      if (this.isDisabled) {
+        this.isDisabled = false
+        let temp1 = null
+        let temp2 = null
+        if (this.dates.length == 1) {
+          temp1 = 0
+          temp2 = 0
+        } else {
+          temp1 = 0
+          temp2 = 1
+        }
+        let tempDateOne = new Date()
+        let tempDateTwo = new Date()
+        //년, 월, 일 설정(start)
+        tempDateOne.setFullYear(
+          Number(this.dates[temp1].substring(0, 4)),
+          Number(this.dates[temp1].substring(5, 7)),
+          Number(this.dates[temp1].substring(8, 10)),
+        )
+        // 시간과 분 설정
+        tempDateOne.setHours(Number(this.startFullTime.substring(0, 2)))
+        tempDateOne.setMinutes(Number(this.startFullTime.substring(3, 5)))
+        //년, 월, 일 설정(end)
+        tempDateTwo.setFullYear(
+          Number(this.dates[temp2].substring(0, 4)),
+          Number(this.dates[temp2].substring(5, 7)),
+          Number(this.dates[temp2].substring(8, 10)),
+        )
+        // 시간과 분 설정
+        tempDateTwo.setHours(Number(this.endFullTime.substring(0, 2)))
+        tempDateTwo.setMinutes(Number(this.endFullTime.substring(3, 5)))
+        console.log(tempDateOne)
+        console.log(tempDateTwo)
 
-      let startResult = ''
-      let endResult = ''
-      // 년
-      startResult += `${tempDateOne.getFullYear()}` + '-'
-      endResult += `${tempDateTwo.getFullYear()}` + '-'
-      //월
-      startResult +=
-        `${
-          String(tempDateOne.getMonth()).length == 1
-            ? '0' + String(tempDateOne.getMonth())
-            : tempDateOne.getMonth()
-        }` + '-'
-      endResult +=
-        `${
-          String(tempDateTwo.getMonth()).length == 1
-            ? '0' + String(tempDateTwo.getMonth())
-            : tempDateTwo.getMonth()
-        }` + '-'
-      // 일
-      startResult += `${
-        String(tempDateOne.getDate()).length == 1
-          ? '0' + String(tempDateOne.getDate())
-          : tempDateOne.getDate()
-      }T`
-      endResult += `${
-        String(tempDateTwo.getDate()).length == 1
-          ? '0' + String(tempDateTwo.getDate())
-          : tempDateTwo.getDate()
-      }T`
-      // 시간
-      startResult +=
-        `${
-          String(tempDateOne.getHours()).length == 1
-            ? '0' + String(tempDateOne.getHours())
-            : tempDateOne.getHours()
-        }` + ':'
-      endResult +=
-        `${
-          String(tempDateTwo.getHours()).length == 1
-            ? '0' + String(tempDateTwo.getHours())
-            : tempDateTwo.getHours()
-        }` + ':'
-      // 분
-      startResult +=
-        `${
-          String(tempDateOne.getMinutes()).length == 1
-            ? '0' + String(tempDateOne.getMinutes())
-            : tempDateOne.getMinutes()
-        }` + ':00'
-      endResult +=
-        `${
-          String(tempDateTwo.getMinutes()).length == 1
-            ? '0' + String(tempDateTwo.getMinutes())
-            : tempDateTwo.getMinutes()
-        }` + ':00'
-      this.$store.state.surveySet.survey.start_date = startResult
-      this.$store.state.surveySet.survey.end_date = endResult
-      // 최종 target과 incomplete 수정
-      let tempTarget = new Set()
-      for (let targetItem of this.$store.state.surveySet.survey.target) {
-        targetItem.forEach(function(element) {
-          tempTarget.add(element)
-        })
+        let startResult = ''
+        let endResult = ''
+        // 년
+        startResult += `${tempDateOne.getFullYear()}` + '-'
+        endResult += `${tempDateTwo.getFullYear()}` + '-'
+        //월
+        startResult +=
+          `${
+            String(tempDateOne.getMonth()).length == 1
+              ? '0' + String(tempDateOne.getMonth())
+              : tempDateOne.getMonth()
+          }` + '-'
+        endResult +=
+          `${
+            String(tempDateTwo.getMonth()).length == 1
+              ? '0' + String(tempDateTwo.getMonth())
+              : tempDateTwo.getMonth()
+          }` + '-'
+        // 일
+        startResult += `${
+          String(tempDateOne.getDate()).length == 1
+            ? '0' + String(tempDateOne.getDate())
+            : tempDateOne.getDate()
+        }T`
+        endResult += `${
+          String(tempDateTwo.getDate()).length == 1
+            ? '0' + String(tempDateTwo.getDate())
+            : tempDateTwo.getDate()
+        }T`
+        // 시간
+        startResult +=
+          `${
+            String(tempDateOne.getHours()).length == 1
+              ? '0' + String(tempDateOne.getHours())
+              : tempDateOne.getHours()
+          }` + ':'
+        endResult +=
+          `${
+            String(tempDateTwo.getHours()).length == 1
+              ? '0' + String(tempDateTwo.getHours())
+              : tempDateTwo.getHours()
+          }` + ':'
+        // 분
+        startResult +=
+          `${
+            String(tempDateOne.getMinutes()).length == 1
+              ? '0' + String(tempDateOne.getMinutes())
+              : tempDateOne.getMinutes()
+          }` + ':00'
+        endResult +=
+          `${
+            String(tempDateTwo.getMinutes()).length == 1
+              ? '0' + String(tempDateTwo.getMinutes())
+              : tempDateTwo.getMinutes()
+          }` + ':00'
+        this.$store.state.surveySet.survey.start_date = startResult
+        this.$store.state.surveySet.survey.end_date = endResult
+        // 최종 target과 incomplete 수정
+        let tempTarget = new Set()
+        for (let targetItem of this.$store.state.surveySet.survey.target) {
+          targetItem.forEach(function(element) {
+            tempTarget.add(element)
+          })
+        }
+        // 최종 share 수정
+        let tempShare = new Set()
+        for (let shareItem of this.$store.state.surveySet.survey.share) {
+          shareItem.forEach(function(element) {
+            tempShare.add(element)
+          })
+        }
+        this.$store.state.surveySet.survey.target = Array.from(tempTarget)
+        this.$store.state.surveySet.survey.incomplete = Array.from(tempTarget)
+        this.$store.state.surveySet.survey.share = Array.from(tempShare)
+        this.$store.state.surveySet.survey.share.push(this.$store.state.uid)
+        SurveyApi.makeSurvey(
+          this.$store.state.surveySet.survey,
+          res => {
+            console.log(res)
+            let payload = {
+              isWriting: false,
+              isClkUpdate: false,
+              survey: {
+                use_template: null,
+              },
+            }
+            this.$store.commit('resetSurveyDragThing', [])
+            this.$store.commit('setSurveySet', payload)
+            if (res.data.state == 'EXPECTED') {
+              this.$swal({
+                icon: 'success',
+                title: '설문 생성을 완료하였습니다.',
+                // target: '.container-set',
+                position: 'center-center',
+                showConfirmButton: false,
+                timer: 1500,
+              })
+              this.isDisabled = true
+              setTimeout(() => {
+                this.$router.push({ name: 'MySurveyExpected' })
+              }, 1000)
+            }
+            if (res.data.state == 'PROCEEDING') {
+              this.$swal({
+                icon: 'success',
+                title: '설문 생성을 완료하였습니다.',
+                // target: '.container-set',
+                position: 'center-center',
+                showConfirmButton: false,
+                timer: 1500,
+              })
+              this.isDisabled = true
+              setTimeout(() => {
+                this.$router.push({ name: 'MySurveyProceeding' })
+              }, 1000)
+            }
+            if (res.data.state == 'COMPLETED') {
+              this.$swal({
+                icon: 'success',
+                title: '설문 생성을 완료하였습니다.',
+                // target: '.container-set',
+                position: 'center-center',
+                showConfirmButton: false,
+                timer: 1500,
+              })
+              this.isDisabled = true
+              setTimeout(() => {
+                this.$router.push({ name: 'MySurveyCompleted' })
+              }, 1000)
+            }
+          },
+          err => {
+            console.log(err)
+          },
+        )
       }
-      // 최종 share 수정
-      let tempShare = new Set()
-      for (let shareItem of this.$store.state.surveySet.survey.share) {
-        shareItem.forEach(function(element) {
-          tempShare.add(element)
-        })
-      }
-      this.$store.state.surveySet.survey.target = Array.from(tempTarget)
-      this.$store.state.surveySet.survey.incomplete = Array.from(tempTarget)
-      this.$store.state.surveySet.survey.share = Array.from(tempShare)
-      this.$store.state.surveySet.survey.share.push(this.$store.state.uid)
-      SurveyApi.makeSurvey(
-        this.$store.state.surveySet.survey,
-        res => {
-          console.log(res)
-          let payload = {
-            isWriting: false,
-            isClkUpdate: false,
-            surveySet: {},
-          }
-          this.$store.commit('resetSurveyDragThing', [])
-          this.$store.commit('setSurveySet', payload)
-          this.$router.push('/main')
-        },
-        err => {
-          console.log(err)
-        },
-      )
     },
   },
 }
 </script>
 
-<style scoped src="./../../css/survey/surveyset/survey-set-thr.css"></style>
+<style scoped src="./../../css/survey/surveyset/survey-set-thr.css">
+.container-set {
+  position: relative;
+}
+</style>
