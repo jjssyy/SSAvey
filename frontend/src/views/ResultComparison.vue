@@ -2,28 +2,6 @@
   <v-app>
     <v-container>
       <v-row class="">
-        <v-col cols="12" sm="12">
-          <v-select
-            v-if="surveys.length != 0"
-            :items="surveys"
-            v-model="selectedSurvey"
-            label="완료된 설문중 비교할 설문을 선택해주세요."
-            dense
-            solo
-          >
-          </v-select>
-          <v-select
-            v-if="surveys.length == 0"
-            :items="surveys"
-            v-model="selectedSurvey"
-            label="완료된 설문이 없습니다."
-            dense
-            solo
-            disabled
-          >
-          </v-select>
-          <!-- {{ this.totaldata }} -->
-        </v-col>
         <v-col class="d-flex justify-center" cols="12" sm="6">
           <v-card class="">
             <v-date-picker v-model="dates" width="75%" range></v-date-picker>
@@ -62,81 +40,6 @@
                     </v-list-item-content>
                   </v-list-item>
                 </template>
-                <template>
-                  <v-divider></v-divider>
-                  <v-list-item>
-                    <v-list-item-content>
-                      <v-list-item-title>설문제목</v-list-item-title>
-                      <v-list-item-subtitle
-                        >설문에 대한 간략한 설명 및 기간</v-list-item-subtitle
-                      >
-                    </v-list-item-content>
-                  </v-list-item>
-                </template>
-                <template>
-                  <v-divider></v-divider>
-                  <v-list-item>
-                    <v-list-item-content>
-                      <v-list-item-title>설문제목</v-list-item-title>
-                      <v-list-item-subtitle
-                        >설문에 대한 간략한 설명 및 기간</v-list-item-subtitle
-                      >
-                    </v-list-item-content>
-                  </v-list-item>
-                </template>
-                <template>
-                  <v-divider></v-divider>
-                  <v-list-item>
-                    <v-list-item-content>
-                      <v-list-item-title>설문제목</v-list-item-title>
-                      <v-list-item-subtitle
-                        >설문에 대한 간략한 설명 및 기간</v-list-item-subtitle
-                      >
-                    </v-list-item-content>
-                  </v-list-item>
-                </template>
-                <template>
-                  <v-divider></v-divider>
-                  <v-list-item>
-                    <v-list-item-content>
-                      <v-list-item-title>설문제목</v-list-item-title>
-                      <v-list-item-subtitle
-                        >설문에 대한 간략한 설명 및 기간</v-list-item-subtitle
-                      >
-                    </v-list-item-content>
-                  </v-list-item>
-                </template>
-                <template>
-                  <v-divider></v-divider>
-                  <v-list-item>
-                    <v-list-item-content>
-                      <v-list-item-title>설문제목</v-list-item-title>
-                      <v-list-item-subtitle
-                        >설문에 대한 간략한 설명 및 기간</v-list-item-subtitle
-                      >
-                    </v-list-item-content>
-                  </v-list-item>
-                </template>
-                <template>
-                  <v-divider></v-divider>
-                  <v-list-item>
-                    <v-list-item-content>
-                      <v-list-item-title>설문제목</v-list-item-title>
-                      <v-list-item-subtitle
-                        >설문에 대한 간략한 설명 및 기간</v-list-item-subtitle
-                      >
-                    </v-list-item-content>
-                  </v-list-item>
-                </template>
-                <template>
-                  <v-divider></v-divider>
-                  <v-list-item>
-                    <v-list-item-content>
-                      <v-list-item-title>설문제목</v-list-item-title>
-                      <v-list-item-subtitle>끝</v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item>
-                </template>
               </v-list-item-group>
             </v-list>
           </v-card>
@@ -148,16 +51,35 @@
         >비교하기</v-btn
       >
     </div>
+    <apexchart> </apexchart>
+    {{ this.dates }}
+    <!-- {{ originresult }} -->
   </v-app>
 </template>
 <script>
 import SurveyApi from '@/api/SurveyApi'
+import VueApexCharts from 'vue-apexcharts'
+
 export default {
+  components: {
+    apexchart: VueApexCharts,
+  },
   data() {
     return {
       totaldata: [],
-      surveys: [],
+      originresult: [],
+      targetresult: [],
+      chartOptions: [],
+      surveyLabelSeries: [],
+      // surveyLabelSerie: [
+      //   [
+      //     ['유튜브', '싸피', '블로그'],
+      //     [30, 20, 10],
+      //   ],
+      //   [[], []],
+      // ],
       dates: [],
+      sid: this.$route.params.sid,
       selectedSurvey: '',
       rows: '',
       page: 1,
@@ -169,25 +91,36 @@ export default {
     },
   },
   created() {
-    SurveyApi.getCertainStateSurveys(
-      'COMPLETED',
-      this.$store.state.uid,
-      this.page - 1,
+    console.log(this.sid)
+    SurveyApi.loadSurveyResult(
+      this.sid,
       res => {
         console.log(res)
-        this.totaldata = res.data.data
-        this.rows = res.data.Pagecount
-        for (const item of res.data.data) {
-          if (item.title !== null) {
-            this.surveys.push(
-              // item.title + '[' + item.start_date + item.end_date + ']',
-              item.title,
-            )
-          }
-        }
+        this.originresult = res.data.data.answers
       },
-      () => {},
+      err => {
+        console.log(err)
+      },
     )
+    // SurveyApi.getCertainStateSurveys(
+    //   'COMPLETED',
+    //   this.$store.state.uid,
+    //   this.page - 1,
+    //   res => {
+    //     console.log(res)
+    //     this.totaldata = res.data.data
+    //     this.rows = res.data.Pagecount
+    //     for (const item of res.data.data) {
+    //       if (item.title !== null) {
+    //         this.surveys.push(
+    //           // item.title + '[' + item.start_date + item.end_date + ']',
+    //           item.title,
+    //         )
+    //       }
+    //     }
+    //   },
+    //   () => {},
+    // )
   },
   computed: {
     dateRangeText() {

@@ -26,6 +26,21 @@ const getSurvey = (surveyId, callback, errorCallback) => {
     .catch(err => errorCallback(err))
 }
 
+const getTemplateSurvey = (
+  tid,
+  start_date,
+  end_date,
+  callback,
+  errorCallback,
+) => {
+  instance
+    .get(
+      '/compare/' + tid + '?start_date=' + start_date + '&end_date=' + end_date,
+    )
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
+}
+
 const makeSurvey = (payload, callback, errorCallback) => {
   instance
     .post('/survey', payload)
@@ -60,6 +75,8 @@ const SurveyApi = {
     loadSurveyResult(payload, callback, errorCallback),
   alarmSurveyResult: (payload, callback, errorCallback) =>
     alarmSurveyResult(payload, callback, errorCallback),
+  getTemplateSurvey: (tid, start_date, end_date, callback, errorCallback) =>
+    getTemplateSurvey(tid, start_date, end_date, callback, errorCallback),
 }
 
 export default SurveyApi

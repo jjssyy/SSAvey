@@ -5,6 +5,8 @@ import com.web.curation.error.CustomException;
 import com.web.curation.error.ErrorCode;
 import com.web.curation.member.User;
 import com.web.curation.member.UserDao;
+import com.web.curation.template.Template;
+import com.web.curation.template.TemplateDao;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,10 +26,10 @@ public class SurveyService {
 	private SurveyDao surveyDao;
 	private AlarmService alarmService;
 	private UserDao userDao;
+	private TemplateDao templateDao;
 	
 	
-	
-	public void createSurvey(Survey survey) {
+	public Survey createSurvey(Survey survey) {
 		//할당된 설문,만든 설문 분배하는 작업
 		List<String> target=survey.getTarget();
 		List<String> share=survey.getShare();
@@ -44,6 +46,15 @@ public class SurveyService {
 		}
 		survey = surveyDao.save(survey);
 		alarmService.setAlarmSchdule(survey.getSid(), survey.getStart_date(), survey.getEnd_date());
+		//템플릿 사용하면 사용한 템플릿에 추가하는 작업
+		if(survey.isUse_template()) {
+			Template template = templateDao.findById(survey.getTemplate())
+					.orElseThrow(() -> new CustomException(ErrorCode.TEMPLATE_NOT_FOUND));
+			List<String> use_survey=template.getSurvey();
+			use_survey.add(survey.getSid());
+			template.setSurvey(use_survey);
+			templateDao.save(template);			
+		}
 		//할당된 설문 분배하는작업
 		for(int i=0;i<target.size();i++) {
 			String temp=target.get(i);
@@ -63,6 +74,7 @@ public class SurveyService {
 			tmp.setMySurvey(my_survey);
 			userDao.save(tmp);
 		}
+		return survey;
 	}
 	
 	public List<Survey> getSurvey(String state,String uid){
@@ -124,7 +136,7 @@ public class SurveyService {
 		if(temp==null)return result;
 		for(int i=0;i<temp.size();i++) {
 			Survey tmp_survey=surveyDao.findById(temp.get(i))
-					.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));;
+					.orElseThrow(() -> new CustomException(ErrorCode.SURVEY_NOT_FOUND));;
 			
 			if(tmp_survey.getState().toString().equals(state)) {
 				result.add(tmp_survey);
@@ -134,10 +146,59 @@ public class SurveyService {
 	}
 	public Survey getSurveyInfo(String sid) {
 		Survey tmp_survey=surveyDao.findById(sid)
-				.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));;
+				.orElseThrow(() -> new CustomException(ErrorCode.SURVEY_NOT_FOUND));;
 		
 		
 		return tmp_survey;
+		
+	}
+	public void deleteSurvey(String sid) {
+		Survey temp=getSurveyInfo(sid);
+		List<String> share=temp.getShare();
+		List<String> incomplete=temp.getIncomplete();
+		List<String> complete=temp.getComplete();
+		//유저에서 만든 설문에서 삭제하는 작업
+		for(int i=0;i<share.size();i++) {
+			String uid=share.get(i);
+			User user=userDao.findById(uid)
+		             .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+			List<String> my_survey=user.getMySurvey();
+			my_survey.remove(sid);
+			user.setMySurvey(my_survey);
+			userDao.save(user);			
+		}
+		//할당된 설문 삭제하는 작업
+		for(int i=0;i<incomplete.size();i++) {
+			String uid=incomplete.get(i);
+			User user=userDao.findById(uid)
+		             .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+			List<String> survey=user.getSurvey();
+			survey.remove(sid);
+			user.setSurvey(survey);
+			userDao.save(user);
+		}
+		//응답한 설문 삭제하는 작업
+		for(int i=0;i<complete.size();i++) {
+			String uid=complete.get(i);
+			User user=userDao.findById(uid)
+		             .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+			List<String> answer_survey=user.getAnswer_survey();
+			answer_survey.remove(sid);
+			user.setAnswer_survey(answer_survey);
+			userDao.save(user);
+		}
+		//만약 템플릿을 사용했다면 삭제하는 작업
+		if(temp.isUse_template()) {
+			Template template = templateDao.findById(temp.getTemplate())
+					.orElseThrow(() -> new CustomException(ErrorCode.TEMPLATE_NOT_FOUND));
+			List<String> use_survey=template.getSurvey();
+			use_survey.remove(sid);
+			template.setSurvey(use_survey);
+			templateDao.save(template);	
+			
+		}
+		surveyDao.delete(temp);
+		
 		
 	}
 	

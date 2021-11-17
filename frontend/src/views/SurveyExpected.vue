@@ -39,7 +39,6 @@
               </v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
-              설문 종류
               <v-btn icon>
                 <v-icon>mdi-arrow-right</v-icon>
               </v-btn>

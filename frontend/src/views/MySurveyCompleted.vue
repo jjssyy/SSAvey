@@ -39,7 +39,6 @@
               </v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
-              설문 종류
               <v-menu bottom :offset-x="offset">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
@@ -92,6 +91,7 @@ import SurveyApi from '@/api/SurveyApi'
 
 export default {
   data: () => ({
+    offset: true,
     surveys: [],
     rows: 2,
     page: 1,

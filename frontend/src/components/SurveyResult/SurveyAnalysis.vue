@@ -5,18 +5,13 @@
         <p class="main-title">
           {{ survey.title }}
         </p>
-        <div class="sub-title">
-          <button>
-            <p>Excel로 반환</p>
-            <i class="fas fa-reply"></i>
-          </button>
-        </div>
+        <export-to-excel v-if="survey" :survey="survey"></export-to-excel>
       </div>
       <div class="analysis-explain">
         <p class="main-explain">
           {{ survey.explain }}
         </p>
-        <button class="sub-explain">
+        <button class="sub-explain" @click="gotoCompare(survey.sid)">
           <p>지난 설문과 비교</p>
           <span class="center">
             <i class="fas fa-angle-double-right"></i>
@@ -210,9 +205,11 @@
 <script>
 import VueApexCharts from 'vue-apexcharts'
 import Chance from 'chance'
+import ExportToExcel from '@/components/SurveyResult/exportToExcel'
 export default {
   components: {
     apexchart: VueApexCharts,
+    ExportToExcel,
   },
   props: {
     survey: {
@@ -280,6 +277,9 @@ export default {
     }
   },
   methods: {
+    gotoCompare(sid) {
+      this.$router.push('/compare/' + sid)
+    },
     // 해당 문항에 기타가 포함되어 있는지 확인.
     findShortOfQue() {
       this.survey.question.forEach(element => {
