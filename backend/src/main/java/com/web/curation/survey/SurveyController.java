@@ -12,6 +12,7 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -79,6 +80,18 @@ public class SurveyController {
     	return new ResponseEntity<>(resultmap,HttpStatus.OK); 	
     }
     
+    @DeleteMapping("/{survey_id}")
+    public ResponseEntity<Map<String, Object>> deleteSurvey(
+    		@PathVariable String survey_id 
+    		){
+    	Map<String, Object> resultmap=new HashMap<String, Object>();
+    	surveyService.deleteSurvey(survey_id);
+  
+    	
+    	resultmap.put("status", HttpStatus.OK);
+    	resultmap.put("data", "success");
+    	return new ResponseEntity<>(resultmap,HttpStatus.OK); 	
+    }
     
     
 }

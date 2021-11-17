@@ -21,6 +21,7 @@ public class TemplateService {
 
     public void createTemplate(Template template){
         log.info(template.getT_title() + " 템플릿 생성");
+        template.setSurvey(new ArrayList<>());
         template = templateDao.save(template);
 
         User user  = userDao.findById(template.getWriter())
