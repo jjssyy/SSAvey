@@ -237,7 +237,9 @@ public class SurveyResultService {
 		long hour = remainDuration.toHours()  - day * 24;
 		long min = (remainDuration.toMinutes() - hour * 60);
 
-		return "#### " + survey.getTitle() + " 설문\n남은 시간: " +
+		return "#### " + survey.getTitle() + " 설문\n" +
+				survey.getExplain() + "\n" +
+				"남은 시간: " +
 				(day != 0 ? day + "일 " : "") +
 				(hour != 0 ? hour + "시 " : "") +
 				min + "분\n:running_man: 서둘러주세요";
