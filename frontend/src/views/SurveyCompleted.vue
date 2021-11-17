@@ -186,7 +186,9 @@ export default {
           this.surveys = res.data.data
           this.surveys.push({ divider: true, inset: true })
         },
-        () => {},
+        err => {
+          console.log(err)
+        },
       )
     },
   },
