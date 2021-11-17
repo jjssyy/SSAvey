@@ -122,7 +122,8 @@
                   <div class="question-control">
                     <p class="q-option-item-c1">'객관식'</p>
                     <p>또는</p>
-                    <p class="q-option-item-c2">'주관식' 추가</p>
+                    <p class="q-option-item-c2">'기타'</p>
+                    <p>&nbsp;추가</p>
                   </div>
                 </div>
                 <div class="is-required">
@@ -170,7 +171,8 @@
                   <div class="question-control">
                     <p class="q-option-item-c1">'객관식'</p>
                     <p>또는</p>
-                    <p class="q-option-item-c2">'주관식' 추가</p>
+                    <p class="q-option-item-c2">'기타'</p>
+                    <p>&nbsp;추가</p>
                   </div>
                 </div>
                 <div class="is-required">
@@ -390,25 +392,33 @@ export default {
                       element,
                     )
                   })
-                  element.childNodes[2].addEventListener('click', function() {
-                    let cloneChild = temp.childNodes[1].childNodes[2].childNodes[0].cloneNode(
-                      true,
-                    )
-                    cloneChild.childNodes[1].setAttribute('placeholder', '기타')
-                    cloneChild.childNodes[1].setAttribute('disabled', 'true')
-                    cloneChild.childNodes[1].value = ''
-                    cloneChild.childNodes[2].style.display = 'block'
-                    cloneChild.childNodes[2].addEventListener(
-                      'click',
-                      function() {
-                        cloneChild.remove()
-                      },
-                    )
-                    temp.childNodes[1].childNodes[2].insertBefore(
-                      cloneChild,
-                      element,
-                    )
-                  })
+                  if (element.childElementCount > 2) {
+                    element.childNodes[2].addEventListener('click', function() {
+                      let cloneChild = temp.childNodes[1].childNodes[2].childNodes[0].cloneNode(
+                        true,
+                      )
+                      cloneChild.childNodes[1].setAttribute(
+                        'placeholder',
+                        '기타',
+                      )
+                      cloneChild.childNodes[1].setAttribute('disabled', 'true')
+                      cloneChild.childNodes[1].value = ''
+                      cloneChild.childNodes[2].style.display = 'block'
+                      cloneChild.childNodes[2].addEventListener(
+                        'click',
+                        function() {
+                          cloneChild.remove()
+                        },
+                      )
+                      temp.childNodes[1].childNodes[2].insertBefore(
+                        cloneChild,
+                        element,
+                      )
+
+                      element.childNodes[1].remove()
+                      element.childNodes[1].remove()
+                    })
+                  }
                 }
               })
             }
@@ -749,20 +759,25 @@ export default {
             },
           )
           // 주관식 버튼 활성화
-          temp[temp.length - 1].childNodes[2].addEventListener(
-            'click',
-            function() {
-              let cloneOption = temp[0].cloneNode(true)
-              cloneOption.childNodes[1].value = ''
-              cloneOption.childNodes[2].style.display = 'block'
-              cloneOption.childNodes[2].addEventListener('click', function() {
-                cloneOption.remove()
-              })
-              cloneOption.childNodes[1].setAttribute('placeholder', '기타')
-              cloneOption.childNodes[1].setAttribute('disabled', 'true')
-              question.insertBefore(cloneOption, temp[temp.length - 1])
-            },
-          )
+          if (temp[temp.length - 1].childElementCount > 2) {
+            temp[temp.length - 1].childNodes[2].addEventListener(
+              'click',
+              function() {
+                let cloneOption = temp[0].cloneNode(true)
+                cloneOption.childNodes[1].value = ''
+                cloneOption.childNodes[2].style.display = 'block'
+                cloneOption.childNodes[2].addEventListener('click', function() {
+                  cloneOption.remove()
+                })
+                cloneOption.childNodes[1].setAttribute('placeholder', '기타')
+                cloneOption.childNodes[1].setAttribute('disabled', 'true')
+                question.insertBefore(cloneOption, temp[temp.length - 1])
+
+                temp[temp.length - 1].childNodes[1].remove()
+                temp[temp.length - 1].childNodes[1].remove()
+              },
+            )
+          }
         }
       })
     }
@@ -879,6 +894,9 @@ export default {
             cloneqOptionItem.childNodes[1].setAttribute('placeholder', '기타')
             cloneqOptionItem.childNodes[1].setAttribute('disabled', 'true')
             qOption.insertBefore(cloneqOptionItem, controlElement)
+
+            controlElement.childNodes[2].remove()
+            controlElement.childNodes[1].remove()
           })
         }
         el.classList.remove('dragthing-drag')
