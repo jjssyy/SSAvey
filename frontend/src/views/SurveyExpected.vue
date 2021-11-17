@@ -34,11 +34,6 @@
                 }}
               </v-list-item-subtitle>
             </v-list-item-content>
-            <v-list-item-action>
-              <v-btn icon>
-                <v-icon>mdi-arrow-right</v-icon>
-              </v-btn>
-            </v-list-item-action>
           </v-list-item>
           <v-divider :key="index + 1"></v-divider>
         </template>
