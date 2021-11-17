@@ -35,14 +35,34 @@
                   {{ ques.q_number }}. {{ ques.q_explanation }}
                 </v-list-item-title>
                 <v-radio-group v-if="ques.q_type == 'SINGLE'" class="mx-5">
-                  <v-radio
+                  <div
                     v-for="(answer, r_index) in ques.q_option"
                     :key="r_index + 2"
                     :label="`${answer.o_explanation}`"
                     :value="`${answer.o_number}`"
-                    @click="checkSingle(index + 1, `${answer.o_number}`)"
                   >
-                  </v-radio>
+                    <v-radio
+                      :label="`${answer.o_explanation}`"
+                      :value="`${answer.o_number}`"
+                      @click="
+                        checkSingle(index + 1, `${answer.o_number}`),
+                          (select = `${answer.o_number}`)
+                      "
+                    ></v-radio>
+                    <v-textarea
+                      v-if="answer.short_answer"
+                      auto-grow
+                      counter
+                      outlined
+                      :rules="shortrules"
+                      rows="2"
+                      clearable
+                      :disabled="select != `${answer.o_number}`"
+                      clear-icon="mdi-close-circle"
+                      @focusout="checkSingle(index + 1, `${answer.o_number}`)"
+                    >
+                    </v-textarea>
+                  </div>
                 </v-radio-group>
                 <v-container class="mx-2" v-if="ques.q_type == 'MULTIPLE'">
                   <v-checkbox
@@ -97,6 +117,7 @@ export default {
     shortvalue: '',
     result: {},
     items: [],
+    select: '',
     isDisabled: true,
   }),
   created() {
