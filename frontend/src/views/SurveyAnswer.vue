@@ -1,97 +1,102 @@
 <template>
-  <v-app>
-    <v-card width="1000" class="mx-auto">
-      <v-toolbar color="#4E7AF5" dark>
-        <v-toolbar-title>{{ this.items.data.title }}</v-toolbar-title>
-        <v-spacer></v-spacer>
-      </v-toolbar>
-      <v-list>
-        <template v-for="(item, index) in items">
-          <v-subheader v-if="item.title" :key="index"
-            >{{ item.explain }} <br />시작 :
-            {{
-              item.start_date.substring(0, 10) +
-                ' ' +
-                item.start_date.substring(11, 16)
-            }}
-            ~ 종료 :
-            {{
-              item.end_date.substring(0, 10) +
-                ' ' +
-                item.end_date.substring(11, 16)
-            }}</v-subheader
-          >
+  <div class=".component-2">
+    <v-app>
+      <v-card width="1000" class="mx-auto">
+        <v-toolbar color="#4E7AF5" dark>
+          <v-toolbar-title>{{ this.items.data.title }}</v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+        <v-list>
+          <template v-for="(item, index) in items">
+            <v-subheader v-if="item.title" :key="index"
+              >{{ item.explain }} <br />시작 :
+              {{
+                item.start_date.substring(0, 10) +
+                  ' ' +
+                  item.start_date.substring(11, 16)
+              }}
+              ~ 종료 :
+              {{
+                item.end_date.substring(0, 10) +
+                  ' ' +
+                  item.end_date.substring(11, 16)
+              }}</v-subheader
+            >
 
-          <v-list-item v-for="(ques, index) in item.question" :key="index + 1">
-            <v-list-item-content>
-              <v-list-item-title>
-                {{ ques.q_number }}. {{ ques.q_explanation }}
-              </v-list-item-title>
-              <v-radio-group v-if="ques.q_type == 'SINGLE'" class="mx-5">
-                <div
-                  v-for="(answer, r_index) in ques.q_option"
-                  :key="r_index + 2"
-                  :label="`${answer.o_explanation}`"
-                  :value="`${answer.o_number}`"
-                >
-                  <v-radio
+            <v-list-item
+              v-for="(ques, index) in item.question"
+              :key="index + 1"
+            >
+              <v-list-item-content>
+                <v-list-item-title>
+                  {{ ques.q_number }}. {{ ques.q_explanation }}
+                </v-list-item-title>
+                <v-radio-group v-if="ques.q_type == 'SINGLE'" class="mx-5">
+                  <div
+                    v-for="(answer, r_index) in ques.q_option"
+                    :key="r_index + 2"
                     :label="`${answer.o_explanation}`"
                     :value="`${answer.o_number}`"
-                    @click="
-                      checkSingle(index + 1, `${answer.o_number}`),
-                        (select = `${answer.o_number}`)
-                    "
-                  ></v-radio>
+                  >
+                    <v-radio
+                      :label="`${answer.o_explanation}`"
+                      :value="`${answer.o_number}`"
+                      @click="
+                        checkSingle(index + 1, `${answer.o_number}`),
+                          (select = `${answer.o_number}`)
+                      "
+                    ></v-radio>
+                    <v-textarea
+                      v-if="answer.short_answer"
+                      auto-grow
+                      counter
+                      outlined
+                      :rules="shortrules"
+                      rows="2"
+                      clearable
+                      :disabled="select != `${answer.o_number}`"
+                      clear-icon="mdi-close-circle"
+                      @focusout="checkSingle(index + 1, `${answer.o_number}`)"
+                    >
+                    </v-textarea>
+                  </div>
+                </v-radio-group>
+                <v-container class="mx-2" v-if="ques.q_type == 'MULTIPLE'">
+                  <v-checkbox
+                    v-for="(answer, c_index) in ques.q_option"
+                    :key="c_index + 3"
+                    class="mt-0 pt-0"
+                    :label="`${answer.o_explanation}`"
+                    :value="`${answer.o_number}`"
+                    @click="checkMultiple(index + 1, `${answer.o_number}`)"
+                  >
+                  </v-checkbox>
+                </v-container>
+                <v-container v-if="ques.q_type == 'SHORT'">
                   <v-textarea
-                    v-if="answer.short_answer"
                     auto-grow
                     counter
-                    outlined
                     :rules="shortrules"
-                    rows="2"
-                    clearable
-                    :disabled="select != `${answer.o_number}`"
-                    clear-icon="mdi-close-circle"
-                    @focusout="checkSingle(index + 1, `${answer.o_number}`)"
-                  >
-                  </v-textarea>
-                </div>
-              </v-radio-group>
-              <v-container class="mx-2" v-if="ques.q_type == 'MULTIPLE'">
-                <v-checkbox
-                  v-for="(answer, c_index) in ques.q_option"
-                  :key="c_index + 3"
-                  class="mt-0 pt-0"
-                  :label="`${answer.o_explanation}`"
-                  :value="`${answer.o_number}`"
-                  @click="checkMultiple(index + 1, `${answer.o_number}`)"
-                >
-                </v-checkbox>
-              </v-container>
-              <v-container v-if="ques.q_type == 'SHORT'">
-                <v-textarea
-                  auto-grow
-                  counter
-                  :rules="shortrules"
-                  :value="shortvalue"
-                  v-model="short[index + 1 + '번']"
-                  background-color="grey lighten-4"
-                  color="cyan"
-                  label="답변을 입력해주세요."
-                  @focusout="checkShort(index + 1)"
-                ></v-textarea>
-              </v-container>
-            </v-list-item-content>
-          </v-list-item>
-        </template>
-      </v-list>
-      <v-card-actions style="float: right;">
-        <v-btn @click="saveresult" text color="primary accent-4">
-          SUBMIT
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-app>
+                    :value="shortvalue"
+                    v-model="short[index + 1 + '번']"
+                    background-color="grey lighten-4"
+                    color="cyan"
+                    label="답변을 입력해주세요."
+                    @focusout="checkShort(index + 1)"
+                  ></v-textarea>
+                </v-container>
+              </v-list-item-content>
+            </v-list-item>
+          </template>
+        </v-list>
+        <v-card-actions style="float: right;">
+          <v-btn @click="saveresult" text color="primary accent-4">
+            SUBMIT
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-app>
+  </div>
 </template>
 
 <script>
@@ -109,6 +114,7 @@ export default {
     shortvalue: '',
     result: {},
     items: [],
+    select: '',
     isDisabled: true,
   }),
   created() {
