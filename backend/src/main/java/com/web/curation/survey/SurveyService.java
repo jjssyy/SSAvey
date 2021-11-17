@@ -29,7 +29,7 @@ public class SurveyService {
 	private TemplateDao templateDao;
 	
 	
-	public void createSurvey(Survey survey) {
+	public Survey createSurvey(Survey survey) {
 		//할당된 설문,만든 설문 분배하는 작업
 		List<String> target=survey.getTarget();
 		List<String> share=survey.getShare();
@@ -74,6 +74,7 @@ public class SurveyService {
 			tmp.setMySurvey(my_survey);
 			userDao.save(tmp);
 		}
+		return survey;
 	}
 	
 	public List<Survey> getSurvey(String state,String uid){
