@@ -60,7 +60,7 @@
             "
           >
             <vue-word-cloud
-              style="width: 50%; cursor: pointer;"
+              style="width: 100%; cursor: pointer; height: 250px"
               :words="wordsOne[index]"
               :color="color"
               font-family="Roboto"
@@ -73,9 +73,12 @@
           <div v-if="element.q_type != 'SHORT' && !isValueInQue[index]">
             <p>(객관식)설문 대상자가 응답하지 않았습니다.</p>
           </div>
-          <div v-if="element.q_type == 'SHORT' && isValueInQue[index]">
+          <div
+            class="item-one"
+            v-if="element.q_type == 'SHORT' && isValueInQue[index]"
+          >
             <vue-word-cloud
-              style="width: 50%; cursor: pointer;"
+              style="width: 100%; cursor: pointer; height: 250px"
               :words="wordsTwo[index]"
               :color="color"
               font-family="Roboto"
