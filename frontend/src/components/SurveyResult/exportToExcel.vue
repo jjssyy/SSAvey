@@ -43,7 +43,10 @@ export default {
     this.question = this.survey.question
 
     for (let index = 0; index < this.answers[0].answers.length; index++) {
-      let person = '{"name":"' + this.answers[0].answers[index].name + '",'
+      let person = ''
+      if (!this.suvey.anony)
+        person += '{"name":"' + this.answers[0].answers[index].name + '",'
+      else person += '{"name":"' + '익명' + (index + 1) + '",'
 
       this.answers.forEach(element => {
         person +=

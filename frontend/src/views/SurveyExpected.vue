@@ -8,15 +8,7 @@
 
       <v-list three-line v-if="surveys.length >= 2">
         <template v-for="(item, index) in surveys">
-          <v-subheader
-            v-if="item.header"
-            :key="index"
-            v-text="item.header"
-          ></v-subheader>
-
-          <v-divider v-else-if="item.divider" :key="index + 1"></v-divider>
-
-          <v-list-item v-else :key="index + 2">
+          <v-list-item :key="index + 2">
             <v-list-item-content>
               <v-list-item-title v-html="item.title"></v-list-item-title>
               <v-list-item-subtitle
@@ -42,11 +34,6 @@
                 }}
               </v-list-item-subtitle>
             </v-list-item-content>
-            <v-list-item-action>
-              <v-btn icon>
-                <v-icon>mdi-arrow-right</v-icon>
-              </v-btn>
-            </v-list-item-action>
           </v-list-item>
           <v-divider :key="index + 1"></v-divider>
         </template>
@@ -82,7 +69,6 @@ export default {
           console.log(res.data.Pagecount)
           this.rows = res.data.Pagecount
           this.surveys = res.data.data
-          this.surveys.push({ divider: true, inset: true })
         },
         () => {},
       )
@@ -97,7 +83,6 @@ export default {
         console.log(res.data.data)
         this.surveys = res.data.data
         this.rows = res.data.Pagecount
-        this.surveys.push({ divider: true, inset: true })
       },
       () => {},
     )

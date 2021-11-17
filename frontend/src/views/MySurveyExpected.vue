@@ -8,15 +8,7 @@
 
       <v-list three-line v-if="surveys.length >= 2">
         <template v-for="(item, index) in surveys">
-          <v-subheader
-            v-if="item.header"
-            :key="index"
-            v-text="item.header"
-          ></v-subheader>
-
-          <v-divider v-else-if="item.divider" :key="index + 1"></v-divider>
-
-          <v-list-item v-else :key="index + 2">
+          <v-list-item :key="index + 2">
             <v-list-item-content>
               <v-list-item-title v-html="item.title"></v-list-item-title>
               <v-list-item-subtitle
@@ -57,18 +49,6 @@
                 </template>
                 <v-list style="padding:0px">
                   <v-list-item>
-                    <v-list-item-title v-if="uid == item.writer"
-                      ><v-icon>mdi-pencil</v-icon> 수정하기
-                    </v-list-item-title>
-                  </v-list-item>
-                  <v-divider></v-divider>
-                  <v-list-item>
-                    <v-list-item-title
-                      ><v-icon>mdi-share-variant</v-icon> 공유
-                    </v-list-item-title>
-                  </v-list-item>
-                  <v-divider></v-divider>
-                  <v-list-item>
                     <v-list-item-title
                       ><v-icon>mdi-delete</v-icon> 삭제
                     </v-list-item-title>
@@ -77,10 +57,7 @@
               </v-menu>
             </v-list-item-action>
           </v-list-item>
-          <v-divider
-            v-if="index != surveys.length - 1"
-            :key="index"
-          ></v-divider>
+          <v-divider :key="index"></v-divider>
         </template>
       </v-list>
       <v-list v-else three-line>
@@ -114,7 +91,6 @@ export default {
           console.log(res.data.data)
           this.rows = res.data.Pagecount
           this.surveys = res.data.data
-          this.surveys.push({ divider: true, inset: true })
         },
         () => {},
       )
@@ -130,7 +106,6 @@ export default {
         this.rows = res.data.Pagecount
         this.surveys = res.data.data
         this.uid = this.$store.state.uid
-        this.surveys.push({ divider: true, inset: true })
       },
       () => {},
     )

@@ -77,9 +77,11 @@ public class AlarmService{
             Survey survey = surveyDao.findById(prefixName).get();
             survey.setState(State.PROCEEDING);
 
-            String message = "#### " + survey.getTitle() + " 설문 시작\n기간: "
-                    + survey.getStart_date().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")) + " ~ "
-                    + survey.getEnd_date().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
+            String message = "#### " + survey.getTitle() + " 설문이 시작되었습니다.\n" +
+                    survey.getExplain() +
+                    "\n기간: " +
+                    survey.getStart_date().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) + " ~ " +
+                    survey.getEnd_date().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
             mattermostAlarm(survey.getWriter(), survey.getTarget(), message);
             surveyDao.save(survey);

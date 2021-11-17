@@ -251,6 +251,7 @@ export default {
       isValueInQue: [],
       isQueOfShort: [],
       isShortQue: [],
+      idxOfShort: [],
       surveyLabelSerie: null,
       chartOptions: [],
       tempChartOption: {
@@ -312,12 +313,14 @@ export default {
         for (let i = 0; i < element.q_option.length; i++) {
           if (element.q_option[i].short_answer) {
             this.isQueOfShort.push(true)
+            this.idxOfShort.push(i)
             check = 1
             break
           }
         }
         if (check == 0) {
           this.isQueOfShort.push(false)
+          this.idxOfShort.push(-1)
         }
       })
       console.log('ㄴ', this.isQueOfShort)
@@ -345,9 +348,15 @@ export default {
         a.answers.forEach(b => {
           b.answer.forEach(c => {
             if (this.survey.question[index].q_type != 'SHORT') {
-              this.surveyLabelSerie[parseInt(a.q_number) - 1][1][
-                parseInt(c) - 1
-              ]++
+              if (!isNaN(c)) {
+                this.surveyLabelSerie[parseInt(a.q_number) - 1][1][
+                  parseInt(c) - 1
+                ]++
+              } else {
+                this.surveyLabelSerie[parseInt(a.q_number) - 1][1][
+                  this.idxOfShort[parseInt(a.q_number)]
+                ]++
+              }
             } else {
               this.surveyLabelSerie[parseInt(a.q_number) - 1][1].push(c)
             }

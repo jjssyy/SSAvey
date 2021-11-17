@@ -11,15 +11,7 @@
 
       <v-list three-line v-if="surveys.length >= 2">
         <template v-for="(item, index) in surveys">
-          <v-subheader
-            v-if="item.header"
-            :key="index"
-            v-text="item.header"
-          ></v-subheader>
-
-          <v-divider v-else-if="item.divider" :key="index + 1"></v-divider>
-
-          <v-list-item v-else :key="index + 2">
+          <v-list-item :key="index + 2">
             <v-list-item-content>
               <v-list-item-title v-html="item.title"></v-list-item-title>
               <v-list-item-subtitle
@@ -58,16 +50,10 @@
                     <v-icon>mdi-dots-vertical</v-icon>
                   </v-btn>
                 </template>
-                <v-list>
+                <v-list style="padding:0px">
                   <v-list-item>
                     <v-list-item-title @click="moveResult(item.sid)"
                       ><v-icon>mdi-text-box-search</v-icon> 결과보기
-                    </v-list-item-title>
-                  </v-list-item>
-                  <v-divider></v-divider>
-                  <v-list-item>
-                    <v-list-item-title
-                      ><v-icon>mdi-share-variant</v-icon> 공유
                     </v-list-item-title>
                   </v-list-item>
                   <v-divider></v-divider>
@@ -118,8 +104,6 @@ export default {
           console.log(res.data.data)
           this.rows = res.data.Pagecount
           this.surveys = res.data.data
-
-          this.surveys.push({ divider: true, inset: true })
         },
         () => {},
       )
@@ -134,8 +118,6 @@ export default {
         console.log(res.data.data)
         this.rows = res.data.Pagecount
         this.surveys = res.data.data
-
-        this.surveys.push({ divider: true, inset: true })
       },
       () => {},
     )

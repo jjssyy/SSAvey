@@ -3,7 +3,7 @@
     class=".
   component-2"
   >
-    <v-app>
+    <v-app class="notosanskr">
       <v-card width="1000" class="mx-auto">
         <v-toolbar color="#4E7AF5" dark>
           <v-toolbar-title>{{ items.data.title }}</v-toolbar-title>
@@ -11,10 +11,20 @@
         </v-toolbar>
         <v-list>
           <template v-for="(item, index) in items">
-            <v-subheader v-if="items.title" :key="index"
-              >{{ item.explain }} <br />시작 {{ item.start_date }} ~ 종료
-              {{ item.start_date }}</v-subheader
-            >
+            <v-subheader v-if="item.title" :key="index"
+              >{{ item.explain }} <br />기간:
+              {{
+                item.start_date.substring(0, 10) +
+                  ' ' +
+                  item.start_date.substring(11, 16)
+              }}
+              ~
+              {{
+                item.end_date.substring(0, 10) +
+                  ' ' +
+                  item.end_date.substring(11, 16)
+              }}
+            </v-subheader>
 
             <v-list-item
               v-for="(ques, index) in item.question"
@@ -52,6 +62,30 @@
                         v-model="shortData[index].show"
                       />
                     </div>
+                    ======= :label="`${answer.o_explanation}`"
+                    :value="`${answer.o_number}`" >
+                    <v-radio
+                      :label="`${answer.o_explanation}`"
+                      :value="`${answer.o_number}`"
+                      @click="
+                        checkSingle(index + 1, `${answer.o_number}`),
+                          (select = `${answer.o_number}`)
+                      "
+                    ></v-radio>
+                    <v-textarea
+                      v-if="answer.short_answer"
+                      auto-grow
+                      counter
+                      outlined
+                      :rules="shortrules"
+                      rows="2"
+                      clearable
+                      :disabled="select != `${answer.o_number}`"
+                      clear-icon="mdi-close-circle"
+                      @focusout="checkSingle(index + 1, `${answer.o_number}`)"
+                    >
+                    </v-textarea>
+                    >>>>>>> develop
                   </div>
                 </v-radio-group>
                 <v-container class="mx-2" v-if="ques.q_type == 'MULTIPLE'">
@@ -114,7 +148,7 @@
 <script>
 import SurveyApi from '@/api/SurveyApi'
 import AnswerApi from '@/api/AnswerApi'
-
+import headerInfo from '@/api/header.js'
 export default {
   data: () => ({
     shortrules: [
@@ -126,6 +160,7 @@ export default {
     shortvalue: '',
     result: {},
     items: [],
+    select: '',
     isDisabled: true,
     shortData: [],
     checkShortData: [],
@@ -224,9 +259,19 @@ export default {
                 timer: 1500,
               })
               this.isDisabled = true
-              setTimeout(() => {
-                this.$router.push({ name: 'SurveyCompleted' })
-              }, 1000)
+              headerInfo.usercount(
+                this.$store.state.uid,
+                res => {
+                  this.$store.commit('setCount', res.data.data)
+                  this.count = this.$store.state.count
+                  setTimeout(() => {
+                    this.$router.push({ name: 'SurveyCompleted' })
+                  }, 1000)
+                },
+                err => {
+                  console.log(err)
+                },
+              )
             }
           },
           err => {
@@ -325,5 +370,10 @@ export default {
 <style scoped>
 .component-2 {
   position: relative;
+}
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.notosanskr * {
+  font-family: 'Noto Sans KR', sans-serif;
 }
 </style>

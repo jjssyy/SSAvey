@@ -168,7 +168,6 @@ public class MemberController {
 
         memberService.getUserImage(uid);
 
-
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 }
