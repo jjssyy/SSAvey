@@ -1,7 +1,7 @@
 <template>
-  <v-app>
-    <v-card width="600" class="mx-auto">
-      <v-toolbar color="black" dark>
+  <v-app class="notosanskr">
+    <v-card width="600" class="mx-auto" elevation="1">
+      <v-toolbar color="#4E7AF5" dark elevation="1">
         <v-toolbar-title>진행중인 내 설문리스트</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon>
@@ -17,11 +17,7 @@
             v-text="item.header"
           ></v-subheader>
 
-          <v-divider
-            v-else-if="item.divider"
-            :key="index + 1"
-            :inset="item.inset"
-          ></v-divider>
+          <v-divider v-else-if="item.divider" :key="index + 1"></v-divider>
 
           <v-list-item v-else :key="index + 2">
             <v-list-item-content>
@@ -35,45 +31,56 @@
                 v-html="item.explain"
               ></v-list-item-subtitle>
               <v-list-item-subtitle>
-                기간: {{ item.start_date }} ~ {{ item.end_date }}
+                기간 :
+                {{
+                  item.start_date.substring(0, 10) +
+                    ' ' +
+                    item.start_date.substring(11, 16)
+                }}
+                ~
+                {{
+                  item.end_date.substring(0, 10) +
+                    ' ' +
+                    item.end_date.substring(11, 16)
+                }}
               </v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
               <v-menu bottom :offset-x="offset">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
+                    plain
                     color="primary"
-                    dark
+                    elevation="0"
                     v-bind="attrs"
                     v-on="on"
-                    @click="moveResult(item.sid)"
                   >
-                    <i class="fas fa-ellipsis-v"></i>
+                    <v-icon>mdi-dots-vertical</v-icon>
                   </v-btn>
                 </template>
                 <v-list>
                   <v-list-item>
-                    <v-list-item-title
-                      >공유
-                      <i
-                        class="fas fa-share-alt fa-sm"
-                        style="float: right;"
-                      ></i
-                    ></v-list-item-title>
+                    <v-list-item-title @click="moveResult(item.sid)"
+                      ><v-icon>mdi-text-box-search</v-icon> 결과보기
+                    </v-list-item-title>
                   </v-list-item>
                   <v-divider></v-divider>
                   <v-list-item>
                     <v-list-item-title
-                      >삭제<i
-                        class="fas fa-trash-alt fa-sm"
-                        style="float: right;"
-                      ></i
-                    ></v-list-item-title>
+                      ><v-icon>mdi-share-variant</v-icon> 공유
+                    </v-list-item-title>
+                  </v-list-item>
+                  <v-divider></v-divider>
+                  <v-list-item>
+                    <v-list-item-title
+                      ><v-icon>mdi-delete</v-icon> 삭제</v-list-item-title
+                    >
                   </v-list-item>
                 </v-list>
               </v-menu>
             </v-list-item-action>
           </v-list-item>
+          <v-divider :key="index + 1"></v-divider>
         </template>
       </v-list>
       <v-list v-else three-line>
@@ -136,4 +143,10 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.notosanskr * {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+</style>

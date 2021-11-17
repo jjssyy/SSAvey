@@ -1,12 +1,9 @@
 <template>
-  <v-app>
-    <v-card width="600" class="mx-auto">
-      <v-toolbar color="black" dark>
+  <v-app class="notosanskr">
+    <v-card width="600" class="mx-auto" elevation="1">
+      <v-toolbar color="#4E7AF5" dark elevation="1">
         <v-toolbar-title>진행완료 설문리스트</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn icon>
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
       </v-toolbar>
 
       <v-list three-line v-if="surveys.length >= 2">
@@ -17,11 +14,7 @@
             v-text="item.header"
           ></v-subheader>
 
-          <v-divider
-            v-else-if="item.divider"
-            :key="index"
-            :inset="item.inset"
-          ></v-divider>
+          <v-divider v-else-if="item.divider" :key="index + 1"></v-divider>
 
           <v-list-item v-else :key="index">
             <v-list-item-content>
@@ -35,7 +28,18 @@
                 v-html="item.explain"
               ></v-list-item-subtitle>
               <v-list-item-subtitle>
-                기간: {{ item.start_date }} ~ {{ item.end_date }}
+                기간 :
+                {{
+                  item.start_date.substring(0, 10) +
+                    ' ' +
+                    item.start_date.substring(11, 16)
+                }}
+                ~
+                {{
+                  item.end_date.substring(0, 10) +
+                    ' ' +
+                    item.end_date.substring(11, 16)
+                }}
               </v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
@@ -48,10 +52,11 @@
                     v-on="on"
                     dark
                     color="primary"
+                    elevation="0"
                   >
                     <v-icon>mdi-text-box-search</v-icon>
                   </v-btn>
-                  <v-btn v-else @click="alertinfo" color="error">
+                  <v-btn v-else @click="alertinfo" color="error" elevation="0">
                     <v-icon>mdi-alarm</v-icon>
                   </v-btn>
                 </template>
@@ -129,6 +134,7 @@
               </v-dialog>
             </v-list-item-action>
           </v-list-item>
+          <v-divider :key="index + 1"></v-divider>
         </template>
       </v-list>
       <v-list v-else three-line>
@@ -227,4 +233,10 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.notosanskr * {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+</style>
