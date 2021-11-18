@@ -125,7 +125,21 @@ export default {
         sid,
         res => {
           console.log(res)
-          this.$router.go(this.$router.currentRoute)
+          this.resetCreated()
+        },
+        () => {},
+      )
+    },
+    resetCreated() {
+      SurveyApi.getMysurvey(
+        'PROCEEDING',
+        this.$store.state.uid,
+        this.page - 1,
+        res => {
+          console.log(res.data.data)
+          this.uid = this.$store.state.uid
+          this.rows = res.data.Pagecount
+          this.surveys = res.data.data
         },
         () => {},
       )
@@ -147,18 +161,7 @@ export default {
     },
   },
   created() {
-    SurveyApi.getMysurvey(
-      'PROCEEDING',
-      this.$store.state.uid,
-      this.page - 1,
-      res => {
-        console.log(res.data.data)
-        this.uid = this.$store.state.uid
-        this.rows = res.data.Pagecount
-        this.surveys = res.data.data
-      },
-      () => {},
-    )
+    this.resetCreated()
   },
 }
 </script>
