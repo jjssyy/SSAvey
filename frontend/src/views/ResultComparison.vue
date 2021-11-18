@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="notosanskr">
     <v-container>
       <v-toolbar dark class="mb-5" color="primary">
         결과비교: {{ this.originsurvey.title }}
@@ -278,3 +278,9 @@ export default {
   },
 }
 </script>
+<style scoped>
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+.notosanskr * {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+</style>

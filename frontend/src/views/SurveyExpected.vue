@@ -6,7 +6,7 @@
         <v-spacer></v-spacer>
       </v-toolbar>
 
-      <v-list three-line v-if="surveys.length >= 2">
+      <v-list three-line v-if="surveys.length >= 1">
         <template v-for="(item, index) in surveys">
           <v-list-item :key="index + 2">
             <v-list-item-content>
