@@ -11,7 +11,11 @@
         <p class="main-explain">
           {{ survey.explain }}
         </p>
-        <button class="sub-explain" @click="gotoCompare(survey.sid)">
+        <button
+          v-if="survey.use_template"
+          class="sub-explain"
+          @click="gotoCompare(survey.sid)"
+        >
           <p>지난 설문과 비교</p>
           <span class="center">
             <i class="fas fa-angle-double-right"></i>

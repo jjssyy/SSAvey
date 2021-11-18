@@ -51,8 +51,8 @@
                         @click="checkSingle(index + 1, `${answer.o_number}`)"
                       />
                       <p>{{ answer.o_explanation }}</p>
-                      {{ checkShortData }}
-                      {{ index }}
+                      <!-- {{ checkShortData }}
+                      {{ index }} -->
                       <input
                         type="text"
                         :disabled="checkShortData[index].show"
@@ -105,8 +105,8 @@
                         @click="checkMultiple(index + 1, `${answer.o_number}`)"
                       />
                       <p>{{ answer.o_explanation }}</p>
-                      {{ checkShortData }}
-                      {{ index }}
+                      <!-- {{ checkShortData }}
+                      {{ index }} -->
                       <input
                         type="text"
                         :disabled="checkShortData[index].show"

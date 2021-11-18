@@ -52,15 +52,40 @@
                 </template>
                 <v-list style="padding:0px">
                   <v-list-item>
-                    <v-list-item-title @click="moveResult(item.sid)"
-                      ><v-icon>mdi-text-box-search</v-icon> 결과보기
+                    <v-list-item-title @click="moveResult(item.sid)">
+                      <v-icon>mdi-text-box-search</v-icon> 결과보기
                     </v-list-item-title>
                   </v-list-item>
                   <v-divider></v-divider>
                   <v-list-item>
-                    <v-list-item-title
-                      ><v-icon>mdi-delete</v-icon> 삭제</v-list-item-title
-                    >
+                    <v-list-item-title>
+                      <v-dialog v-if="item.writer == uid" width="500">
+                        <template v-slot:activator="{ on, attrs }">
+                          <div v-bind="attrs" v-on="on">
+                            <v-icon>mdi-delete</v-icon> 삭제
+                          </div>
+                        </template>
+                        <v-card width="1000" class="mx-auto">
+                          <v-toolbar color="error" dark>
+                            <v-toolbar-title
+                              >정말 삭제하시겠습니까?</v-toolbar-title
+                            >
+                            <v-spacer></v-spacer>
+                          </v-toolbar>
+                          <br />
+                          <v-card-text>
+                            정말로 삭제하시겠습니까?
+                          </v-card-text>
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="error" @click="delmysurvey(item.sid)"
+                              >삭제</v-btn
+                            >
+                          </v-card-actions>
+                        </v-card>
+                      </v-dialog>
+                      <div v-else><v-icon>mdi-delete</v-icon> 삭제</div>
+                    </v-list-item-title>
                   </v-list-item>
                 </v-list>
               </v-menu>
@@ -86,6 +111,7 @@ export default {
   data: () => ({
     offset: true,
     surveys: [],
+    uid: '',
     rows: 2,
     page: 1,
   }),
@@ -117,6 +143,7 @@ export default {
       this.page - 1,
       res => {
         console.log(res.data.data)
+        this.uid = this.$store.state.uid
         this.rows = res.data.Pagecount
         this.surveys = res.data.data
       },
