@@ -41,7 +41,7 @@ public class SurveyService {
 		}
 		//미할당된 사람중 작성자가 존재한다면 제거하는 작업
 		if(incomplete.contains(survey.getWriter())) {
-			target.remove(survey.getWriter());
+			incomplete.remove(survey.getWriter());
 			survey.setIncomplete(incomplete);
 		}
 		survey = surveyDao.save(survey);
