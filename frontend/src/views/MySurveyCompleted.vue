@@ -124,7 +124,7 @@ export default {
         sid,
         res => {
           console.log(res)
-          this.$router.go()
+          this.$router.go(this.$router.currentRoute)
         },
         () => {},
       )
