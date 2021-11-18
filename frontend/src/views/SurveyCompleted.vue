@@ -59,8 +59,6 @@
                   </v-toolbar>
                   <v-list>
                     <template>
-                      {{ myresult }} <br />
-                      {{ shortnumber }}
                       <v-subheader>
                         <strong
                           >설문제목: {{ myresult.title }}</strong
@@ -104,11 +102,9 @@
                                 :value="`${answer.o_number}`"
                               >
                               </v-radio>
-                              <input v-model="ques.answer[0]" />
                             </v-radio-group>
                           </div>
                           <div v-else>
-                            {{ shortnumber[index].show }}
                             <v-radio-group
                               v-model="shortnumber[index].show"
                               v-if="ques.q_type == 'SINGLE'"
@@ -139,7 +135,7 @@
                               disabled
                             >
                             </v-checkbox>
-                            <input disabled v-model="ques.answer[0]" />
+                            <input disabled v-model="ques.answer" />
                           </v-container>
                           <v-container v-if="ques.q_type == 'SHORT'">
                             <v-textarea

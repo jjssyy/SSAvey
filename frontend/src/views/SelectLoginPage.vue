@@ -1,6 +1,6 @@
 <template>
-  <v-app style="display: flex; justify-content: center">
-    <section class="section-container">
+  <v-app class="mx-auto">
+    <section class="my-auto section-container">
       <v-row class="signin">
         <v-col cols="12" sm="8" class="left">
           <img src="@/assets/bigLogo.png" alt="" />
