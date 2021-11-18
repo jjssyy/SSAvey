@@ -11,7 +11,11 @@
         <p class="main-explain">
           {{ survey.explain }}
         </p>
-        <button class="sub-explain" @click="gotoCompare(survey.sid)">
+        <button
+          v-if="survey.use_template"
+          class="sub-explain"
+          @click="gotoCompare(survey.sid)"
+        >
           <p>지난 설문과 비교</p>
           <span class="center">
             <i class="fas fa-angle-double-right"></i>
@@ -413,10 +417,21 @@ export default {
           // 선택항목 넣기
           this.resultOne[i][0] = this.surveyLabelSerie[index][0][i]
           // % 넣기
-          this.resultOne[i][1] = parseInt(
-            (this.surveyLabelSerie[index][1][i] / this.survey.complete.length) *
-              100,
-          )
+          if (this.survey.question[index].q_type == 'MULTIPLE') {
+            let tempSum = 0
+            this.surveyLabelSerie[index][1].forEach(element => {
+              tempSum += element
+            })
+            this.resultOne[i][1] = parseInt(
+              (this.surveyLabelSerie[index][1][i] / tempSum) * 100,
+            )
+          } else {
+            this.resultOne[i][1] = parseInt(
+              (this.surveyLabelSerie[index][1][i] /
+                this.survey.complete.length) *
+                100,
+            )
+          }
           // position과 name 합친거 push
           for (let j = 0; j < this.survey.answers.length; j++) {
             if (this.survey.answers[j].q_number == `${parseInt(index) + 1}`) {

@@ -30,59 +30,52 @@
               <v-list-item-content>
                 <v-list-item-title>
                   {{ ques.q_number }}. {{ ques.q_explanation }}
+                  <span
+                    v-if="requiredCheck[index].show"
+                    class="notice-question"
+                  >
+                    필수응답 문항
+                  </span>
                 </v-list-item-title>
                 <v-radio-group v-if="ques.q_type == 'SINGLE'" class="mx-5">
                   <div
                     v-for="(answer, r_index) in ques.q_option"
                     :key="r_index + 2"
                   >
-                    <div v-if="!answer.short_answer">
-                      <input
-                        type="radio"
-                        name="SINGLE"
-                        @click="checkSingle(index + 1, `${answer.o_number}`)"
-                      />
-                      <p>{{ answer.o_explanation }}</p>
+                    <div v-if="!answer.short_answer" class="item-select">
+                      <div class="input-center">
+                        <input
+                          type="radio"
+                          name="SINGLE"
+                          @click="checkSingle(index + 1, `${answer.o_number}`)"
+                        />
+                      </div>
+                      <p class="center">{{ answer.o_explanation }}</p>
                     </div>
-                    <div v-if="answer.short_answer">
-                      <input
-                        type="radio"
-                        name="SINGLE"
-                        @click="checkSingle(index + 1, `${answer.o_number}`)"
-                      />
-                      <p>{{ answer.o_explanation }}</p>
-                      {{ checkShortData }}
-                      {{ index }}
-                      <input
+                    <div v-if="answer.short_answer" class="item-select">
+                      <div class="input-center">
+                        <input
+                          type="radio"
+                          name="SINGLE"
+                          @click="checkSingle(index + 1, `${answer.o_number}`)"
+                        />
+                      </div>
+                      <p class="center">
+                        {{ answer.o_explanation }}
+                      </p>
+                    </div>
+                    <div v-if="answer.short_answer" class="item-select">
+                      <textarea
+                        :ref="index"
+                        cols="30"
+                        rows="5"
+                        class="short-text"
+                        :class="{ selectText: !checkShortData[index].show }"
                         type="text"
                         :disabled="checkShortData[index].show"
                         v-model="shortData[index].show"
-                      />
+                      ></textarea>
                     </div>
-                    <!-- ======= :label="`${answer.o_explanation}`"
-                    :value="`${answer.o_number}`" > -->
-                    <!-- <v-radio
-                      :label="`${answer.o_explanation}`"
-                      :value="`${answer.o_number}`"
-                      @click="
-                        checkSingle(index + 1, `${answer.o_number}`),
-                          (select = `${answer.o_number}`)
-                      "
-                    ></v-radio> -->
-                    <!-- <v-textarea
-                      v-if="answer.short_answer"
-                      auto-grow
-                      counter
-                      outlined
-                      :rules="shortrules"
-                      rows="2"
-                      clearable
-                      :disabled="select != `${answer.o_number}`"
-                      clear-icon="mdi-close-circle"
-                      @focusout="checkSingle(index + 1, `${answer.o_number}`)"
-                    >
-                    </v-textarea>
-                    >>>>>>> develop -->
                   </div>
                 </v-radio-group>
                 <v-container class="mx-2" v-if="ques.q_type == 'MULTIPLE'">
@@ -90,28 +83,41 @@
                     v-for="(answer, c_index) in ques.q_option"
                     :key="c_index + 2"
                   >
-                    <div v-if="!answer.short_answer">
-                      <input
-                        type="checkbox"
-                        name="MULTIPLE"
-                        @click="checkMultiple(index + 1, `${answer.o_number}`)"
-                      />
-                      <p>{{ answer.o_explanation }}</p>
+                    <div v-if="!answer.short_answer" class="item-select">
+                      <div class="input-center">
+                        <input
+                          type="checkbox"
+                          name="MULTIPLE"
+                          @click="
+                            checkMultiple(index + 1, `${answer.o_number}`)
+                          "
+                        />
+                      </div>
+                      <p class="center">{{ answer.o_explanation }}</p>
                     </div>
-                    <div v-if="answer.short_answer">
-                      <input
-                        type="checkbox"
-                        name="MULTIPLE"
-                        @click="checkMultiple(index + 1, `${answer.o_number}`)"
-                      />
-                      <p>{{ answer.o_explanation }}</p>
-                      {{ checkShortData }}
-                      {{ index }}
-                      <input
+                    <div v-if="answer.short_answer" class="item-select">
+                      <div class="input-center">
+                        <input
+                          type="checkbox"
+                          name="MULTIPLE"
+                          @click="
+                            checkMultiple(index + 1, `${answer.o_number}`)
+                          "
+                        />
+                      </div>
+                      <p class="center">{{ answer.o_explanation }}</p>
+                    </div>
+                    <div v-if="answer.short_answer" class="item-select">
+                      <textarea
+                        :ref="index"
+                        cols="30"
+                        rows="5"
+                        class="short-text"
+                        :class="{ selectText: !checkShortData[index].show }"
                         type="text"
                         :disabled="checkShortData[index].show"
                         v-model="shortData[index].show"
-                      />
+                      ></textarea>
                     </div>
                   </div>
                 </v-container>
@@ -133,7 +139,12 @@
           </template>
         </v-list>
         <v-card-actions style="float: right;">
-          <v-btn @click="saveresult" text color="primary accent-4">
+          <v-btn
+            @click="saveresult"
+            text
+            color="primary accent-4"
+            :disabled="isDisabled"
+          >
             SUBMIT
           </v-btn>
         </v-card-actions>
@@ -158,10 +169,11 @@ export default {
     result: {},
     items: [],
     select: '',
-    isDisabled: true,
+    isDisabled: false,
     shortData: [],
     checkShortData: [],
     findShortIndex: [],
+    requiredCheck: [],
   }),
   created() {
     console.log(this.$route.params.sid)
@@ -173,6 +185,16 @@ export default {
         console.log('hi')
         console.log(this.result)
         this.initInput()
+        for (let i = 0; i < this.result.question.length; i++) {
+          this.requiredCheck.push({ show: null })
+        }
+        this.result.question.forEach((element, index) => {
+          if (element.required) {
+            this.requiredCheck[index].show = true
+          } else {
+            this.requiredCheck[index].show = false
+          }
+        })
       },
       err => {
         console.log(err)
@@ -213,8 +235,9 @@ export default {
       console.log(this.findShortIndex)
     },
     saveresult() {
+      this.isDisabled = true
       if (this.isDisabled) {
-        this.isDisabled = false
+        // this.isDisabled = false
         console.log(this.result)
         // 기타 포함된 question 조작들어감
         // question만큼 반복문 돌아
@@ -314,6 +337,7 @@ export default {
         this.result.question[index - 1].answer.push(key)
       }
       console.log(this.result)
+      console.log('여기', this.result)
     },
     checkSingle(index, key) {
       console.log('sing', index, key) // index는 문항번호, key는 선택지번호
@@ -328,6 +352,8 @@ export default {
           if (this.checkShortData[index - 1].show) {
             console.log('ㅎ4')
             this.checkShortData[index - 1].show = false
+            console.log(this.$refs[index - 1])
+            // this.$refs[index - 1][0].click()
             console.log(this.checkShortData.show)
           }
         } else {
@@ -350,6 +376,7 @@ export default {
         this.result.question[index - 1].answer.push(key)
       }
       console.log(this.result)
+      console.log('여기', this.result)
     },
     checkShort(index) {
       if (this.result.question[index - 1].hasOwnProperty('answer')) {
@@ -359,18 +386,9 @@ export default {
         this.result.question[index - 1].answer = []
         this.result.question[index - 1].answer.push(this.short[`${index}번`])
       }
-      console.log(this.result)
+      console.log(this.result.question)
     },
   },
 }
 </script>
-<style scoped>
-.component-2 {
-  position: relative;
-}
-@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
-
-.notosanskr * {
-  font-family: 'Noto Sans KR', sans-serif;
-}
-</style>
+<style scoped src="./../css/survey/survey/survey-answer.css"></style>
