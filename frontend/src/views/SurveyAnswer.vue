@@ -49,7 +49,7 @@
                       <div class="input-center">
                         <input
                           type="radio"
-                          name="SINGLE"
+                          :name="`SINGLE${index}`"
                           @click="checkSingle(index + 1, `${answer.o_number}`)"
                         />
                       </div>
@@ -59,7 +59,7 @@
                       <div class="input-center">
                         <input
                           type="radio"
-                          name="SINGLE"
+                          :name="`SINGLE${index}`"
                           @click="checkSingle(index + 1, `${answer.o_number}`)"
                         />
                       </div>
@@ -90,7 +90,7 @@
                       <div class="input-center">
                         <input
                           type="checkbox"
-                          name="MULTIPLE"
+                          :name="`MULTIPLE${index}`"
                           @click="
                             checkMultiple(index + 1, `${answer.o_number}`)
                           "
@@ -102,7 +102,7 @@
                       <div class="input-center">
                         <input
                           type="checkbox"
-                          name="MULTIPLE"
+                          :name="`MULTIPLE${index}`"
                           @click="
                             checkMultiple(index + 1, `${answer.o_number}`)
                           "
