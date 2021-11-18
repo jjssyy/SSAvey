@@ -5,6 +5,8 @@ function singleMake(question) {
     `<div id="SINGLE" class="dragthing-drop"><p class="q-type">객관식(단일선택)</p><div class="question"><textarea class="question-title" type="text"placeholder="질문제목을 입력해주세요."` +
     ` >${question['q_explanation']}</textarea>`
   result += `<button class="question-garbage"><i class="fas fa-trash-alt"></i></button><div class="q-option">`
+
+  let useShortAnswer = false
   question.q_option.forEach(function(element, index) {
     console.log(index, element)
     if (index == 0) {
@@ -16,6 +18,7 @@ function singleMake(question) {
       if (element['short_answer']) {
         result += `<div class="q-option-item"><div class="q-option-item-center"><input type="radio" name="SINGLE" value="${index +
           1}" /></div><input type="text" placeholder="기타" disabled="true"/><i class="fas fa-times"></i></div>`
+        useShortAnswer = true
       } else {
         result += `<div class="q-option-item"><div class="q-option-item-center"><input type="radio" name="SINGLE" value="${index +
           1}" /></div><input type="text" placeholder="선택" value="${
@@ -24,7 +27,11 @@ function singleMake(question) {
       }
     }
   })
-  result += `<div class="question-control"><p class="q-option-item-c1">'선택'</p><p>또는</p><p class="q-option-item-c2">'기타' 추가</p></div></div><div class="is-required"><p class="is-required-text">필수 응답</p><label class="toggle-control"><input type="checkbox" checked="checked" /><span class="control"></span></label></div>`
+  result += `<div class="question-control"><p class="q-option-item-c1">'선택'</p>`
+  if (!useShortAnswer) {
+    result += `<p>또는</p><p class="q-option-item-c2">'기타'</p>`
+  }
+  result += `<p>&nbsp;추가</p></div></div><div class="is-required"><p class="is-required-text">필수 응답</p><label class="toggle-control"><input type="checkbox" checked="checked" /><span class="control"></span></label></div>`
   result += `</div></div>`
   return result
 }
@@ -34,6 +41,8 @@ function multipleMake(question) {
     `<div id="MULTIPLE" class="dragthing-drop"><p class="q-type">객관식(복수선택)</p><div class="question"><textarea class="question-title" type="text"placeholder="질문제목을 입력해주세요."` +
     ` >${question['q_explanation']}</textarea>`
   result += `<button class="question-garbage"><i class="fas fa-trash-alt"></i></button><div class="q-option">`
+
+  let useShortAnswer = false
   question.q_option.forEach(function(element, index) {
     if (index == 0) {
       result += `<div class="q-option-item"><div class="q-option-item-center"><input type="checkbox" name="MULTIPLE" value="${index +
@@ -44,6 +53,7 @@ function multipleMake(question) {
       if (element['short_answer']) {
         result += `<div class="q-option-item"><div class="q-option-item-center"><input type="checkbox" name="MULTIPLE" value="${index +
           1}" /></div><input type="text" placeholder="기타" disabled="true"/><i class="fas fa-times"></i></div>`
+        useShortAnswer = true
       } else {
         result += `<div class="q-option-item"><div class="q-option-item-center"><input type="checkbox" name="MULTIPLE" value="${index +
           1}" /></div><input type="text" placeholder="선택" value="${
@@ -52,7 +62,11 @@ function multipleMake(question) {
       }
     }
   })
-  result += `<div class="question-control"><p class="q-option-item-c1">'선택'</p><p>또는</p><p class="q-option-item-c2">'기타' 추가</p></div></div><div class="is-required"><p class="is-required-text">필수 응답</p><label class="toggle-control"><input type="checkbox" checked="checked" /><span class="control"></span></label></div>`
+  result += `<div class="question-control"><p class="q-option-item-c1">'선택'</p>`
+  if (!useShortAnswer) {
+    result += `<p>또는</p><p class="q-option-item-c2">'기타'</p>`
+  }
+  result += `<p>&nbsp;추가</p></div></div><div class="is-required"><p class="is-required-text">필수 응답</p><label class="toggle-control"><input type="checkbox" checked="checked" /><span class="control"></span></label></div>`
   result += `</div></div>`
   return result
 }

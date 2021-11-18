@@ -44,7 +44,7 @@ export default {
 
     for (let index = 0; index < this.answers[0].answers.length; index++) {
       let person = ''
-      if (!this.suvey.anony)
+      if (!this.survey.anony)
         person += '{"name":"' + this.answers[0].answers[index].name + '",'
       else person += '{"name":"' + '익명' + (index + 1) + '",'
 
@@ -67,4 +67,20 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.sub-title {
+  width: 25%;
+  display: flex;
+  justify-content: end;
+}
+button {
+  display: flex;
+  color: #737272;
+}
+p {
+  margin-right: 0.5rem;
+}
+button:hover {
+  color: #688ae6;
+}
+</style>

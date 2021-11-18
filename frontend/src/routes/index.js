@@ -19,6 +19,8 @@ import Testcomponent from '@/components/SurveyResult/MySurveyAnswer.vue'
 import ResultComparison from '@/views/ResultComparison.vue'
 import SurveyResult from '@/views/SurveyResultPage.vue'
 import Test from '@/views/Test.vue'
+import PageNotFound from '@/views/PageNotFound.vue'
+
 Vue.use(VueRouter)
 
 export default new VueRouter({
@@ -137,6 +139,15 @@ export default new VueRouter({
       name: 'SurveyResult',
       component: SurveyResult,
       meta: { auth: true },
+    },
+    {
+      path: '*',
+      redirect: '/404',
+    },
+    {
+      path: '/404',
+      name: 'PageNotFound',
+      component: PageNotFound,
     },
   ],
 })

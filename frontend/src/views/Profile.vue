@@ -3,13 +3,6 @@
     <v-card class="mx-auto mt-5" color="#3396f4" dark width="600">
       <v-card-title>
         <v-list-item class="grow">
-          <v-list-item-avatar color="grey darken-3">
-            <v-img
-              class="elevation-6"
-              alt=""
-              src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-            ></v-img>
-          </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>
               <h2>{{ user.name }} 님</h2>

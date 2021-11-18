@@ -1,9 +1,16 @@
 <template>
+<<<<<<< HEAD
   <div class=".component-2">
+=======
+  <div
+    class=".
+  component-2"
+  >
+>>>>>>> 2c83e566591c59ff7f11d3be96cb83503b931357
     <v-app class="notosanskr">
       <v-card width="1000" class="mx-auto">
         <v-toolbar color="#4E7AF5" dark>
-          <v-toolbar-title>{{ this.items.data.title }}</v-toolbar-title>
+          <v-toolbar-title>{{ items.data.title }}</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
         <v-list>
@@ -35,18 +42,41 @@
                   <div
                     v-for="(answer, r_index) in ques.q_option"
                     :key="r_index + 2"
-                    :label="`${answer.o_explanation}`"
-                    :value="`${answer.o_number}`"
                   >
-                    <v-radio
+                    <div v-if="!answer.short_answer">
+                      <input
+                        type="radio"
+                        name="SINGLE"
+                        @click="checkSingle(index + 1, `${answer.o_number}`)"
+                      />
+                      <p>{{ answer.o_explanation }}</p>
+                    </div>
+                    <div v-if="answer.short_answer">
+                      <input
+                        type="radio"
+                        name="SINGLE"
+                        @click="checkSingle(index + 1, `${answer.o_number}`)"
+                      />
+                      <p>{{ answer.o_explanation }}</p>
+                      {{ checkShortData }}
+                      {{ index }}
+                      <input
+                        type="text"
+                        :disabled="checkShortData[index].show"
+                        v-model="shortData[index].show"
+                      />
+                    </div>
+                    <!-- ======= :label="`${answer.o_explanation}`"
+                    :value="`${answer.o_number}`" > -->
+                    <!-- <v-radio
                       :label="`${answer.o_explanation}`"
                       :value="`${answer.o_number}`"
                       @click="
                         checkSingle(index + 1, `${answer.o_number}`),
                           (select = `${answer.o_number}`)
                       "
-                    ></v-radio>
-                    <v-textarea
+                    ></v-radio> -->
+                    <!-- <v-textarea
                       v-if="answer.short_answer"
                       auto-grow
                       counter
@@ -59,18 +89,38 @@
                       @focusout="checkSingle(index + 1, `${answer.o_number}`)"
                     >
                     </v-textarea>
+                    >>>>>>> develop -->
                   </div>
                 </v-radio-group>
                 <v-container class="mx-2" v-if="ques.q_type == 'MULTIPLE'">
-                  <v-checkbox
+                  <div
                     v-for="(answer, c_index) in ques.q_option"
-                    :key="c_index + 3"
-                    class="mt-0 pt-0"
-                    :label="`${answer.o_explanation}`"
-                    :value="`${answer.o_number}`"
-                    @click="checkMultiple(index + 1, `${answer.o_number}`)"
+                    :key="c_index + 2"
                   >
-                  </v-checkbox>
+                    <div v-if="!answer.short_answer">
+                      <input
+                        type="checkbox"
+                        name="MULTIPLE"
+                        @click="checkMultiple(index + 1, `${answer.o_number}`)"
+                      />
+                      <p>{{ answer.o_explanation }}</p>
+                    </div>
+                    <div v-if="answer.short_answer">
+                      <input
+                        type="checkbox"
+                        name="MULTIPLE"
+                        @click="checkMultiple(index + 1, `${answer.o_number}`)"
+                      />
+                      <p>{{ answer.o_explanation }}</p>
+                      {{ checkShortData }}
+                      {{ index }}
+                      <input
+                        type="text"
+                        :disabled="checkShortData[index].show"
+                        v-model="shortData[index].show"
+                      />
+                    </div>
+                  </div>
                 </v-container>
                 <v-container v-if="ques.q_type == 'SHORT'">
                   <v-textarea
@@ -102,7 +152,7 @@
 <script>
 import SurveyApi from '@/api/SurveyApi'
 import AnswerApi from '@/api/AnswerApi'
-
+import headerInfo from '@/api/header.js'
 export default {
   data: () => ({
     shortrules: [
@@ -116,15 +166,20 @@ export default {
     items: [],
     select: '',
     isDisabled: true,
+    shortData: [],
+    checkShortData: [],
+    findShortIndex: [],
   }),
   created() {
     console.log(this.$route.params.sid)
     SurveyApi.getSurvey(
       this.$route.params.sid,
       res => {
-        console.log(res)
         this.items = res.data
         this.result = res.data.data
+        console.log('hi')
+        console.log(this.result)
+        this.initInput()
       },
       err => {
         console.log(err)
@@ -132,14 +187,63 @@ export default {
     )
   },
   computed: {
-    resultCompute() {
-      return this.result
+    returnShortData() {
+      return this.checkShortData
     },
   },
   methods: {
+    initInput() {
+      // 기타의 입력값이 들어온다.
+      for (let i = 0; i < this.result.question.length; i++) {
+        this.shortData.push({ show: '' })
+      }
+      // 기타의 disabled true, false 여부를 저장한다.(기타가 1개 있다고 가정)
+      for (let i = 0; i < this.result.question.length; i++) {
+        this.checkShortData.push({ show: true })
+      }
+      this.findShortIndex = Array.from(
+        { length: this.result.question.length },
+        () => -1,
+      )
+      // 기타의 q_option의 몇번째 index에 위치한지 검사한다. 없으면 -1
+      this.result.question.forEach((element, index) => {
+        if (element.q_type != 'SHORT') {
+          element.q_option.forEach((element2, index2) => {
+            if (element2.short_answer) {
+              this.findShortIndex[index] = index2
+            }
+          })
+        }
+      })
+      console.log(this.shortData)
+      console.log(this.checkShortData)
+      console.log(this.findShortIndex)
+    },
     saveresult() {
       if (this.isDisabled) {
         this.isDisabled = false
+        console.log(this.result)
+        // 기타 포함된 question 조작들어감
+        // question만큼 반복문 돌아
+        for (let i = 0; i < this.result.question.length; i++) {
+          // 그 question이 기타가 있냐?
+          if (this.findShortIndex[i] != -1) {
+            // 있으면 그 question 기타 index가 answer에 있는지 찾아
+            if (
+              this.result.question[i].answer.includes(
+                String(this.findShortIndex[i] + 1),
+              )
+            ) {
+              // 기타가 있네? 그러면 해당 index에 this.shortData[i] 에 있는거 넣어
+              this.result.question[i].answer[
+                this.result.question[i].answer.indexOf(
+                  String(this.findShortIndex[i] + 1),
+                )
+              ] = this.shortData[i].show
+            }
+          }
+        }
+        console.log('최종!')
         console.log(this.result)
         this.result.answer_question = this.result.question
         let tmp = {
@@ -159,9 +263,19 @@ export default {
                 timer: 1500,
               })
               this.isDisabled = true
-              setTimeout(() => {
-                this.$router.push({ name: 'SurveyCompleted' })
-              }, 1000)
+              headerInfo.usercount(
+                this.$store.state.uid,
+                res => {
+                  this.$store.commit('setCount', res.data.data)
+                  this.count = this.$store.state.count
+                  setTimeout(() => {
+                    this.$router.push({ name: 'SurveyCompleted' })
+                  }, 1000)
+                },
+                err => {
+                  console.log(err)
+                },
+              )
             }
           },
           err => {
@@ -171,6 +285,28 @@ export default {
       }
     },
     checkMultiple(index, key) {
+      console.log('mult', index, key) // index는 문항번호, key는 선택지번호
+      // 해당 문항이 기타가 있냐?
+      console.log(this.findShortIndex[index - 1])
+      if (this.findShortIndex[index - 1] != -1) {
+        console.log('ㅎ2')
+        // key는 기타의 선택지 번호와 같냐?
+        if (parseInt(key) - 1 == this.findShortIndex[index - 1]) {
+          console.log('ㅎ3')
+          // 지금 해당 문항의 input 비활성화되어있냐?
+          if (this.checkShortData[index - 1].show) {
+            console.log('ㅎ4')
+            this.checkShortData[index - 1].show = false
+            console.log(this.checkShortData.show)
+          } else {
+            // 비활성화 시켜주기
+            console.log('ㅎ5')
+            this.checkShortData[index - 1].show = true
+            // 데이터 날리기
+            this.shortData[index - 1].show = ''
+          }
+        }
+      }
       if (this.result.question[index - 1].hasOwnProperty('answer')) {
         if (this.result.question[index - 1].answer.includes(key)) {
           this.result.question[index - 1].answer.splice(
@@ -187,6 +323,28 @@ export default {
       console.log(this.result)
     },
     checkSingle(index, key) {
+      console.log('sing', index, key) // index는 문항번호, key는 선택지번호
+      // 해당 문항이 기타가 있냐?
+      console.log(this.findShortIndex[index - 1])
+      if (this.findShortIndex[index - 1] != -1) {
+        console.log('ㅎ2')
+        // key는 기타의 선택지 번호와 같냐?
+        if (parseInt(key) - 1 == this.findShortIndex[index - 1]) {
+          console.log('ㅎ3')
+          // 지금 해당 문항의 input 비활성화되어있냐?
+          if (this.checkShortData[index - 1].show) {
+            console.log('ㅎ4')
+            this.checkShortData[index - 1].show = false
+            console.log(this.checkShortData.show)
+          }
+        } else {
+          // 비활성화 시켜주기
+          console.log('ㅎ5')
+          this.checkShortData[index - 1].show = true
+          // 데이터 날리기
+          this.shortData[index - 1].show = ''
+        }
+      }
       if (this.result.question[index - 1].hasOwnProperty('answer')) {
         if (this.result.question[index - 1].answer.length != 0) {
           this.result.question[index - 1].answer.pop()

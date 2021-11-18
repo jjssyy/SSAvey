@@ -50,16 +50,10 @@
                     <v-icon>mdi-dots-vertical</v-icon>
                   </v-btn>
                 </template>
-                <v-list>
+                <v-list style="padding:0px">
                   <v-list-item>
                     <v-list-item-title @click="moveResult(item.sid)"
                       ><v-icon>mdi-text-box-search</v-icon> 결과보기
-                    </v-list-item-title>
-                  </v-list-item>
-                  <v-divider></v-divider>
-                  <v-list-item>
-                    <v-list-item-title
-                      ><v-icon>mdi-share-variant</v-icon> 공유
                     </v-list-item-title>
                   </v-list-item>
                   <v-divider></v-divider>

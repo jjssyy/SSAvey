@@ -80,18 +80,6 @@
                 </template>
                 <v-list style="padding:0px">
                   <v-list-item>
-                    <v-list-item-title v-if="uid == item.writer"
-                      ><v-icon>mdi-pencil</v-icon> 수정하기
-                    </v-list-item-title>
-                  </v-list-item>
-                  <v-divider></v-divider>
-                  <v-list-item>
-                    <v-list-item-title
-                      ><v-icon>mdi-share-variant</v-icon> 공유
-                    </v-list-item-title>
-                  </v-list-item>
-                  <v-divider></v-divider>
-                  <v-list-item>
                     <v-list-item-title
                       ><v-icon>mdi-delete</v-icon> 삭제
                     </v-list-item-title>
