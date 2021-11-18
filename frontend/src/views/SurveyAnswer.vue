@@ -1,12 +1,5 @@
 <template>
-<<<<<<< HEAD
   <div class=".component-2">
-=======
-  <div
-    class=".
-  component-2"
-  >
->>>>>>> 2c83e566591c59ff7f11d3be96cb83503b931357
     <v-app class="notosanskr">
       <v-card width="1000" class="mx-auto">
         <v-toolbar color="#4E7AF5" dark>
