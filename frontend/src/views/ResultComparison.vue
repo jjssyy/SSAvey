@@ -55,17 +55,16 @@
         v-for="(item, index) in originsurvey.question"
         :key="index"
       >
-        <h2>{{ item.q_number }}. {{ item.q_explanation }}</h2>
-        <div v-if="item.q_type != 'SHORT'" id="chart" :key="index">
-          <apexchart
-            type="bar"
-            height="430"
-            :options="chartDatas[index].chartOptions"
-            :series="chartDatas[index].series"
-          ></apexchart>
-        </div>
-        <div v-else id="chart" :key="index">
-          <p>주관식 워드클라우드</p>
+        <div v-if="item.q_type != 'SHORT'">
+          <h2>{{ item.q_number }}. {{ item.q_explanation }}</h2>
+          <div v-if="item.q_type != 'SHORT'" id="chart" :key="index">
+            <apexchart
+              type="bar"
+              height="430"
+              :options="chartDatas[index].chartOptions"
+              :series="chartDatas[index].series"
+            ></apexchart>
+          </div>
         </div>
       </div>
     </div>

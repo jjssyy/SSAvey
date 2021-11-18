@@ -59,6 +59,8 @@
                   </v-toolbar>
                   <v-list>
                     <template>
+                      {{ myresult }} <br />
+                      {{ shortnumber }}
                       <v-subheader>
                         <strong
                           >설문제목: {{ myresult.title }}</strong
@@ -88,20 +90,41 @@
                           <v-list-item-title>
                             {{ ques.q_number }}. {{ ques.q_explanation }}
                           </v-list-item-title>
-                          <v-radio-group
-                            v-model="ques.answer[0]"
-                            v-if="ques.q_type == 'SINGLE'"
-                            class="mx-5"
-                            disabled
-                          >
-                            <v-radio
-                              v-for="(answer, r_index) in ques.q_option"
-                              :key="r_index + 2"
-                              :label="`${answer.o_explanation}`"
-                              :value="`${answer.o_number}`"
+                          <div v-if="ques.answer[0].length == 1">
+                            <v-radio-group
+                              v-model="ques.answer[0]"
+                              v-if="ques.q_type == 'SINGLE'"
+                              class="mx-5"
+                              disabled
                             >
-                            </v-radio>
-                          </v-radio-group>
+                              <v-radio
+                                v-for="(answer, r_index) in ques.q_option"
+                                :key="r_index + 2"
+                                :label="`${answer.o_explanation}`"
+                                :value="`${answer.o_number}`"
+                              >
+                              </v-radio>
+                              <input v-model="ques.answer[0]" />
+                            </v-radio-group>
+                          </div>
+                          <div v-else>
+                            {{ shortnumber[index].show }}
+                            <v-radio-group
+                              v-model="shortnumber[index].show"
+                              v-if="ques.q_type == 'SINGLE'"
+                              class="mx-5"
+                              disabled
+                            >
+                              <v-radio
+                                v-for="(answer, r_index) in ques.q_option"
+                                :key="r_index + 2"
+                                :label="`${answer.o_explanation}`"
+                                :value="`${answer.o_number}`"
+                              >
+                              </v-radio>
+                              <input v-model="ques.answer[0]" />
+                            </v-radio-group>
+                          </div>
                           <v-container
                             class="mx-2"
                             v-if="ques.q_type == 'MULTIPLE'"
@@ -116,6 +139,7 @@
                               disabled
                             >
                             </v-checkbox>
+                            <input disabled v-model="ques.answer[0]" />
                           </v-container>
                           <v-container v-if="ques.q_type == 'SHORT'">
                             <v-textarea
@@ -162,6 +186,7 @@ export default {
     rows: 2,
     page: 1,
     answer_surveys: [],
+    shortnumber: [],
   }),
   methods: {
     alertinfo() {
@@ -183,6 +208,30 @@ export default {
         temp,
         res => {
           this.myresult = res.data.data
+
+          for (let i = 0; i < res.data.data.answer_question.length; i++) {
+            let bool = false
+            let snum = 0
+
+            for (
+              let j = 0;
+              j < res.data.data.answer_question[i].q_option.length;
+              j++
+            ) {
+              if (
+                res.data.data.answer_question[i].q_option[j].o_explanation ==
+                '기타'
+              ) {
+                bool = true
+                snum = j + 1
+              }
+            }
+            if (bool) {
+              this.shortnumber.push({ show: snum })
+            } else {
+              this.shortnumber.push({ show: -1 })
+            }
+          }
         },
         err => {
           console.log(err)
