@@ -444,12 +444,23 @@ export default {
                   this.resultOne[i][2].push(
                     `${this.survey.answers[j].answers[k].position} ${this.survey.answers[j].answers[k].name}`,
                   )
-                } else if (this.surveyLabelSerie[i][0][j] == '기타') {
+                } else if (this.surveyLabelSerie[index][0][i] == '기타') {
                   // 이 i+1선택지가 기타니? label에서 조사하자
-                  console.log('흠')
-                  this.resultOne[i][2].push(
-                    `${this.survey.answers[j].answers[k].position} ${this.survey.answers[j].answers[k].name}`,
-                  )
+                  for (
+                    let h = 0;
+                    h < this.survey.answers[j].answers[k].answer.length;
+                    h++
+                  ) {
+                    if (
+                      this.survey.answers[j].answers[k].answer[h].length > 1
+                    ) {
+                      console.log('흠')
+                      console.log('이거', i, j, k)
+                      this.resultOne[i][2].push(
+                        `${this.survey.answers[j].answers[k].position} ${this.survey.answers[j].answers[k].name}`,
+                      )
+                    }
+                  }
                 }
               }
               break
