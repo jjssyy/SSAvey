@@ -503,23 +503,45 @@ export default {
       this.survey.anony = !this.survey.anony
     },
     createSurvey() {
+      // this.survey.template에 tid 넣기
+      let temp3 = this.survey.template
+      // use_template에 true 넣기
       let temp1 = this.survey.title
       let temp2 = this.survey.explain
-      this.survey = {
-        title: temp1,
-        explain: temp2,
-        anony: false, // 익명설문인지
-        start_date: null, // surveyset 페이지에서 작성
-        end_date: null, // surveyset 페이지에서 작성
-        question: [],
-        state: 'EXPECTED', // surveyset 페이지에서 보낼 때 결정
-        share: [], // surveyset에서
-        target: [], // surveyset에서
-        complete: [], //빈 배열로
-        incomplete: [], // surveyset에서 target과 동일한 값으로
-        use_template: null,
-        template: null,
-        writer: this.$store.state.uid,
+      if (!this.survey.use_template) {
+        this.survey = {
+          title: temp1,
+          explain: temp2,
+          anony: false, // 익명설문인지
+          start_date: null, // surveyset 페이지에서 작성
+          end_date: null, // surveyset 페이지에서 작성
+          question: [],
+          state: 'EXPECTED', // surveyset 페이지에서 보낼 때 결정
+          share: [], // surveyset에서
+          target: [], // surveyset에서
+          complete: [], //빈 배열로
+          incomplete: [], // surveyset에서 target과 동일한 값으로
+          use_template: null,
+          template: null,
+          writer: this.$store.state.uid,
+        }
+      } else {
+        this.survey = {
+          title: temp1,
+          explain: temp2,
+          anony: false, // 익명설문인지
+          start_date: null, // surveyset 페이지에서 작성
+          end_date: null, // surveyset 페이지에서 작성
+          question: [],
+          state: 'EXPECTED', // surveyset 페이지에서 보낼 때 결정
+          share: [], // surveyset에서
+          target: [], // surveyset에서
+          complete: [], //빈 배열로
+          incomplete: [], // surveyset에서 target과 동일한 값으로
+          use_template: true,
+          template: temp3,
+          writer: this.$store.state.uid,
+        }
       }
       // if (!this.surveyOrTemplate) {
       //   this.$swal({
