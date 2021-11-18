@@ -503,14 +503,34 @@ export default {
       this.survey.anony = !this.survey.anony
     },
     createSurvey() {
-      if (
-        !this.surveyOrTemplate ||
-        !this.survey.title ||
-        !this.survey.explain
-      ) {
-        console.log('hi')
+      if (!this.surveyOrTemplate) {
+        this.$swal({
+          title: '설문지 와 탬플릿 중 선택하여주세요.',
+          icon: 'warning',
+          showCancelButton: false,
+          timer: 1500,
+        })
         return
       }
+      if (!this.survey.title) {
+        this.$swal({
+          title: '설문지 제목을 입력하여주세요.',
+          icon: 'warning',
+          showCancelButton: false,
+          timer: 1500,
+        })
+        return
+      }
+      if (!this.survey.explain) {
+        this.$swal({
+          title: '설문지 설명을 입력하여주세요.',
+          icon: 'warning',
+          showCancelButton: false,
+          timer: 1500,
+        })
+        return
+      }
+
       console.log(this.surveyOrTemplate)
       document
         .querySelector('.drop-parent')
@@ -640,6 +660,7 @@ export default {
             this.surveyOrTemplate = null
             this.survey.title = null
             this.survey.explain = null
+            this.createTemplate()
           },
           err => {
             console.log(err)
