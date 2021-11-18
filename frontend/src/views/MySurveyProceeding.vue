@@ -120,6 +120,16 @@ export default {
       console.log(sid)
       this.$router.push(`/survey-result/${sid}`)
     },
+    delmysurvey(sid) {
+      SurveyApi.deleteSurvey(
+        sid,
+        res => {
+          console.log(res)
+          this.$router.go()
+        },
+        () => {},
+      )
+    },
   },
   watch: {
     page() {
