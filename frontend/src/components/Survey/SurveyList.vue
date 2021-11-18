@@ -503,33 +503,51 @@ export default {
       this.survey.anony = !this.survey.anony
     },
     createSurvey() {
-      if (!this.surveyOrTemplate) {
-        this.$swal({
-          title: '설문지 와 탬플릿 중 선택하여주세요.',
-          icon: 'warning',
-          showCancelButton: false,
-          timer: 1500,
-        })
-        return
+      let temp1 = this.survey.title
+      let temp2 = this.survey.explain
+      this.survey = {
+        title: temp1,
+        explain: temp2,
+        anony: false, // 익명설문인지
+        start_date: null, // surveyset 페이지에서 작성
+        end_date: null, // surveyset 페이지에서 작성
+        question: [],
+        state: 'EXPECTED', // surveyset 페이지에서 보낼 때 결정
+        share: [], // surveyset에서
+        target: [], // surveyset에서
+        complete: [], //빈 배열로
+        incomplete: [], // surveyset에서 target과 동일한 값으로
+        use_template: null,
+        template: null,
+        writer: this.$store.state.uid,
       }
-      if (!this.survey.title) {
-        this.$swal({
-          title: '설문지 제목을 입력하여주세요.',
-          icon: 'warning',
-          showCancelButton: false,
-          timer: 1500,
-        })
-        return
-      }
-      if (!this.survey.explain) {
-        this.$swal({
-          title: '설문지 설명을 입력하여주세요.',
-          icon: 'warning',
-          showCancelButton: false,
-          timer: 1500,
-        })
-        return
-      }
+      // if (!this.surveyOrTemplate) {
+      //   this.$swal({
+      //     title: '설문지 와 탬플릿 중 선택하여주세요.',
+      //     icon: 'warning',
+      //     showCancelButton: false,
+      //     timer: 1500,
+      //   })
+      //   return
+      // }
+      // if (!this.survey.title) {
+      //   this.$swal({
+      //     title: '설문지 제목을 입력하여주세요.',
+      //     icon: 'warning',
+      //     showCancelButton: false,
+      //     timer: 1500,
+      //   })
+      //   return
+      // }
+      // if (!this.survey.explain) {
+      //   this.$swal({
+      //     title: '설문지 설명을 입력하여주세요.',
+      //     icon: 'warning',
+      //     showCancelButton: false,
+      //     timer: 1500,
+      //   })
+      //   return
+      // }
 
       console.log(this.surveyOrTemplate)
       document

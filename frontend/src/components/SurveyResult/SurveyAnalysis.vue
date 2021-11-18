@@ -444,7 +444,7 @@ export default {
                   this.resultOne[i][2].push(
                     `${this.survey.answers[j].answers[k].position} ${this.survey.answers[j].answers[k].name}`,
                   )
-                } else if (this.surveyLabelSerie[j][0][i] == '기타') {
+                } else if (this.surveyLabelSerie[i][0][j] == '기타') {
                   // 이 i+1선택지가 기타니? label에서 조사하자
                   console.log('흠')
                   this.resultOne[i][2].push(
@@ -475,6 +475,7 @@ export default {
                 break
               }
             }
+            console.log('check!', check)
             if (check != -1) {
               // 이것을 key로
               if (this.resultTwo.hasOwnProperty(element.answer[check])) {

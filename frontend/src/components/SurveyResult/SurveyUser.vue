@@ -118,6 +118,12 @@ export default {
       return temp
     },
   },
+  watch: {
+    survey: function(newVal) {
+      this.series[0] = newVal.complete.length
+      this.series[1] = newVal.incomplete.length
+    },
+  },
   methods: {
     // 완료자, 미완료자 count
     initCount() {
