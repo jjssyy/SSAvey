@@ -26,6 +26,13 @@ const getSurvey = (surveyId, callback, errorCallback) => {
     .catch(err => errorCallback(err))
 }
 
+const deleteSurvey = (sid, callback, errorCallback) => {
+  instance
+    .delete(`/survey/` + sid)
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
+}
+
 const getTemplateSurvey = (
   tid,
   start_date,
@@ -77,6 +84,8 @@ const SurveyApi = {
     alarmSurveyResult(payload, callback, errorCallback),
   getTemplateSurvey: (tid, start_date, end_date, callback, errorCallback) =>
     getTemplateSurvey(tid, start_date, end_date, callback, errorCallback),
+  deleteSurvey: (sid, callback, errorCallback) =>
+    deleteSurvey(sid, callback, errorCallback),
 }
 
 export default SurveyApi

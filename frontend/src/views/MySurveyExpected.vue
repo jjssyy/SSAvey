@@ -6,7 +6,7 @@
         <v-spacer></v-spacer>
       </v-toolbar>
 
-      <v-list three-line v-if="surveys.length >= 2">
+      <v-list three-line v-if="surveys.length >= 1">
         <template v-for="(item, index) in surveys">
           <v-list-item :key="index + 2">
             <v-list-item-content>
@@ -35,7 +35,38 @@
               </v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
-              <v-menu bottom :offset-x="offset">
+              <v-dialog v-if="item.writer == uid" width="500">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    v-bind="attrs"
+                    v-on="on"
+                    dark
+                    color="primary"
+                    elevation="0"
+                  >
+                    <v-icon>mdi-delete</v-icon>
+                  </v-btn>
+                </template>
+                <v-card width="1000" class="mx-auto">
+                  <v-toolbar color="error" dark>
+                    <v-toolbar-title>정말 삭제하시겠습니까?</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                  </v-toolbar>
+                  <br />
+                  <v-card-text>
+                    정말로 삭제하시겠습니까?
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="error" @click="delmysurvey(item.sid)"
+                      >삭제</v-btn
+                    >
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+              <v-btn v-else disabled><v-icon>mdi-delete</v-icon></v-btn>
+
+              <!-- <v-menu bottom :offset-x="offset">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
                     plain
@@ -66,7 +97,7 @@
                     </v-list-item-title>
                   </v-list-item>
                 </v-list>
-              </v-menu>
+              </v-menu> -->
             </v-list-item-action>
           </v-list-item>
           <v-divider :key="index"></v-divider>
@@ -92,7 +123,18 @@ export default {
     page: 1,
     uid: '',
   }),
-  methods: {},
+  methods: {
+    delmysurvey(sid) {
+      SurveyApi.deleteSurvey(
+        sid,
+        res => {
+          console.log(res)
+          this.$router.go()
+        },
+        () => {},
+      )
+    },
+  },
   watch: {
     page() {
       SurveyApi.getMysurvey(
@@ -119,7 +161,9 @@ export default {
         this.surveys = res.data.data
         this.uid = this.$store.state.uid
       },
-      () => {},
+      err => {
+        console.log(err)
+      },
     )
   },
 }
