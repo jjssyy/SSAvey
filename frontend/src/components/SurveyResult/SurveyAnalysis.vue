@@ -60,7 +60,7 @@
             "
           >
             <vue-word-cloud
-              style="width: 100%; cursor: pointer; height: 250px"
+              style="width: 300px; cursor: pointer; height: 250px; margin-right: 100px; margin-top: 20px;"
               :words="wordsOne[index]"
               :color="color"
               font-family="Roboto"
@@ -78,7 +78,7 @@
             v-if="element.q_type == 'SHORT' && isValueInQue[index]"
           >
             <vue-word-cloud
-              style="width: 100%; cursor: pointer; height: 250px"
+              style="width: 300px; cursor: pointer; height: 250px; margin-left: 100px;"
               :words="wordsTwo[index]"
               :color="color"
               font-family="Roboto"
@@ -198,7 +198,7 @@
               class="detail-select-box"
               v-if="element.length == 1 && !survey.anony"
             >
-              <option>{{ element2[0] }}</option>
+              <option>{{ element[0] }}</option>
             </select>
             <select
               class="detail-select-box"
@@ -251,7 +251,6 @@ export default {
       isValueInQue: [],
       isQueOfShort: [],
       isShortQue: [],
-      idxOfShort: [],
       surveyLabelSerie: null,
       chartOptions: [],
       tempChartOption: {
@@ -313,17 +312,15 @@ export default {
         for (let i = 0; i < element.q_option.length; i++) {
           if (element.q_option[i].short_answer) {
             this.isQueOfShort.push(true)
-            this.idxOfShort.push(i)
             check = 1
             break
           }
         }
         if (check == 0) {
           this.isQueOfShort.push(false)
-          this.idxOfShort.push(-1)
         }
       })
-      console.log('ㄴ', this.isQueOfShort)
+      console.log('?', this.isQueOfShort)
     },
     initLS() {
       // 배열 만들기
@@ -348,13 +345,16 @@ export default {
         a.answers.forEach(b => {
           b.answer.forEach(c => {
             if (this.survey.question[index].q_type != 'SHORT') {
-              if (!isNaN(c)) {
-                this.surveyLabelSerie[parseInt(a.q_number) - 1][1][
-                  parseInt(c) - 1
-                ]++
+              if (c.length > 1) {
+                console.log(a.q_number)
+                let temp = this.surveyLabelSerie[
+                  parseInt(a.q_number) - 1
+                ][0].indexOf('기타')
+                console.log('temp', temp)
+                this.surveyLabelSerie[parseInt(a.q_number) - 1][1][temp]++
               } else {
                 this.surveyLabelSerie[parseInt(a.q_number) - 1][1][
-                  this.idxOfShort[parseInt(a.q_number)]
+                  parseInt(c) - 1
                 ]++
               }
             } else {
@@ -381,7 +381,7 @@ export default {
         temp.labels = this.surveyLabelSerie[i][0]
         this.chartOptions.push(temp)
       }
-      console.log(this.surveyLabelSerie)
+      console.log('최종', this.surveyLabelSerie)
 
       // 주관식 문항이면 true
       this.isShortQue = Array.from(
@@ -421,9 +421,17 @@ export default {
           for (let j = 0; j < this.survey.answers.length; j++) {
             if (this.survey.answers[j].q_number == `${parseInt(index) + 1}`) {
               for (let k = 0; k < this.survey.answers[j].answers.length; k++) {
+                // console.log(i, j, k)
+                // console.log(this.surveyLabelSerie[j][0][i], '기타야')
                 if (
                   this.survey.answers[j].answers[k].answer.includes(`${i + 1}`)
                 ) {
+                  this.resultOne[i][2].push(
+                    `${this.survey.answers[j].answers[k].position} ${this.survey.answers[j].answers[k].name}`,
+                  )
+                } else if (this.surveyLabelSerie[j][0][i] == '기타') {
+                  // 이 i+1선택지가 기타니? label에서 조사하자
+                  console.log('흠')
                   this.resultOne[i][2].push(
                     `${this.survey.answers[j].answers[k].position} ${this.survey.answers[j].answers[k].name}`,
                   )
@@ -442,16 +450,24 @@ export default {
         // 해당 index+1문항이 기타가 있냐?
         if (this.isQueOfShort[index]) {
           // 있으면 일단 해당 문항으로 가자 -> 기타가 몇번 선택지야?
-          let shortIndex = this.surveyLabelSerie[index][0].indexOf('기타')
+          // let shortIndex = this.surveyLabelSerie[index][0].indexOf('기타')
           this.survey.answers[index].answers.forEach(element => {
-            if (element.answer[0] == `${shortIndex + 1}`) {
+            // answer중에 길이가 2 넘는애 있어?
+            let check = -1
+            for (let i = 0; i < element.answer.length; i++) {
+              if (element.answer[i].length > 1) {
+                check = i
+                break
+              }
+            }
+            if (check != -1) {
               // 이것을 key로
-              if (this.resultTwo.hasOwnProperty(element.answer[1])) {
-                this.resultTwo[`${element.answer[1]}`].push(
+              if (this.resultTwo.hasOwnProperty(element.answer[check])) {
+                this.resultTwo[`${element.answer[check]}`].push(
                   `${element.position} ${element.name}`,
                 )
               } else {
-                this.resultTwo[`${element.answer[1]}`] = [
+                this.resultTwo[`${element.answer[check]}`] = [
                   `${element.position} ${element.name}`,
                 ]
               }
@@ -469,9 +485,10 @@ export default {
           this.resultOne[i][1] = element.answer[0]
         })
       }
-      console.log(this.resultOne)
-      console.log(this.resultTwo)
+      console.log('1', this.resultOne)
+      console.log('2', this.resultTwo)
       this.isOpenModal = !this.isOpenModal
+      console.log('3', '아 어디!')
     },
     closeModal() {
       this.isOpenModal = !this.isOpenModal
@@ -524,8 +541,8 @@ export default {
         }
       })
       console.log('hi')
-      console.log(this.wordsOne)
-      console.log(this.wordsTwo)
+      console.log('word1', this.wordsOne)
+      console.log('word2', this.wordsTwo)
     },
   },
   computed: {
