@@ -1,8 +1,5 @@
 <template>
-  <div
-    class=".
-  component-2"
-  >
+  <div class=".component-2">
     <v-app class="notosanskr">
       <v-card width="1000" class="mx-auto">
         <v-toolbar color="#4E7AF5" dark>

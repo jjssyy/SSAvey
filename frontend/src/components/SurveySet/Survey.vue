@@ -2,10 +2,7 @@
   <v-app>
     <v-card width="1000" class="mx-auto">
       <v-toolbar color="#4E7AF5" dark>
-        <v-toolbar-title
-          >{{ this.survey.title }} {{ result
-          }}{{ checkresult }}</v-toolbar-title
-        >
+        <v-toolbar-title>{{ this.survey.title }}</v-toolbar-title>
         <v-spacer></v-spacer>
       </v-toolbar>
       <v-list>

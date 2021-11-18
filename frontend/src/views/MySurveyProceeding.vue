@@ -9,9 +9,9 @@
         </v-btn>
       </v-toolbar>
 
-      <v-list three-line v-if="surveys.length >= 2">
+      <v-list three-line v-if="surveys.length >= 1">
         <template v-for="(item, index) in surveys">
-          <v-list-item :key="index + 2">
+          <v-list-item :key="index">
             <v-list-item-content>
               <v-list-item-title v-html="item.title"></v-list-item-title>
               <v-list-item-subtitle
@@ -66,7 +66,7 @@
               </v-menu>
             </v-list-item-action>
           </v-list-item>
-          <v-divider :key="index + 1"></v-divider>
+          <v-divider :key="index"></v-divider>
         </template>
       </v-list>
       <v-list v-else three-line>
@@ -84,6 +84,7 @@ import SurveyApi from '@/api/SurveyApi'
 
 export default {
   data: () => ({
+    offset: true,
     surveys: [],
     rows: 2,
     page: 1,

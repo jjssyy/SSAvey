@@ -55,7 +55,11 @@
               id="noHover"
               >진행</v-btn
             >
-            <v-row class="d-flex" style="align-items: center">
+            <v-row
+              class="d-flex"
+              style="align-items: center; cursor: pointer;"
+              @click="gotothissurvey(survey.sid)"
+            >
               <v-col cols="12" sm="8">
                 <h4>&nbsp; {{ survey.title }}</h4>
               </v-col>
@@ -209,6 +213,7 @@
 <script>
 import main from '@/api/main.js'
 import UserApi from '@/api/UserApi'
+import AnswerApi from '@/api/AnswerApi'
 import axios from 'axios'
 export default {
   data() {
@@ -273,6 +278,28 @@ export default {
     },
     gotoCompleted() {
       this.$router.push('/survey/state/completed')
+    },
+    gotothissurvey(sid) {
+      let temp = {
+        id: this.$store.state.uid,
+        sid: sid,
+      }
+
+      let isassigned = {}
+
+      AnswerApi.checkAssignedSurveyUser(
+        temp,
+        res => {
+          console.log(res.data.data)
+          isassigned = res.data.data
+        },
+        err => {
+          console.log(err)
+        },
+      )
+      if (isassigned) {
+        this.$router.push(`/answer/survey/${sid}`)
+      }
     },
   },
   // created() {
