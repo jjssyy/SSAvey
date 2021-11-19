@@ -11,7 +11,7 @@
         width="100%"
         height="350px"
         :options="chartOptions"
-        :series="series"
+        :series="[series[0].show, series[1].show]"
       ></apexchart>
     </section>
     <section class="user-item">
@@ -72,7 +72,7 @@ export default {
   },
   data() {
     return {
-      series: [0, 0],
+      series: [{ show: 0 }, { show: 0 }],
       chartOptions: {
         chart: {
           width: 380,
@@ -120,15 +120,15 @@ export default {
   },
   watch: {
     survey: function(newVal) {
-      this.series[0] = newVal.complete.length
-      this.series[1] = newVal.incomplete.length
+      this.series[0].show = newVal.complete.length
+      this.series[1].show = newVal.incomplete.length
     },
   },
   methods: {
     // 완료자, 미완료자 count
     initCount() {
-      this.series[0] = this.survey.complete.length
-      this.series[1] = this.survey.incomplete.length
+      this.series[0].show = this.survey.complete.length
+      this.series[1].show = this.survey.incomplete.length
     },
     sendPersonAlarm(user) {
       // 알림 보내고,
