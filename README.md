@@ -21,7 +21,7 @@
      <br>
 
 ## UCC
-https://youtu.be/CBSSqBZxR3I
+https://youtu.be/lrKpjAwndXk
 ## ERD
 ![ERD](exec/ERD.PNG)
 
