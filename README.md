@@ -29,10 +29,10 @@ https://youtu.be/CBSSqBZxR3I
 https://www.figma.com/file/XyPPJJKXXDhhy0M51RjzHZ/%ED%8A%B9%ED%99%94%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?node-id=1%3A4
 
 ## 기능명세
-https://descriptive-palm-574.notion.site/af23164466a34b299d36b28238cdbc16
+https://descriptive-palm-574.notion.site/c8c8517ce7b94d5eae389b5740bbed6d?v=95139dc240e3413cac31bc9280d97952
 
 ## API
-https://descriptive-palm-574.notion.site/30361e28d9d44efead2413ffd1d4e0bf?v=79ccc6246c0a4d63b23ff6d16df0596c
+https://descriptive-palm-574.notion.site/9ed44a710e35471594e30e582b14cb32?v=79c3ef977dd3445c81018900cfe00749
 
 ## 프로젝트 명세
 
