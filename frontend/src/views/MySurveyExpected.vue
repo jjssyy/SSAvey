@@ -124,7 +124,7 @@ export default {
     },
     resetCreated() {
       SurveyApi.getMysurvey(
-        'PROCEEDING',
+        'EXPECTED',
         this.$store.state.uid,
         this.page - 1,
         res => {
