@@ -84,7 +84,9 @@
                           </v-card-actions>
                         </v-card>
                       </v-dialog>
-                      <div v-else><v-icon>mdi-delete</v-icon> 삭제</div>
+                      <div v-else disabled>
+                        <v-icon>mdi-delete</v-icon> 삭제
+                      </div>
                     </v-list-item-title>
                   </v-list-item>
                 </v-list>
