@@ -26,7 +26,7 @@ https://youtu.be/CBSSqBZxR3I
 ![ERD](exec/ERD.PNG)
 
 ## 와이어프레임
-https://www.figma.com/file/XyPPJJKXXDhhy0M51RjzHZ/%ED%8A%B9%ED%99%94%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?node-id=1%3A4
+https://www.figma.com/file/SualqBiW79snBswJf9SQzW/SSAvey?node-id=0%3A1
 
 ## 기능명세
 https://descriptive-palm-574.notion.site/c8c8517ce7b94d5eae389b5740bbed6d?v=95139dc240e3413cac31bc9280d97952
@@ -131,9 +131,8 @@ https://descriptive-palm-574.notion.site/9ed44a710e35471594e30e582b14cb32?v=79c3
 
 --------------------
 ### 핵심 라이브러리
-기본 제공하는 라이브러리 외 핵심 기능 구현에 사용한 라이브러리가 있다면 작성해주세요.  
-- **Mattermost API**
 
+- **Mattermost API**
   - **링크** : https://api.mattermost.com/
   - **소개** : Mattermost에서 제공하는 API
   - **사용 기능** : 로그인, Post, 채널 기능 이용
