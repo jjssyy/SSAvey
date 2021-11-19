@@ -88,7 +88,7 @@
                           <v-list-item-title>
                             {{ ques.q_number }}. {{ ques.q_explanation }}
                           </v-list-item-title>
-                          <div v-if="ques.answer[0].length == 1">
+                          <div v-if="ques.answer[0].length <= 2">
                             <v-radio-group
                               v-model="ques.answer[0]"
                               v-if="ques.q_type == 'SINGLE'"
