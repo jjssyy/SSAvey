@@ -11,19 +11,19 @@
 ## 프로젝트 소개
 
 - 서비스명 : SSAvey
-- 소재 : 일기 & 감정분석 & 음악추천
-- 사용자의 일기 감정분석을 통한 음악 추천 프로그램
-  1. 설문조사를 통해 사용자의 음악 취향을 분석한다.
-  2. 일기에 대한 감정분석을 한다.
-  3. 분석 결과에 따른 음악을 추천한다.
-  4. 다른 날짜의 비슷한 감정을 느낀 일기도 추천해 준다.
-  5. 사용자의 일기에 대한 긍부정 보고서와 일기 작성 비율 보고서를 제공한다.
+- 소재 : 설문조사
+- 싸피인을 위한 설문조사 사이트
+  1. Mattermost로 설문 관련 알림을 보내고 받을 수 있습니다.
+  2. 설문 응답 후 자신이 응답한 내용을 확인할 수 있습니다.
+  3. 설문 결과를 시각화하여 직관적으로 결과를 확인할 수 있습니다.
+  4. 이전에 진행한 설문과 비교한 결과를 확인할 수 있습니다.
+  5. 설문 결과를 엑셀 파일로 추출할 수 있습니다.
      <br>
 
 ## UCC
 https://youtu.be/CBSSqBZxR3I
 ## ERD
-![ERD](exec/ERD.png)
+![ERD](exec/ERD.PNG)
 
 ## 와이어프레임
 https://www.figma.com/file/XyPPJJKXXDhhy0M51RjzHZ/%ED%8A%B9%ED%99%94%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?node-id=1%3A4
@@ -41,25 +41,6 @@ https://descriptive-palm-574.notion.site/9ed44a710e35471594e30e582b14cb32?v=79c3
 ---
 ## :video_game: 기술 스택
 
-### :robot: AI
-<details>
-    <summary>AI 자세히 살펴보기 🔥</summary>
-    <ul>
-      <li>기술스택 ⚙</li>
-    </ul>
-    <ul>
-        <li>Pytorch</li>
-        <li>numpy</li>
-        <li>gluonnlp</li>
-        <li>pandas</li>
-    </ul>
-    <ul>
-      <li>인공지능 모델 ⚙</li>
-    </ul>
-    <ul>
-        <li>KoBERT</li>
-    </ul>
-</details>
 
 ### 💻Back-End
 
@@ -70,14 +51,12 @@ https://descriptive-palm-574.notion.site/9ed44a710e35471594e30e582b14cb32?v=79c3
     </ul>
     <ul>
         <li>Spring-Boot : 2.3.9</li>
-        <li>Spring-Boot-Data-JPA</li>
+        <li>Spring-Data-MongoDB</li>
         <li>spring-boot-starter-validation</li>
         <li>spring-boot-starter-jdbc</li>
-        <li>openvidu-java-client : 2.17.0</li>
         <li>spring-cloud-starter-aws : 2.2.5</li>
         <li>lombok</li>
-        <li>mysql : 8.0.22</li>
-        <li>redis </li>
+        <li>mongoDB</li>
     </ul>
 </details>
 
@@ -112,7 +91,6 @@ https://descriptive-palm-574.notion.site/9ed44a710e35471594e30e582b14cb32?v=79c3
         <li>v-calendar</li>
         <li>vue-compare-image</li>
         <li>vue-easy-range-date-picker</li>
-        <li>vue-google-login</li>
         <li>vue-infinite-loading</li>   
         <li>vue-typer</li>
         <li>vue2-datepicker</li>
@@ -148,22 +126,15 @@ https://descriptive-palm-574.notion.site/9ed44a710e35471594e30e582b14cb32?v=79c3
   - [BootstrapVue](https://bootstrap-vue.org/)
   - [AntDesign of Vue](https://antdv.com/docs/vue/introduce-cn/)
 - **Design Tool 사용** : 
-- **담당자** : 민찬우, 송지현
+- **담당자** : 김대호, 민찬우
   <br>
 
 --------------------
 ### 핵심 라이브러리
 기본 제공하는 라이브러리 외 핵심 기능 구현에 사용한 라이브러리가 있다면 작성해주세요.  
-- **카카오 로그인 API**
+- **Mattermost API**
 
-  - **링크** : https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api
-  - **소개** : 카카오에서 제공하는 로그인 API
-  - **사용 기능** : 카카오 로그인 API -> 소셜로그인 이용
-  - **담당자** : 양동현
+  - **링크** : https://api.mattermost.com/
+  - **소개** : Mattermost에서 제공하는 API
+  - **사용 기능** : 로그인, Post, 채널 기능 이용
 
-- **구글 로그인 API**
-
-  - **링크** : https://www.npmjs.com/package/vue-google-login
-  - **소개** : 구글에서 제공하는 로그인 API
-  - **사용 기능** : 구글 로그인 API -> 소셜로그인 이용
-  - **담당자** : 전시영
