@@ -116,7 +116,7 @@ https://descriptive-palm-574.notion.site/9ed44a710e35471594e30e582b14cb32?v=79c3
   </details>
 
 
--------------------------------------------------
+---
 
 #### Design
 
@@ -129,7 +129,7 @@ https://descriptive-palm-574.notion.site/9ed44a710e35471594e30e582b14cb32?v=79c3
 - **담당자** : 김대호, 민찬우
   <br>
 
---------------------
+---
 ### 핵심 라이브러리
 
 - **Mattermost API**
